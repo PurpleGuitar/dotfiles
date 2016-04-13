@@ -1,0 +1,21 @@
+[core]
+	filemode = false
+	autocrlf = false
+	whitespace = cr-at-eol
+[user]
+	name = Craig Oliver
+	email = craig.robert.oliver@gmail.com
+[push]
+	default = simple
+[alias]
+	lga = log --color --graph --oneline --decorate --all
+	lgan = !git --no-pager log --color --graph --oneline --decorate --all
+	lg = log --color --graph --oneline --decorate
+	lgn = !git --no-pager log --color --graph --oneline --decorate
+	fa = fetch --all --prune
+[credential]
+	helper = cache
+[diff]
+	tool = vimdiff
+
+# vim: filetype=gitconfig

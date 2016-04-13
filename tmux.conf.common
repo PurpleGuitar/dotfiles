@@ -1,0 +1,63 @@
+# Use Ctrl-A instead of Ctrl-B to engage tmux (less finger movement)
+unbind-key C-b
+set -g prefix C-a
+bind-key C-a send-prefix # C-a C-a sends a C-a
+
+# Don't delay waiting for Esc key
+set -sg escape-time 0
+
+# Allow yank into system clipboard
+bind C-y run-shell -b "tmux show-buffer | xclip -selection clipboard -i"
+# move x clipboard into tmux paste buffer
+bind C-p run-shell -b "xclip -o -selection clipboard | tmux load-buffer - ; tmux paste-buffer"
+
+# better splits with | and -
+bind-key | split-window -h
+bind-key \ split-window -h # | with no shift
+bind-key - split-window -v
+
+# Use vi-like key bindings
+set -g mode-keys vi
+
+# Reload config file
+bind r source-file ~/.tmux.conf \; display-message "Config reloaded."
+
+# hjkl pane traversal
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Start windows and panes at 1, not 0
+set -g base-index 1
+set -g pane-base-index 1
+
+# Set colors
+set -g default-terminal "xterm-256color"
+
+# Set window title
+set-option -g set-titles on
+set-option -g set-titles-string '#T'
+set-window-option -g automatic-rename on
+
+# Set pane divider
+set -g pane-border-bg black
+set -g pane-border-fg colour238
+set -g pane-active-border-bg black
+set -g pane-active-border-fg white
+
+# Set status bar
+set -g status-bg colour235
+set -g status-fg white
+set -g status-justify centre
+set -g status-left '#P:#T'
+set -g status-left-length 40
+set -g status-right '#S #H %a %h %d %l:%M %p'
+set -g status-right-length 40
+set-window-option -g window-status-current-bg colour235
+set-window-option -g window-status-current-fg white
+
+# Use 12 hour clock
+set-window-option -g clock-mode-style 12
+
+# vim: filetype=tmux
