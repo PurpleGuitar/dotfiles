@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Things to install before running this script:
 # - realpath
 # - git
