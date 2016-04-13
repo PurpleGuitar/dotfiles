@@ -1,13 +1,20 @@
 dotfiles
 ========
 
-Craig's configuration files
+Craig's configuration files for Linux
 
 Setup
 -----
 
-Create a simlink to each file you want from your home directory.
+Make sure the following is already installed:
 
+- realpath (this may already be installed depending on your OS)
+- git
+- tmux
+- vim
+
+Then run install.sh.  The following sections are only needed if you run
+into issues or want to install manually.
 
 .profile
 --------

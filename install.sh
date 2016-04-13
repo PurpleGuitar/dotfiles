@@ -67,6 +67,7 @@ fi
 mkdir -p $VIM_DIR/bundle
 cd $VIM_DIR/bundle
 git clone https://github.com/VundleVim/Vundle.vim.git
+git clone https://github.com/PurpleGuitar/vim-croz-colorscheme.git
 cd $TARGET_DIR
 vim "+PluginInstall" "+qall"
 
