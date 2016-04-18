@@ -18,7 +18,6 @@ alias apt-check='/usr/lib/update-notifier/apt-check --human-readable'
 # From: http://superuser.com/a/47216
 google() {
     search=""
-    echo "$1"
     for term in $*; do
         search="$search%20$term"
     done
