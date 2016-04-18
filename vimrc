@@ -138,14 +138,6 @@ set number
 set complete+=k
 
 
-" OS-specific settings
-" ========================================================================
-if ( has("win16") || has("win32") || has("win64") )
-    set guifont=Inconsolata:h11:cANSI
-    let g:airline_powerline_fonts = 0
-endif
-
-
 " Why move fingers if you don't have to?
 " ========================================================================
 
