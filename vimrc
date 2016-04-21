@@ -128,6 +128,7 @@ set softtabstop=4
 set hlsearch
 set ignorecase
 set mouse=a
+set ttymouse=xterm2
 set nowrap
 set clipboard=unnamedplus
 set title
