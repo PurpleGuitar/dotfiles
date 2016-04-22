@@ -37,7 +37,6 @@ Plugin 'pangloss/vim-javascript'           " Syntax handler for JavaScript
 Plugin 'elzr/vim-json'                     " Syntax handling for JSON
 Plugin 'nblock/vim-dokuwiki'               " Syntax highlighting for Dokuwiki text files
 Plugin 'Raimondi/delimitMate'              " Automatically close quote, parens, brackets, etc.
-Plugin 'sjl/gundo.vim'                     " Navigate undo tree
 Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 
 
@@ -80,11 +79,18 @@ let g:pandoc#folding#level=999                    " Don't initally fold docs
 
 " NERDTree file browser
 Plugin 'scrooloose/nerdtree'
-nnoremap <Leader>f :NERDTreeFind<CR>
+nnoremap <Leader>nt :NERDTreeFind<CR>
+
 
 " Highlights targets for f, F, t, and T motions
 Plugin 'unblevable/quick-scope'
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+
+" Navigate undo tree
+Plugin 'sjl/gundo.vim'
+nnoremap <Leader>gu :GundoToggle<CR>
+
 
 " Editor Settings
 " ========================================================================
