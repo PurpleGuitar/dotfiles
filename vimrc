@@ -22,103 +22,69 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Vundle vundles Vundle
-Plugin 'gmarik/Vundle.vim'
 
-" Keepers
-
+Plugin 'gmarik/Vundle.vim'                 " Vundle vundles Vundle
 Plugin 'PurpleGuitar/vim-croz-colorscheme' " Craig's color scheme
 Plugin 'tpope/vim-sensible'                " Sensible defaults for vim settings
-Plugin 'bling/vim-airline.git'             " Pretty Powerline statusbar
 Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, etc.)
-Plugin 'airblade/vim-gitgutter'            " Show adds, dels, mods in gutter
-Plugin 'scrooloose/syntastic'              " Automatic code linting for Python, JS, Java, etc.
 Plugin 'tpope/vim-unimpaired'              " Shortcuts, such as ]b (:bnext), ]q (:cnext), an ]e (exchange line)
 Plugin 'tomtom/tcomment_vim'               " Sophisticated commenting, e.g. Ctrl-// to comment
 Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm color codes
 Plugin 'godlygeek/tabular'                 " Line up columns of text
 Plugin 'vim-voom/VOoM'                     " Outliner for use with e.g. Pandoc/Markdown text files
-Plugin 'unblevable/quick-scope'            " Highlights targets for f, F, t, and T motions
-Plugin 'vim-pandoc/vim-pandoc'             " Support for Pandoc documents
-Plugin 'vim-pandoc/vim-pandoc-syntax'      " Syntax support for Pandoc (Markdown) docs
 Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
 Plugin 'pangloss/vim-javascript'           " Syntax handler for JavaScript
 Plugin 'elzr/vim-json'                     " Syntax handling for JSON
 Plugin 'nblock/vim-dokuwiki'               " Syntax highlighting for Dokuwiki text files
-
-" Useful, maybe keepers
-
-Plugin 'Raimondi/delimitMate' " Automatically close quote, parens, brackets, etc.
-Plugin 'scrooloose/nerdtree'  " NERDTree file browser
-Plugin 'sjl/gundo.vim'        " Navigate undo tree
-Plugin 'tommcdo/vim-exchange' " Exchange chunks of text
-Plugin 'vim-scripts/DrawIt'   " Draw ASCII art in Vim
-
-" Experimental
-
-Plugin 'terryma/vim-multiple-cursors'     " Multiple cursor support, a la Sublime
-Plugin 'majutsushi/tagbar'                " Display code outline if tag support exists
-Plugin 'tpope/vim-speeddating'            " Easily increment and decrement dates
-Plugin 'mattn/calendar-vim'               " Display calendar and date picker
-Plugin 'kshenoy/vim-signature'            " Show marks in gutter
-Plugin 'mustache/vim-mustache-handlebars' " Syntax support for Mustache
-Plugin 'dhruvasagar/vim-table-mode'       " Table mode support
-
-call vundle#end()
-filetype plugin indent on
+Plugin 'Raimondi/delimitMate'              " Automatically close quote, parens, brackets, etc.
+Plugin 'sjl/gundo.vim'                     " Navigate undo tree
+Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 
 
-" Syntastic settings
-" ========================================================================
+" Automatic code linting for Python, JS, Java, etc.
+Plugin 'scrooloose/syntastic'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 
-" Airline settings
-" ========================================================================
+" Pretty Powerline statusbar
+Plugin 'bling/vim-airline.git'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
 
 
-" Tagbar settings
-" ========================================================================
-let g:tagbar_sort = 0
-
-
-" Gitgutter settings
-" ========================================================================
+" Show adds, dels, mods in gutter
+Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_sign_column_always = 1
-
 nmap [h <Plug>GitGutterPrevHunk
 nmap ]h <Plug>GitGutterNextHunk
 
 
-" Pandoc settings
-" ========================================================================
-let g:pandoc#formatting#mode = "h"
-let g:pandoc#keyboard#sections#header_style = "s"
-let g:pandoc#formatting#textwidth = 75
+" Support for Pandoc documents
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+let g:pandoc#formatting#mode = 'h'                " hard line breaks
+let g:pandoc#keyboard#sections#header_style = 's' " Use setext style headers for 1 and 2
+let g:pandoc#formatting#textwidth = 75            " Text width for Pandoc documents
+let g:pandoc#folding#level=999                    " Don't initally fold docs
+" nnoremap <Leader>pp :!pandoc --standalone --smart --css style.css % --output %.html<CR>
+" nmap <Leader>pb <Leader>pp<CR>:!midori %.html &<CR>
+" nmap <Leader>pr <Leader>pp<CR>:!midori --execute Reload<CR>
 
-nnoremap <Leader>pp :!pandoc --standalone --smart --css style.css % --output %.html<CR>
-nmap <Leader>pb <Leader>pp<CR>:!midori %.html &<CR>
-nmap <Leader>pr <Leader>pp<CR>:!midori --execute Reload<CR>
 
-
-" NERDTreeSettings
-" ========================================================================
+" NERDTree file browser
+Plugin 'scrooloose/nerdtree'
 nnoremap <Leader>f :NERDTreeFind<CR>
 
-
-" Table mode settings
-" ========================================================================
-let g:table_mode_corner="|"
+" Highlights targets for f, F, t, and T motions
+Plugin 'unblevable/quick-scope'
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Editor Settings
 " ========================================================================
@@ -179,21 +145,19 @@ nmap <Esc><Up> [e
 nmap <Esc><Down> ]e
 
 
-" Use my custom colors (from PurpleGuitar/vim-croz-colorscheme)
-" ========================================================================
-colorscheme croz
-
-
-" Experimental: Remember undo
-" ======================================
-if has('persistent_undo')
-    set undolevels=5000
-    set undofile
-endif
-
-
 " Import local .vimrc, if there is one
 " ========================================================================
 if !empty(glob("~/.vimrc-local"))
     source ~/.vimrc-local
 endif
+
+
+" Finish with Vundle (putting this at the end allows the local .vimrc
+" to load plugins if it wishes.)
+call vundle#end()
+filetype plugin indent on
+
+
+" Load my colorscheme if available
+" Must be called after vundle#end()
+silent! colorscheme croz
