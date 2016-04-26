@@ -38,6 +38,7 @@ Plugin 'elzr/vim-json'                     " Syntax handling for JSON
 Plugin 'nblock/vim-dokuwiki'               " Syntax highlighting for Dokuwiki text files
 Plugin 'Raimondi/delimitMate'              " Automatically close quote, parens, brackets, etc.
 Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
+Plugin 'kshenoy/vim-signature'             " Show marks in gutter
 
 
 " Automatic code linting for Python, JS, Java, etc.
