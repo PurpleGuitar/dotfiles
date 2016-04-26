@@ -73,9 +73,15 @@ let g:pandoc#formatting#mode = 'h'                " hard line breaks
 let g:pandoc#keyboard#sections#header_style = 's' " Use setext style headers for 1 and 2
 let g:pandoc#formatting#textwidth = 75            " Text width for Pandoc documents
 let g:pandoc#folding#level=999                    " Don't initally fold docs
+let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes"] " Don't show dashes (they're invisible)
+let g:pandoc#folding#fdc = 0 " Don't show foldlevel column
 " nnoremap <Leader>pp :!pandoc --standalone --smart --css style.css % --output %.html<CR>
 " nmap <Leader>pb <Leader>pp<CR>:!midori %.html &<CR>
 " nmap <Leader>pr <Leader>pp<CR>:!midori --execute Reload<CR>
+
+" Insert journal entry at bottom of file
+nnoremap <Leader>je Go<CR>### <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
+inoremap <Leader>je <Esc>Go<CR>### <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
 
 
 " NERDTree file browser
@@ -91,6 +97,25 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " Navigate undo tree
 Plugin 'sjl/gundo.vim'
 nnoremap <Leader>gu :GundoToggle<CR>
+
+" Task management in Pandoc
+Plugin 'PurpleGuitar/vim-pandoc-tasks'
+autocmd FileType pandoc inoremap [<Space>]<Space> ![_]<Space>
+autocmd FileType pandoc inoremap [x]<Space> ![x]<Space>
+autocmd FileType pandoc inoremap [w]<Space> ![w]<Space>
+autocmd FileType pandoc nnoremap <Leader>tt :TaskToggle<CR>
+autocmd FileType pandoc vnoremap <Leader>tt :TaskToggle<CR>
+autocmd FileType pandoc nnoremap <Leader>tw :TaskWait<CR>
+autocmd FileType pandoc vnoremap <Leader>tw :TaskWait<CR>
+autocmd FileType pandoc nnoremap <Leader>tx :TaskDelete<CR>
+autocmd FileType pandoc vnoremap <Leader>tx :TaskDelete<CR>
+autocmd FileType pandoc nnoremap <NUL> :TaskToggle<CR>
+autocmd FileType pandoc vnoremap <NUL> :TaskToggle<CR>
+autocmd FileType pandoc nnoremap <C-Space> :TaskToggle<CR>
+autocmd FileType pandoc vnoremap <C-Space> :TaskToggle<CR>
+autocmd FileType pandoc nnoremap <Leader>tl :TaskList<CR>
+autocmd FileType pandoc nnoremap <Leader>tn :TaskListByName<CR>
+autocmd FileType pandoc nnoremap <Leader>td :TaskListDoneByNameReverse<CR>
 
 
 " Editor Settings
