@@ -103,12 +103,10 @@ set ignorecase
 set mouse=a
 set ttymouse=xterm2
 set nowrap
-set clipboard=unnamedplus
 set title
 set diffopt+=iwhite
 set textwidth=75
 set hidden
-set number
 set complete+=k
 
 
