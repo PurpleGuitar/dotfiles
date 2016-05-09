@@ -76,12 +76,12 @@ nmap ]h <Plug>GitGutterNextHunk
 " Support for Pandoc documents
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
-let g:pandoc#formatting#mode = 'h'                " hard line breaks
-let g:pandoc#keyboard#sections#header_style = 's' " Use setext style headers for 1 and 2
-let g:pandoc#formatting#textwidth = 75            " Text width for Pandoc documents
-let g:pandoc#folding#level=999                    " Don't initally fold docs
+let g:pandoc#formatting#mode = 'h'                               " hard line breaks
+let g:pandoc#keyboard#sections#header_style = 's'                " Use setext style headers for 1 and 2
+let g:pandoc#formatting#textwidth = 75                           " Text width for Pandoc documents
+let g:pandoc#folding#level=999                                   " Don't initally fold docs
 let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes"] " Don't show dashes (they're invisible)
-let g:pandoc#folding#fdc = 0 " Don't show foldlevel column
+let g:pandoc#folding#fdc = 0                                     " Don't show foldlevel column
 let g:pandoc#formatting#equalprg='pandoc -t markdown-shortcut_reference_links --reference-links --standalone --columns 75'
 
 function! PandocIndentOnWrite()
@@ -128,7 +128,7 @@ nnoremap <Leader>gu :GundoToggle<CR>
 set guioptions=
 
 " Task management in Pandoc
-Plugin 'PurpleGuitar/vim-pandoc-tasks'
+Plugin  'PurpleGuitar/vim-pandoc-tasks'
 autocmd FileType pandoc nnoremap <Leader>tx  :PandocTaskDelete<CR>
 autocmd FileType pandoc vnoremap <Leader>tx  :PandocTaskDelete<CR>gv
 autocmd FileType pandoc nnoremap <NUL>       :PandocTaskToggle<CR>
