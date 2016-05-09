@@ -38,6 +38,7 @@ Plugin 'nblock/vim-dokuwiki'               " Syntax highlighting for Dokuwiki te
 Plugin 'Raimondi/delimitMate'              " Automatically close quote, parens, brackets, etc.
 Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 Plugin 'kshenoy/vim-signature'             " Show marks in gutter
+Plugin 'tpope/vim-speeddating'             " Increment/decrement dates
 
 
 " Automatic code linting for Python, JS, Java, etc.
