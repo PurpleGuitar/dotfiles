@@ -30,7 +30,6 @@ Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, 
 Plugin 'tpope/vim-unimpaired'              " Shortcuts, such as ]b (:bnext), ]q (:cnext), an ]e (exchange line)
 Plugin 'tomtom/tcomment_vim'               " Sophisticated commenting, e.g. Ctrl-// to comment
 Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm color codes
-Plugin 'godlygeek/tabular'                 " Line up columns of text
 Plugin 'vim-voom/VOoM'                     " Outliner for use with e.g. Pandoc/Markdown text files
 Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
 Plugin 'pangloss/vim-javascript'           " Syntax handler for JavaScript
