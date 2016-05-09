@@ -82,13 +82,32 @@ let g:pandoc#formatting#textwidth = 75            " Text width for Pandoc docume
 let g:pandoc#folding#level=999                    " Don't initally fold docs
 let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes"] " Don't show dashes (they're invisible)
 let g:pandoc#folding#fdc = 0 " Don't show foldlevel column
-" nnoremap <Leader>pp :!pandoc --standalone --smart --css style.css % --output %.html<CR>
-" nmap <Leader>pb <Leader>pp<CR>:!midori %.html &<CR>
-" nmap <Leader>pr <Leader>pp<CR>:!midori --execute Reload<CR>
+let g:pandoc#formatting#equalprg='pandoc -t markdown-shortcut_reference_links --reference-links --standalone --columns 75'
+
+function! PandocIndentOnWrite()
+    if &ft == 'pandoc'
+        " :normal! mzgg=G`z
+        let save_cursor = getpos('.')
+        normal! H
+        let save_window = getpos('.')
+        :normal! gg=G
+        call setpos('.', save_window)
+        normal! zt
+        call setpos('.', save_cursor)
+    endif
+endfunction
+autocmd BufWritePre * call PandocIndentOnWrite()
+
+" Use tab to jump to next link
+autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]<CR>:nohlsearch<CR>
+autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]<CR>:nohlsearch<CR>
+
+" Remap goto definition to goto link
+autocmd FileType pandoc nmap gd <Leader>gl
 
 " Insert journal entry at bottom of file
-nnoremap <Leader>je Go<CR>### <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
-inoremap <Leader>je <Esc>Go<CR>### <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
+nnoremap <Leader>je Go<CR><C-o>0### <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
+inoremap <Leader>je <Esc>Go<CR><C-o>0### <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
 
 
 " NERDTree file browser
@@ -107,22 +126,19 @@ nnoremap <Leader>gu :GundoToggle<CR>
 
 " Task management in Pandoc
 Plugin 'PurpleGuitar/vim-pandoc-tasks'
-autocmd FileType pandoc inoremap [<Space>]<Space> ![_]<Space>
-autocmd FileType pandoc inoremap [x]<Space> ![x]<Space>
-autocmd FileType pandoc inoremap [w]<Space> ![w]<Space>
-autocmd FileType pandoc nnoremap <Leader>tt :TaskToggle<CR>
-autocmd FileType pandoc vnoremap <Leader>tt :TaskToggle<CR>
-autocmd FileType pandoc nnoremap <Leader>tw :TaskWait<CR>
-autocmd FileType pandoc vnoremap <Leader>tw :TaskWait<CR>
-autocmd FileType pandoc nnoremap <Leader>tx :TaskDelete<CR>
-autocmd FileType pandoc vnoremap <Leader>tx :TaskDelete<CR>
-autocmd FileType pandoc nnoremap <NUL> :TaskToggle<CR>
-autocmd FileType pandoc vnoremap <NUL> :TaskToggle<CR>
-autocmd FileType pandoc nnoremap <C-Space> :TaskToggle<CR>
-autocmd FileType pandoc vnoremap <C-Space> :TaskToggle<CR>
-autocmd FileType pandoc nnoremap <Leader>tl :TaskList<CR>
-autocmd FileType pandoc nnoremap <Leader>tn :TaskListByName<CR>
-autocmd FileType pandoc nnoremap <Leader>td :TaskListDoneByNameReverse<CR>
+autocmd FileType pandoc nnoremap <Leader>tx  :PandocTaskDelete<CR>
+autocmd FileType pandoc vnoremap <Leader>tx  :PandocTaskDelete<CR>gv
+autocmd FileType pandoc nnoremap <NUL>       :PandocTaskToggle<CR>
+autocmd FileType pandoc vnoremap <NUL>       :PandocTaskToggle<CR>gv
+autocmd FileType pandoc nnoremap <C-Space>   :PandocTaskToggle<CR>
+autocmd FileType pandoc vnoremap <C-Space>   :PandocTaskToggle<CR>gv
+autocmd FileType pandoc nnoremap <Leader>tl  :PandocTaskListTodo<CR>
+autocmd FileType pandoc nnoremap <Leader>tn  :PandocTaskListTodoSorted<CR>
+autocmd FileType pandoc nnoremap <Leader>tnj  :PandocTaskListTodoSorted<CR>:cc<CR>
+autocmd FileType pandoc nnoremap <Leader>tu  :PandocTaskListUnfinished<CR>
+autocmd FileType pandoc nnoremap <Leader>tun :PandocTaskListUnfinishedSorted<CR>
+autocmd FileType pandoc nnoremap <Leader>td  :PandocTaskListDoneSorted<CR>
+
 
 
 " Editor Settings
@@ -198,3 +214,18 @@ filetype plugin indent on
 " Load my colorscheme if available
 " Must be called after vundle#end()
 silent! colorscheme croz
+
+" Special commands for todoing
+autocmd FileType pandoc nnoremap <Leader>tla  :cd ~/Documents/todo<CR>:PandocTaskListTodo 'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tna  :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted 'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tnaj  :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted 'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
+autocmd FileType pandoc nnoremap <Leader>tua  :cd ~/Documents/todo<CR>:PandocTaskListUnfinished 'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tuna :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tunaj :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
+autocmd FileType pandoc nnoremap <Leader>tda  :cd ~/Documents/todo<CR>:PandocTaskListDoneSorted 'project/**/*.md', 'journal/**/*.md'<CR>
+function! s:new_journal_entry()
+    let timestamp_filename = strftime( "journal/%Y-%m-%d_%H%M%S.md", localtime() )
+    execute "e " . timestamp_filename
+endfunction
+command! NewJournalEntry call s:new_journal_entry()
+autocmd FileType pandoc nnoremap <Leader>nje  :NewJournalEntry<CR>
