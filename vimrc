@@ -136,11 +136,15 @@ autocmd FileType pandoc vnoremap <NUL>       :PandocTaskToggle<CR>gv
 autocmd FileType pandoc nnoremap <C-Space>   :PandocTaskToggle<CR>
 autocmd FileType pandoc vnoremap <C-Space>   :PandocTaskToggle<CR>gv
 autocmd FileType pandoc nnoremap <Leader>tl  :PandocTaskListTodo<CR>
+autocmd FileType pandoc nnoremap <Leader>tlj :PandocTaskListTodo<CR>:cc<CR>
 autocmd FileType pandoc nnoremap <Leader>tn  :PandocTaskListTodoSorted<CR>
-autocmd FileType pandoc nnoremap <Leader>tnj  :PandocTaskListTodoSorted<CR>:cc<CR>
+autocmd FileType pandoc nnoremap <Leader>tnj :PandocTaskListTodoSorted<CR>:cc<CR>
 autocmd FileType pandoc nnoremap <Leader>tu  :PandocTaskListUnfinished<CR>
 autocmd FileType pandoc nnoremap <Leader>tun :PandocTaskListUnfinishedSorted<CR>
 autocmd FileType pandoc nnoremap <Leader>td  :PandocTaskListDoneSorted<CR>
+autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
+autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR>
+
 
 
 
@@ -231,13 +235,15 @@ filetype plugin indent on
 silent! colorscheme croz
 
 " Special commands for todoing
-autocmd FileType pandoc nnoremap <Leader>tla  :cd ~/Documents/todo<CR>:PandocTaskListTodo 'project/**/*.md', 'journal/**/*.md'<CR>
-autocmd FileType pandoc nnoremap <Leader>tna  :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted 'project/**/*.md', 'journal/**/*.md'<CR>
-autocmd FileType pandoc nnoremap <Leader>tnaj  :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted 'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
-autocmd FileType pandoc nnoremap <Leader>tua  :cd ~/Documents/todo<CR>:PandocTaskListUnfinished 'project/**/*.md', 'journal/**/*.md'<CR>
-autocmd FileType pandoc nnoremap <Leader>tuna :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>
+
+autocmd FileType pandoc nnoremap <Leader>tla   :cd ~/Documents/todo<CR>:PandocTaskListTodo             'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tna   :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tnaj  :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
+autocmd FileType pandoc nnoremap <Leader>tua   :cd ~/Documents/todo<CR>:PandocTaskListUnfinished       'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tuna  :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>
 autocmd FileType pandoc nnoremap <Leader>tunaj :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
-autocmd FileType pandoc nnoremap <Leader>tda  :cd ~/Documents/todo<CR>:PandocTaskListDoneSorted 'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tda   :cd ~/Documents/todo<CR>:PandocTaskListDoneSorted       'project/**/*.md', 'journal/**/*.md'<CR>
+
 function! s:new_journal_entry()
     let timestamp_filename = strftime( "journal/%Y-%m-%d_%H%M%S.md", localtime() )
     execute "e " . timestamp_filename
