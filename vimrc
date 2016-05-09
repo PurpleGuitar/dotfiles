@@ -199,6 +199,19 @@ nmap <C-w>\ <C-w>v
 " (This mimics the excellent S-A-Up and Down on OneNote)
 nmap <Esc><Up> [e
 nmap <Esc><Down> ]e
+nmap <A-Up> [e
+nmap <A-Down> ]e
+nmap <A-S-Up> [e
+nmap <A-S-Down> ]e
+nnoremap <A-Left> <<
+nnoremap <A-Right> >>
+nnoremap <A-S-Left> <<
+nnoremap <A-S-Right> >>
+
+" Shortcuts for dates
+inoremap <expr> tdy strftime( "%Y-%m-%d", localtime() )
+inoremap <expr> tmr strftime( "%Y-%m-%d", localtime() + (24 * 3600) )
+inoremap <expr> nwk strftime( "%Y-%m-%d", localtime() + (7 * 24 * 3600) )
 
 
 " Import local .vimrc, if there is one
@@ -212,7 +225,6 @@ endif
 " to load plugins if it wishes.)
 call vundle#end()
 filetype plugin indent on
-
 
 " Load my colorscheme if available
 " Must be called after vundle#end()
