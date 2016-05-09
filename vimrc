@@ -124,6 +124,9 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 Plugin 'sjl/gundo.vim'
 nnoremap <Leader>gu :GundoToggle<CR>
 
+" Gui options
+set guioptions=
+
 " Task management in Pandoc
 Plugin 'PurpleGuitar/vim-pandoc-tasks'
 autocmd FileType pandoc nnoremap <Leader>tx  :PandocTaskDelete<CR>
