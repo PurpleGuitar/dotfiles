@@ -41,6 +41,13 @@ Plugin 'kshenoy/vim-signature'             " Show marks in gutter
 Plugin 'tpope/vim-speeddating'             " Increment/decrement dates
 
 
+Plugin 'junegunn/vim-easy-align'                 " Line up columns of text
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+
 " Automatic code linting for Python, JS, Java, etc.
 Plugin 'scrooloose/syntastic'
 set statusline+=%#warningmsg#
