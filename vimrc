@@ -39,6 +39,7 @@ Plugin 'Raimondi/delimitMate'              " Automatically close quote, parens, 
 Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 Plugin 'kshenoy/vim-signature'             " Show marks in gutter
 Plugin 'tpope/vim-speeddating'             " Increment/decrement dates
+Plugin 'kergoth/vim-hilinks'               " Show highlighting at the cursor
 
 
 Plugin 'junegunn/vim-easy-align'                 " Line up columns of text
@@ -60,7 +61,8 @@ let g:syntastic_check_on_wq = 0
 
 
 " Pretty Powerline statusbar
-Plugin 'bling/vim-airline.git'
+Plugin 'vim-airline/vim-airline.git'
+Plugin 'vim-airline/vim-airline-themes.git'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
@@ -86,7 +88,6 @@ let g:pandoc#formatting#equalprg='pandoc -t markdown-shortcut_reference_links --
 
 function! PandocIndentOnWrite()
     if &ft == 'pandoc'
-        " :normal! mzgg=G`z
         let save_cursor = getpos('.')
         normal! H
         let save_window = getpos('.')
@@ -145,7 +146,9 @@ autocmd FileType pandoc nnoremap <Leader>td  :PandocTaskListDoneSorted<CR>
 autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
 autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR>
 
-
+" Finish with Vundle 
+call vundle#end()
+filetype plugin indent on
 
 
 " Editor Settings
@@ -178,10 +181,6 @@ inoremap <Leader>m <Esc>:wa<CR>:make<CR>
 " Use ctrl-s to save (Windows muscle memory)
 nnoremap <C-s> :update<CR>
 inoremap <C-s> :update<CR>
-
-" Use \hlt to reveal the highlighting under the cursor.  Thanks to:
-" http://vim.wikia.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
-nnoremap <Leader>hlt :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 
 " Fixup whitespace, ASCII
 nnoremap <Leader>fix<Space> :%s/\s\+$//<CR>
@@ -217,25 +216,12 @@ inoremap <expr> tdy strftime( "%Y-%m-%d", localtime() )
 inoremap <expr> tmr strftime( "%Y-%m-%d", localtime() + (24 * 3600) )
 inoremap <expr> nwk strftime( "%Y-%m-%d", localtime() + (7 * 24 * 3600) )
 
-
-" Import local .vimrc, if there is one
-" ========================================================================
-if !empty(glob("~/.vimrc-local"))
-    source ~/.vimrc-local
-endif
-
-
-" Finish with Vundle (putting this at the end allows the local .vimrc
-" to load plugins if it wishes.)
-call vundle#end()
-filetype plugin indent on
-
-" Load my colorscheme if available
-" Must be called after vundle#end()
-silent! colorscheme croz
+" Common typos
+abbreviate THe The
+abbreviate THat That
+abbreviate WHat What
 
 " Special commands for todoing
-
 autocmd FileType pandoc nnoremap <Leader>tla   :cd ~/Documents/todo<CR>:PandocTaskListTodo             'project/**/*.md', 'journal/**/*.md'<CR>
 autocmd FileType pandoc nnoremap <Leader>tna   :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>
 autocmd FileType pandoc nnoremap <Leader>tnaj  :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
@@ -245,8 +231,18 @@ autocmd FileType pandoc nnoremap <Leader>tunaj :cd ~/Documents/todo<CR>:PandocTa
 autocmd FileType pandoc nnoremap <Leader>tda   :cd ~/Documents/todo<CR>:PandocTaskListDoneSorted       'project/**/*.md', 'journal/**/*.md'<CR>
 
 function! s:new_journal_entry()
-    let timestamp_filename = strftime( "journal/%Y-%m-%d_%H%M%S.md", localtime() )
+    let timestamp_filename = strftime( "~/Documents/todo/journal/%Y-%m-%d_%H%M%S.md", localtime() )
     execute "e " . timestamp_filename
 endfunction
 command! NewJournalEntry call s:new_journal_entry()
 autocmd FileType pandoc nnoremap <Leader>nje  :NewJournalEntry<CR>
+
+" Load my colorscheme if available
+" Must be called after vundle#end()
+silent! colorscheme croz
+
+" Import local .vimrc, if there is one
+" ========================================================================
+if !empty(glob("~/.vimrc-local"))
+    source ~/.vimrc-local
+endif
