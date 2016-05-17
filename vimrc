@@ -181,18 +181,25 @@ inoremap <Leader>m <Esc>:wa<CR>:make<CR>
 " Use ctrl-s to save (Windows muscle memory)
 nnoremap <C-s> :update<CR>
 inoremap <C-s> :update<CR>
+vnoremap <C-s> <Esc>:update<CR>gv
 
 " Fixup whitespace, ASCII
-nnoremap <Leader>fix<Space> :%s/\s\+$//<CR>
-nnoremap <Leader>fix' :%s/’/'/g<CR>
-nnoremap <Leader>fix" :%s/[“”]/"/g<CR>
+nnoremap <Leader>fix<Space> :silent! %s/\s\+$//<CR>:silent! %s/[\xa0]/ /g<CR>
+nnoremap <Leader>fix' :%s/[\x92’]/'/g<CR>
+nnoremap <Leader>fix" :%s/[\x93\x94“”]/"/g<CR>
+nnoremap <Leader>fix- :%s/[\x96\xb7]/-/g<CR>
+nnoremap <leader>fa /[^\x00-\x7F]<CR>
+nnoremap <leader>ga ga
+
 
 " Search for visually selected text with //
 vnoremap // y/<C-R>"<CR>
 
-" Handle line movement
+" Handle linewise movement
 nnoremap j gj
 nnoremap k gk
+autocmd FileType pandoc nnoremap j gj
+autocmd FileType pandoc nnoremap k gk
 
 " Window shortcuts
 nmap <C-w>- <C-w>s
@@ -211,10 +218,6 @@ nnoremap <A-Right> >>
 nnoremap <A-S-Left> <<
 nnoremap <A-S-Right> >>
 
-" Shortcuts for dates
-inoremap <expr> tdy strftime( "%Y-%m-%d", localtime() )
-inoremap <expr> tmr strftime( "%Y-%m-%d", localtime() + (24 * 3600) )
-inoremap <expr> nwk strftime( "%Y-%m-%d", localtime() + (7 * 24 * 3600) )
 
 " Common typos
 abbreviate THe The
@@ -246,3 +249,57 @@ silent! colorscheme croz
 if !empty(glob("~/.vimrc-local"))
     source ~/.vimrc-local
 endif
+
+" Lookup date
+" Set date prog if it's something other than 'date'
+" let g:date_prog = 'C:\MinGW\msys\1.0\bin\date.exe'
+" Should move this to a vim plugin
+function! s:get_date(...)
+    if a:0 > 0
+        let date_string = a:1
+    else
+        let date_string = input("Enter date: ")
+    endif
+    if exists("g:date_prog")
+        let date_prog = g:date_prog
+    else
+        let date_prog = 'date'
+    endif
+    return substitute(system(date_prog . ' --date="' . date_string . '" +%Y-%m-%d'), '\n\+$', '', '')
+endfunction
+command! -nargs=* InsertDate let @* = s:get_date(<args>) | normal! "*p
+
+inoremap \ddd <C-o>:InsertDate<CR>
+inoremap \dd0 <C-o>:InsertDate 'today'<CR>
+inoremap \dd1 <C-o>:InsertDate 'tomorrow'<CR>
+inoremap \dd- <C-o>:InsertDate 'tomorrow'<CR>
+inoremap \dd2 <C-o>:InsertDate '2 day'<CR>
+inoremap \dd= <C-o>:InsertDate '2 day'<CR>
+inoremap \dd3 <C-o>:InsertDate '3 day'<CR>
+inoremap \dd4 <C-o>:InsertDate '4 day'<CR>
+inoremap \ddw <C-o>:InsertDate '1 week'<CR>
+inoremap \ddm <C-o>:InsertDate 'monday'<CR>
+inoremap \ddt <C-o>:InsertDate 'tuesday'<CR>
+inoremap \ddw <C-o>:InsertDate 'wednesday'<CR>
+inoremap \ddr <C-o>:InsertDate 'thursday'<CR>
+inoremap \ddf <C-o>:InsertDate 'friday'<CR>
+inoremap \dds <C-o>:InsertDate 'saturday'<CR>
+inoremap \ddu <C-o>:InsertDate 'sunday'<CR>
+
+nnoremap \ddd :InsertDate<CR>
+nnoremap \dd0 :InsertDate 'today'<CR>
+nnoremap \dd1 :InsertDate 'tomorrow'<CR>
+nnoremap \dd- :InsertDate 'tomorrow'<CR>
+nnoremap \dd2 :InsertDate '2 day'<CR>
+nnoremap \dd= :InsertDate '2 day'<CR>
+nnoremap \dd3 :InsertDate '3 day'<CR>
+nnoremap \dd4 :InsertDate '4 day'<CR>
+nnoremap \ddw :InsertDate '1 week'<CR>
+nnoremap \ddm :InsertDate 'monday'<CR>
+nnoremap \ddt :InsertDate 'tuesday'<CR>
+nnoremap \ddw :InsertDate 'wednesday'<CR>
+nnoremap \ddr :InsertDate 'thursday'<CR>
+nnoremap \ddf :InsertDate 'friday'<CR>
+nnoremap \dds :InsertDate 'saturday'<CR>
+nnoremap \ddu :InsertDate 'sunday'<CR>
+
