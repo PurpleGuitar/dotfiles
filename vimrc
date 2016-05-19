@@ -303,3 +303,14 @@ nnoremap \ddf :PasteDateBefore 'friday'<CR>
 nnoremap \dds :PasteDateBefore 'saturday'<CR>
 nnoremap \ddu :PasteDateBefore 'sunday'<CR>
 
+function! s:todo_quickfix()
+    copen
+    cd ~/Documents/todo
+    PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'
+    setlocal modifiable
+    1,$EasyAlign 4/ /
+    setlocal nomodifiable
+    setlocal nomodified
+endfunction
+command! TodoQuickfix call s:todo_quickfix()
+nnoremap <Leader>tq :TodoQuickfix<CR>
