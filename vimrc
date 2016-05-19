@@ -267,39 +267,39 @@ function! s:get_date(...)
     endif
     return substitute(system(date_prog . ' --date="' . date_string . '" +%Y-%m-%d'), '\n\+$', '', '')
 endfunction
-command! -nargs=* InsertDate let @* = s:get_date(<args>) | normal! "*p
+command! -nargs=* CopyDate let @" = s:get_date(<args>)
+command! -nargs=* PasteDateAfter let @" = s:get_date(<args>) | normal! ""p
+command! -nargs=* PasteDateBefore let @" = s:get_date(<args>) | normal! ""P
 
-inoremap \ddd <C-o>:InsertDate<CR>
-inoremap \dd0 <C-o>:InsertDate 'today'<CR>
-inoremap \dd1 <C-o>:InsertDate 'tomorrow'<CR>
-inoremap \dd- <C-o>:InsertDate 'tomorrow'<CR>
-inoremap \dd2 <C-o>:InsertDate '2 day'<CR>
-inoremap \dd= <C-o>:InsertDate '2 day'<CR>
-inoremap \dd3 <C-o>:InsertDate '3 day'<CR>
-inoremap \dd4 <C-o>:InsertDate '4 day'<CR>
-inoremap \ddw <C-o>:InsertDate '1 week'<CR>
-inoremap \ddm <C-o>:InsertDate 'monday'<CR>
-inoremap \ddt <C-o>:InsertDate 'tuesday'<CR>
-inoremap \ddw <C-o>:InsertDate 'wednesday'<CR>
-inoremap \ddr <C-o>:InsertDate 'thursday'<CR>
-inoremap \ddf <C-o>:InsertDate 'friday'<CR>
-inoremap \dds <C-o>:InsertDate 'saturday'<CR>
-inoremap \ddu <C-o>:InsertDate 'sunday'<CR>
+inoremap \ddd <C-o>:PasteDateAfter<CR>
+inoremap \dd0 <C-o>:PasteDateAfter 'today'<CR>
+inoremap \dd1 <C-o>:PasteDateAfter 'tomorrow'<CR>
+inoremap \dd- <C-o>:PasteDateAfter 'tomorrow'<CR>
+inoremap \dd2 <C-o>:PasteDateAfter '2 day'<CR>
+inoremap \dd= <C-o>:PasteDateAfter '2 day'<CR>
+inoremap \dd3 <C-o>:PasteDateAfter '3 day'<CR>
+inoremap \dd4 <C-o>:PasteDateAfter '4 day'<CR>
+inoremap \ddm <C-o>:PasteDateAfter 'monday'<CR>
+inoremap \ddt <C-o>:PasteDateAfter 'tuesday'<CR>
+inoremap \ddw <C-o>:PasteDateAfter 'wednesday'<CR>
+inoremap \ddr <C-o>:PasteDateAfter 'thursday'<CR>
+inoremap \ddf <C-o>:PasteDateAfter 'friday'<CR>
+inoremap \dds <C-o>:PasteDateAfter 'saturday'<CR>
+inoremap \ddu <C-o>:PasteDateAfter 'sunday'<CR>
 
-nnoremap \ddd :InsertDate<CR>
-nnoremap \dd0 :InsertDate 'today'<CR>
-nnoremap \dd1 :InsertDate 'tomorrow'<CR>
-nnoremap \dd- :InsertDate 'tomorrow'<CR>
-nnoremap \dd2 :InsertDate '2 day'<CR>
-nnoremap \dd= :InsertDate '2 day'<CR>
-nnoremap \dd3 :InsertDate '3 day'<CR>
-nnoremap \dd4 :InsertDate '4 day'<CR>
-nnoremap \ddw :InsertDate '1 week'<CR>
-nnoremap \ddm :InsertDate 'monday'<CR>
-nnoremap \ddt :InsertDate 'tuesday'<CR>
-nnoremap \ddw :InsertDate 'wednesday'<CR>
-nnoremap \ddr :InsertDate 'thursday'<CR>
-nnoremap \ddf :InsertDate 'friday'<CR>
-nnoremap \dds :InsertDate 'saturday'<CR>
-nnoremap \ddu :InsertDate 'sunday'<CR>
+nnoremap \ddd :PasteDateBefore<CR>
+nnoremap \dd0 :PasteDateBefore 'today'<CR>
+nnoremap \dd1 :PasteDateBefore 'tomorrow'<CR>
+nnoremap \dd- :PasteDateBefore 'tomorrow'<CR>
+nnoremap \dd2 :PasteDateBefore '2 day'<CR>
+nnoremap \dd= :PasteDateBefore '2 day'<CR>
+nnoremap \dd3 :PasteDateBefore '3 day'<CR>
+nnoremap \dd4 :PasteDateBefore '4 day'<CR>
+nnoremap \ddm :PasteDateBefore 'monday'<CR>
+nnoremap \ddt :PasteDateBefore 'tuesday'<CR>
+nnoremap \ddw :PasteDateBefore 'wednesday'<CR>
+nnoremap \ddr :PasteDateBefore 'thursday'<CR>
+nnoremap \ddf :PasteDateBefore 'friday'<CR>
+nnoremap \dds :PasteDateBefore 'saturday'<CR>
+nnoremap \ddu :PasteDateBefore 'sunday'<CR>
 
