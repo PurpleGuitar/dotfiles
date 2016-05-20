@@ -115,6 +115,23 @@ inoremap <Leader>je <Esc>Go<CR><C-o>0### <Esc>"=strftime("%a %b %d %Y %I:%M %p")
 Plugin 'scrooloose/nerdtree'
 nnoremap <Leader>nt :NERDTreeFind<CR>
 
+" From: http://superuser.com/questions/195022/vim-how-to-synchronize-nerdtree-with-current-opened-tab-file-path
+" returns true iff is NERDTree open/active
+function! s:isNTOpen()
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+" calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
+function! s:syncTree()
+  if &modifiable && s:isNTOpen() && strlen(expand('%')) > 0 && !&diff
+    let l:curwinnr = winnr()
+    NERDTreeFind
+    exec l:curwinnr . "wincmd w"
+    "wincmd p
+  endif
+endfunction
+
+autocmd BufEnter * call s:syncTree()
 
 " Highlights targets for f, F, t, and T motions
 Plugin 'unblevable/quick-scope'
@@ -146,7 +163,7 @@ autocmd FileType pandoc nnoremap <Leader>td  :PandocTaskListDoneSorted<CR>
 autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
 autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR>
 
-" Finish with Vundle 
+" Finish with Vundle
 call vundle#end()
 filetype plugin indent on
 
