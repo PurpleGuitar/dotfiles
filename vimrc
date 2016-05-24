@@ -235,12 +235,6 @@ nnoremap <A-Right> >>
 nnoremap <A-S-Left> <<
 nnoremap <A-S-Right> >>
 
-
-" Common typos
-abbreviate THe The
-abbreviate THat That
-abbreviate WHat What
-
 " Special commands for todoing
 autocmd FileType pandoc nnoremap <Leader>tla   :cd ~/Documents/todo<CR>:PandocTaskListTodo             'project/**/*.md', 'journal/**/*.md'<CR>
 autocmd FileType pandoc nnoremap <Leader>tna   :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>
@@ -285,8 +279,8 @@ function! s:get_date(...)
     return substitute(system(date_prog . ' --date="' . date_string . '" +%Y-%m-%d'), '\n\+$', '', '')
 endfunction
 command! -nargs=* CopyDate let @" = s:get_date(<args>)
-command! -nargs=* PasteDateAfter let @" = s:get_date(<args>) | normal! ""p
-command! -nargs=* PasteDateBefore let @" = s:get_date(<args>) | normal! ""P
+command! -nargs=* PasteDateAfter let @" = s:get_date(<args>) . ' ' | normal! ""p
+command! -nargs=* PasteDateBefore let @" = s:get_date(<args>) . ' ' | normal! ""P
 
 inoremap \ddd <C-o>:PasteDateAfter<CR>
 inoremap \dd0 <C-o>:PasteDateAfter 'today'<CR>
@@ -331,3 +325,16 @@ function! s:todo_quickfix()
 endfunction
 command! TodoQuickfix call s:todo_quickfix()
 nnoremap <Leader>tq :TodoQuickfix<CR>
+nnoremap <Leader>qt :TodoQuickfix<CR>
+
+" Correct two initial capitals
+" From: https://groups.google.com/forum/#!topic/comp.editors/L8_j0vrs2Hg
+fu! AAa_to_Aaa()
+  let c = getline(".")[0:col(".")-2]
+  if c =~ '\v\C<[[:upper:]]{2}[[:lower:]]$'
+    let pos = getpos('.')
+    normal hh~
+    call setpos('.',pos)
+  endif
+endf
+:au CursorMovedI * call AAa_to_Aaa()
