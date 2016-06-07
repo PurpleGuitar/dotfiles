@@ -86,8 +86,9 @@ let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes"] " Don't show da
 let g:pandoc#folding#fdc = 0                                     " Don't show foldlevel column
 let g:pandoc#formatting#equalprg='pandoc -t markdown-shortcut_reference_links --reference-links --standalone --columns 75'
 
+let g:pandoc_indent_on_write = 1
 function! PandocIndentOnWrite()
-    if &ft == 'pandoc'
+    if &ft == 'pandoc' && g:pandoc_indent_on_write == 1
         let save_cursor = getpos('.')
         normal! H
         let save_window = getpos('.')
@@ -97,7 +98,13 @@ function! PandocIndentOnWrite()
         call setpos('.', save_cursor)
     endif
 endfunction
+function! PandocUpdateNoIndent()
+    let g:pandoc_indent_on_write = 0
+    update
+    let g:pandoc_indent_on_write = 1
+endfunction
 autocmd BufWritePre * call PandocIndentOnWrite()
+autocmd FileType pandoc inoremap <C-s> :call PandocUpdateNoIndent()<CR>
 
 " Use tab to jump to next link
 autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]<CR>:nohlsearch<CR>
