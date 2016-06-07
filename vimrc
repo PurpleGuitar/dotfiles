@@ -215,8 +215,12 @@ vnoremap // y/<C-R>"<CR>
 " Handle linewise movement
 nnoremap j gj
 nnoremap k gk
+vnoremap j gj
+vnoremap k gk
 autocmd FileType pandoc nnoremap j gj
 autocmd FileType pandoc nnoremap k gk
+autocmd FileType pandoc vnoremap j gj
+autocmd FileType pandoc vnoremap k gk
 
 " Window shortcuts
 nmap <C-w>- <C-w>s
