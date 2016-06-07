@@ -1,11 +1,12 @@
-# Things to install before running this script:
-# - realpath
-# - git
-# - tmux
-# - vim 
-
 # Abort on any error.
 set -e
+
+# Check for required tools.
+REQUIRED_TOOLS="realpath git tmux vim"
+for REQUIRED_TOOL in $REQUIRED_TOOLS
+do
+    command -v $REQUIRED_TOOL >/dev/null 2>&1 || { echo >&2 "$REQUIRED_TOOL must be installed before running this script."; exit 1; }
+done
 
 # Target directory, usually the user's home dir.
 # Change this variable for testing.
