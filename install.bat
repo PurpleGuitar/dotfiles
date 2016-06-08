@@ -1,4 +1,4 @@
-rem @echo off
+@echo off
 
 rem Check for administrative priveleges.
 rem From: https://stackoverflow.com/questions/4051883/batch-script-how-to-check-for-admin-rights#11995662
@@ -15,11 +15,17 @@ rem Get target dir
 set TARGET_DIR=%USERPROFILE%
 cd %TARGET_DIR%
 
-rem Delete old vimrc if it exists
-del .vimrc >nul 2>&1
+rem Link to dotfiles
+for %%x in (
+    vimrc
+    gitconfig
+) do (
+    rem Delete old file if it exists
+    del .%%x >nul 2>&1
+    rem Create hardlink to new file
+    mklink /H ".%%x" %SCRIPT_DIR%%%x"
+)
 
-rem Create hardlink to new vimrc
-mklink /H ".vimrc" %SCRIPT_DIR%vimrc"
 
 rem Create new .vim directory
 rmdir /s /q .vim
