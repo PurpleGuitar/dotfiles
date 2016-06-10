@@ -22,7 +22,6 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-
 Plugin 'gmarik/Vundle.vim'                 " Vundle vundles Vundle
 Plugin 'PurpleGuitar/vim-croz-colorscheme' " Craig's color scheme
 Plugin 'tpope/vim-sensible'                " Sensible defaults for vim settings
@@ -112,6 +111,9 @@ autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]\<bar><[^>]\+><CR>:nohls
 
 " Remap goto definition to goto link
 autocmd FileType pandoc nmap gd <Leader>gl
+
+" Show line breaks
+autocmd FileType pandoc set showbreak=....
 
 " NERDTree file browser
 Plugin 'scrooloose/nerdtree'
