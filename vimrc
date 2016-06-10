@@ -84,7 +84,7 @@ let g:pandoc#formatting#textwidth = 75                           " Text width fo
 let g:pandoc#folding#level=999                                   " Don't initally fold docs
 let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes"] " Don't show dashes (they're invisible)
 let g:pandoc#folding#fdc = 0                                     " Don't show foldlevel column
-let g:pandoc#formatting#equalprg='pandoc -t markdown-shortcut_reference_links --reference-links --standalone --columns 75'
+let g:pandoc#formatting#equalprg='pandoc -t markdown --standalone --columns 75'
 
 let g:pandoc_indent_on_write = 1
 function! PandocIndentOnWrite()
@@ -107,16 +107,11 @@ autocmd BufWritePre * call PandocIndentOnWrite()
 autocmd FileType pandoc inoremap <C-s> :call PandocUpdateNoIndent()<CR>
 
 " Use tab to jump to next link
-autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]<CR>:nohlsearch<CR>
-autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]<CR>:nohlsearch<CR>
+autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]\<bar><[^>]\+><CR>:nohlsearch<CR>
+autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]\<bar><[^>]\+><CR>:nohlsearch<CR>
 
 " Remap goto definition to goto link
 autocmd FileType pandoc nmap gd <Leader>gl
-
-" Insert journal entry at bottom of file
-nnoremap <Leader>je Go<CR><C-o>0### <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
-inoremap <Leader>je <Esc>Go<CR><C-o>0### <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
-
 
 " NERDTree file browser
 Plugin 'scrooloose/nerdtree'
@@ -169,6 +164,11 @@ autocmd FileType pandoc nnoremap <Leader>tun :PandocTaskListUnfinishedSorted<CR>
 autocmd FileType pandoc nnoremap <Leader>td  :PandocTaskListDoneSorted<CR>
 autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
 autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR>
+
+" Support fullscreen for gvim
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-shell'
+let g:shell_fullscreen_always_on_top = 0
 
 " Finish with Vundle
 call vundle#end()
@@ -256,7 +256,7 @@ autocmd FileType pandoc nnoremap <Leader>tunaj :cd ~/Documents/todo<CR>:PandocTa
 autocmd FileType pandoc nnoremap <Leader>tda   :cd ~/Documents/todo<CR>:PandocTaskListDoneSorted       'project/**/*.md', 'journal/**/*.md'<CR>
 
 function! s:new_journal_entry()
-    let timestamp_filename = strftime( "~/Documents/todo/journal/%Y-%m-%d_%H%M%S.md", localtime() )
+    let timestamp_filename = strftime( "~/Documents/todo/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
     execute "e " . timestamp_filename
 endfunction
 command! NewJournalEntry call s:new_journal_entry()
