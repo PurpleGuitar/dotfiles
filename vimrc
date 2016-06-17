@@ -327,18 +327,21 @@ nnoremap \ddf :PasteDateBefore 'friday'<CR>
 nnoremap \dds :PasteDateBefore 'saturday'<CR>
 nnoremap \ddu :PasteDateBefore 'sunday'<CR>
 
-function! s:todo_quickfix()
+function! s:todo_quickfix(command_name)
     copen
     cd ~/Documents/todo
-    PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'
+    execute a:command_name . " 'project/**/*.md', 'journal/**/*.md'"
     setlocal modifiable
     1,$EasyAlign 4/ /
     setlocal nomodifiable
     setlocal nomodified
 endfunction
-command! TodoQuickfix call s:todo_quickfix()
+command! TodoQuickfix call s:todo_quickfix('PandocTaskListTodoSorted')
+command! TodoQuickfixAll call s:todo_quickfix('PandocTaskListUnfinishedSorted')
 nnoremap <Leader>tq :TodoQuickfix<CR>
 nnoremap <Leader>qt :TodoQuickfix<CR>
+nnoremap <Leader>tqa :TodoQuickfixAll<CR>
+nnoremap <Leader>qta :TodoQuickfixAll<CR>
 
 " Correct two initial capitals
 " From: https://groups.google.com/forum/#!topic/comp.editors/L8_j0vrs2Hg
