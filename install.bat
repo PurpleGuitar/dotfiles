@@ -18,6 +18,7 @@ cd %TARGET_DIR%
 rem Link to dotfiles
 for %%x in (
     vimrc
+    vimrc-plugins
     gitconfig
 ) do (
     rem Delete old file if it exists
