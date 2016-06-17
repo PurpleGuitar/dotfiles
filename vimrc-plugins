@@ -20,7 +20,16 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" ========================================================================
+" START VUNDLE PLUGINS
+" ========================================================================
+" (Vundle.vim must always be first)
 Plugin 'gmarik/Vundle.vim'                 " Vundle vundles Vundle
+
+
+" ========================================================================
+" Plugins that don't need configuring
+" ========================================================================
 Plugin 'PurpleGuitar/vim-croz-colorscheme' " Craig's color scheme
 Plugin 'tpope/vim-sensible'                " Sensible defaults for vim settings
 Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, etc.)
@@ -39,14 +48,19 @@ Plugin 'tpope/vim-speeddating'             " Increment/decrement dates
 Plugin 'kergoth/vim-hilinks'               " Show highlighting at the cursor
 
 
-Plugin 'junegunn/vim-easy-align'                 " Line up columns of text
+" ========================================================================
+" Easy Align
+" ========================================================================
+Plugin 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
 
-" Automatic code linting for Python, JS, Java, etc.
+" ========================================================================
+" Syntastic
+" ========================================================================
 Plugin 'scrooloose/syntastic'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -57,7 +71,9 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 
-" Pretty Powerline statusbar
+" ========================================================================
+" Airline (Powerline)
+" ========================================================================
 Plugin 'vim-airline/vim-airline.git'
 Plugin 'vim-airline/vim-airline-themes.git'
 let g:airline#extensions#tabline#enabled = 1
@@ -65,14 +81,18 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
 
 
-" Show adds, dels, mods in gutter
+" ========================================================================
+" Git Gutter
+" ========================================================================
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_sign_column_always = 1
 nmap [h <Plug>GitGutterPrevHunk
 nmap ]h <Plug>GitGutterNextHunk
 
 
-" Support for Pandoc documents
+" ========================================================================
+" Pandoc
+" ========================================================================
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 let g:pandoc#formatting#mode = 'h'                               " hard line breaks
@@ -113,9 +133,69 @@ autocmd FileType pandoc nmap gd <Leader>gl
 " Show line breaks
 autocmd FileType pandoc set showbreak=....
 
+" Shortcuts for generating pandoc docs
+autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
+autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR>
+
+
+" ========================================================================
+" Pandoc Tasks - task management in Pandoc
+" ========================================================================
+Plugin  'PurpleGuitar/vim-pandoc-tasks'
+autocmd FileType pandoc nnoremap <Leader>tx  :PandocTaskDelete<CR>
+autocmd FileType pandoc vnoremap <Leader>tx  :PandocTaskDelete<CR>gv
+autocmd FileType pandoc nnoremap <NUL>       :PandocTaskToggle<CR>
+autocmd FileType pandoc vnoremap <NUL>       :PandocTaskToggle<CR>gv
+autocmd FileType pandoc nnoremap <C-Space>   :PandocTaskToggle<CR>
+autocmd FileType pandoc vnoremap <C-Space>   :PandocTaskToggle<CR>gv
+autocmd FileType pandoc nnoremap <Leader>tl  :PandocTaskListTodo<CR>
+autocmd FileType pandoc nnoremap <Leader>tlj :PandocTaskListTodo<CR>:cc<CR>
+autocmd FileType pandoc nnoremap <Leader>tn  :PandocTaskListTodoSorted<CR>
+autocmd FileType pandoc nnoremap <Leader>tnj :PandocTaskListTodoSorted<CR>:cc<CR>
+autocmd FileType pandoc nnoremap <Leader>tu  :PandocTaskListUnfinished<CR>
+autocmd FileType pandoc nnoremap <Leader>tun :PandocTaskListUnfinishedSorted<CR>
+autocmd FileType pandoc nnoremap <Leader>td  :PandocTaskListDoneSorted<CR>
+
+" Special commands for todoing
+autocmd FileType pandoc nnoremap <Leader>tla   :cd ~/Documents/todo<CR>:PandocTaskListTodo             'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tna   :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tnaj  :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
+autocmd FileType pandoc nnoremap <Leader>tua   :cd ~/Documents/todo<CR>:PandocTaskListUnfinished       'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tuna  :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>
+autocmd FileType pandoc nnoremap <Leader>tunaj :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
+autocmd FileType pandoc nnoremap <Leader>tda   :cd ~/Documents/todo<CR>:PandocTaskListDoneSorted       'project/**/*.md', 'journal/**/*.md'<CR>
+
+" Create insta-journal-entry for quick notes
+function! s:new_journal_entry()
+    let timestamp_filename = strftime( "~/Documents/todo/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
+    execute "e " . timestamp_filename
+endfunction
+command! NewJournalEntry call s:new_journal_entry()
+autocmd FileType pandoc nnoremap <Leader>nje  :NewJournalEntry<CR>
+
+" Make quickfix list pretty
+function! s:todo_quickfix(command_name)
+    copen
+    cd ~/Documents/todo
+    execute a:command_name . " 'project/**/*.md', 'journal/**/*.md'"
+    setlocal modifiable
+    1,$EasyAlign 4/ /
+    setlocal nomodifiable
+    setlocal nomodified
+endfunction
+command! TodoQuickfix call s:todo_quickfix('PandocTaskListTodoSorted')
+command! TodoQuickfixAll call s:todo_quickfix('PandocTaskListUnfinishedSorted')
+nnoremap <Leader>tq :TodoQuickfix<CR>
+nnoremap <Leader>qt :TodoQuickfix<CR>
+nnoremap <Leader>tqa :TodoQuickfixAll<CR>
+nnoremap <Leader>qta :TodoQuickfixAll<CR>
+
+" ========================================================================
 " NERDTree file browser
+" ========================================================================
 Plugin 'scrooloose/nerdtree'
 nnoremap <Leader>nt :NERDTreeFind<CR>
+
 
 " From: http://superuser.com/questions/195022/vim-how-to-synchronize-nerdtree-with-current-opened-tab-file-path
 " returns true iff is NERDTree open/active
@@ -135,42 +215,33 @@ endfunction
 
 autocmd BufEnter * call s:syncTree()
 
-" Highlights targets for f, F, t, and T motions
+
+" ========================================================================
+" Quick Scope - Highlights targets for f, F, t, and T motions
+" ========================================================================
 Plugin 'unblevable/quick-scope'
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 
-" Navigate undo tree
+" ========================================================================
+" Gundo -- navigate undo tree
+" ========================================================================
 Plugin 'sjl/gundo.vim'
 nnoremap <Leader>gu :GundoToggle<CR>
 
-" Gui options
-set guioptions=
 
-" Task management in Pandoc
-Plugin  'PurpleGuitar/vim-pandoc-tasks'
-autocmd FileType pandoc nnoremap <Leader>tx  :PandocTaskDelete<CR>
-autocmd FileType pandoc vnoremap <Leader>tx  :PandocTaskDelete<CR>gv
-autocmd FileType pandoc nnoremap <NUL>       :PandocTaskToggle<CR>
-autocmd FileType pandoc vnoremap <NUL>       :PandocTaskToggle<CR>gv
-autocmd FileType pandoc nnoremap <C-Space>   :PandocTaskToggle<CR>
-autocmd FileType pandoc vnoremap <C-Space>   :PandocTaskToggle<CR>gv
-autocmd FileType pandoc nnoremap <Leader>tl  :PandocTaskListTodo<CR>
-autocmd FileType pandoc nnoremap <Leader>tlj :PandocTaskListTodo<CR>:cc<CR>
-autocmd FileType pandoc nnoremap <Leader>tn  :PandocTaskListTodoSorted<CR>
-autocmd FileType pandoc nnoremap <Leader>tnj :PandocTaskListTodoSorted<CR>:cc<CR>
-autocmd FileType pandoc nnoremap <Leader>tu  :PandocTaskListUnfinished<CR>
-autocmd FileType pandoc nnoremap <Leader>tun :PandocTaskListUnfinishedSorted<CR>
-autocmd FileType pandoc nnoremap <Leader>td  :PandocTaskListDoneSorted<CR>
-autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
-autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR>
 
-" Support fullscreen for gvim
+" ========================================================================
+" Xolox shell - supports fullscreen, among other things
+" ========================================================================
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-shell'
 let g:shell_fullscreen_always_on_top = 0
 
-" Finish with Vundle
+
+" ========================================================================
+" END VUNDLE PLUGINS
+" ========================================================================
 call vundle#end()
 filetype plugin indent on
 

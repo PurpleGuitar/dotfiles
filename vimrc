@@ -77,22 +77,6 @@ nnoremap <A-Right> >>
 nnoremap <A-S-Left> <<
 nnoremap <A-S-Right> >>
 
-" Special commands for todoing
-autocmd FileType pandoc nnoremap <Leader>tla   :cd ~/Documents/todo<CR>:PandocTaskListTodo             'project/**/*.md', 'journal/**/*.md'<CR>
-autocmd FileType pandoc nnoremap <Leader>tna   :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>
-autocmd FileType pandoc nnoremap <Leader>tnaj  :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
-autocmd FileType pandoc nnoremap <Leader>tua   :cd ~/Documents/todo<CR>:PandocTaskListUnfinished       'project/**/*.md', 'journal/**/*.md'<CR>
-autocmd FileType pandoc nnoremap <Leader>tuna  :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>
-autocmd FileType pandoc nnoremap <Leader>tunaj :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
-autocmd FileType pandoc nnoremap <Leader>tda   :cd ~/Documents/todo<CR>:PandocTaskListDoneSorted       'project/**/*.md', 'journal/**/*.md'<CR>
-
-function! s:new_journal_entry()
-    let timestamp_filename = strftime( "~/Documents/todo/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
-    execute "e " . timestamp_filename
-endfunction
-command! NewJournalEntry call s:new_journal_entry()
-autocmd FileType pandoc nnoremap <Leader>nje  :NewJournalEntry<CR>
-
 " Load my colorscheme if available
 " Must be called after vundle#end()
 silent! colorscheme croz
@@ -156,21 +140,6 @@ nnoremap \ddf :PasteDateBefore 'friday'<CR>
 nnoremap \dds :PasteDateBefore 'saturday'<CR>
 nnoremap \ddu :PasteDateBefore 'sunday'<CR>
 
-function! s:todo_quickfix(command_name)
-    copen
-    cd ~/Documents/todo
-    execute a:command_name . " 'project/**/*.md', 'journal/**/*.md'"
-    setlocal modifiable
-    1,$EasyAlign 4/ /
-    setlocal nomodifiable
-    setlocal nomodified
-endfunction
-command! TodoQuickfix call s:todo_quickfix('PandocTaskListTodoSorted')
-command! TodoQuickfixAll call s:todo_quickfix('PandocTaskListUnfinishedSorted')
-nnoremap <Leader>tq :TodoQuickfix<CR>
-nnoremap <Leader>qt :TodoQuickfix<CR>
-nnoremap <Leader>tqa :TodoQuickfixAll<CR>
-nnoremap <Leader>qta :TodoQuickfixAll<CR>
 
 " Correct two initial capitals
 " From: https://groups.google.com/forum/#!topic/comp.editors/L8_j0vrs2Hg
