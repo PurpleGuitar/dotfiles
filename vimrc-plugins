@@ -47,6 +47,11 @@ Plugin 'kshenoy/vim-signature'             " Show marks in gutter
 Plugin 'tpope/vim-speeddating'             " Increment/decrement dates
 Plugin 'kergoth/vim-hilinks'               " Show highlighting at the cursor
 
+" ========================================================================
+" Autoformat
+" ========================================================================
+Plugin 'Chiel92/vim-autoformat'
+autocmd BufWrite * :Autoformat
 
 " ========================================================================
 " Easy Align
@@ -103,25 +108,25 @@ let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes"] " Don't show da
 let g:pandoc#folding#fdc = 0                                     " Don't show foldlevel column
 let g:pandoc#formatting#equalprg='pandoc -t markdown --standalone --columns 75'
 
-let g:pandoc_indent_on_write = 1
-function! PandocIndentOnWrite()
-    if &ft == 'pandoc' && g:pandoc_indent_on_write == 1
-        let save_cursor = getpos('.')
-        normal! H
-        let save_window = getpos('.')
-        :normal! gg=G
-        call setpos('.', save_window)
-        normal! zt
-        call setpos('.', save_cursor)
-    endif
-endfunction
-function! PandocUpdateNoIndent()
-    let g:pandoc_indent_on_write = 0
-    update
-    let g:pandoc_indent_on_write = 1
-endfunction
-autocmd BufWritePre * call PandocIndentOnWrite()
-autocmd FileType pandoc inoremap <C-s> :call PandocUpdateNoIndent()<CR>
+" let g:pandoc_indent_on_write = 1
+" function! PandocIndentOnWrite()
+"     if &ft == 'pandoc' && g:pandoc_indent_on_write == 1
+"         let save_cursor = getpos('.')
+"         normal! H
+"         let save_window = getpos('.')
+"         :normal! gg=G
+"         call setpos('.', save_window)
+"         normal! zt
+"         call setpos('.', save_cursor)
+"     endif
+" endfunction
+" function! PandocUpdateNoIndent()
+"     let g:pandoc_indent_on_write = 0
+"     update
+"     let g:pandoc_indent_on_write = 1
+" endfunction
+" autocmd BufWritePre * call PandocIndentOnWrite()
+" autocmd FileType pandoc inoremap <C-s> :call PandocUpdateNoIndent()<CR>
 
 " Use tab to jump to next link
 autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]\<bar><[^>]\+><CR>:nohlsearch<CR>
@@ -134,8 +139,8 @@ autocmd FileType pandoc nmap gd <Leader>gl
 autocmd FileType pandoc set showbreak=....
 
 " Shortcuts for generating pandoc docs
-autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
-autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR>
+autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
+autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
 
 
 " ========================================================================
@@ -190,6 +195,10 @@ nnoremap <Leader>qt :TodoQuickfix<CR>
 nnoremap <Leader>tqa :TodoQuickfixAll<CR>
 nnoremap <Leader>qta :TodoQuickfixAll<CR>
 
+" Insert journal entry at bottom of file
+nnoremap <Leader>je Go<CR><C-o>0## <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
+inoremap <Leader>je <Esc>Go<CR><C-o>0## <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
+
 " ========================================================================
 " NERDTree file browser
 " ========================================================================
@@ -200,17 +209,17 @@ nnoremap <Leader>nt :NERDTreeFind<CR>
 " From: http://superuser.com/questions/195022/vim-how-to-synchronize-nerdtree-with-current-opened-tab-file-path
 " returns true iff is NERDTree open/active
 function! s:isNTOpen()
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+    return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
 
 " calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
 function! s:syncTree()
-  if &modifiable && s:isNTOpen() && strlen(expand('%')) > 0 && !&diff
-    let l:curwinnr = winnr()
-    NERDTreeFind
-    exec l:curwinnr . "wincmd w"
-    "wincmd p
-  endif
+    if &modifiable && s:isNTOpen() && strlen(expand('%')) > 0 && !&diff
+        let l:curwinnr = winnr()
+        NERDTreeFind
+        exec l:curwinnr . "wincmd w"
+        "wincmd p
+    endif
 endfunction
 
 autocmd BufEnter * call s:syncTree()

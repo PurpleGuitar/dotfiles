@@ -81,23 +81,24 @@ nnoremap <A-S-Right> >>
 " Must be called after vundle#end()
 silent! colorscheme croz
 
+
+" Correct two initial capitals
+" From: https://groups.google.com/forum/#!topic/comp.editors/L8_j0vrs2Hg
+fu! AAa_to_Aaa()
+    let c = getline(".")[0:col(".")-2]
+    if c =~ '\v\C<[[:upper:]]{2}[[:lower:]]$'
+        let pos = getpos('.')
+        normal hh~
+        call setpos('.',pos)
+    endif
+endf
+:au CursorMovedI * call AAa_to_Aaa()
+
 " Import local .vimrc, if there is one
 " ========================================================================
 if !empty(glob("~/.vimrc-local"))
     source ~/.vimrc-local
 endif
 
-
-
-
-" Correct two initial capitals
-" From: https://groups.google.com/forum/#!topic/comp.editors/L8_j0vrs2Hg
-fu! AAa_to_Aaa()
-  let c = getline(".")[0:col(".")-2]
-  if c =~ '\v\C<[[:upper:]]{2}[[:lower:]]$'
-    let pos = getpos('.')
-    normal hh~
-    call setpos('.',pos)
-  endif
-endf
-:au CursorMovedI * call AAa_to_Aaa()
+" Don't wrap pandoc docs (has to happen after plugins)
+autocmd FileType pandoc set nowrap
