@@ -108,26 +108,6 @@ let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes"] " Don't show da
 let g:pandoc#folding#fdc = 0                                     " Don't show foldlevel column
 let g:pandoc#formatting#equalprg='pandoc -t markdown --standalone --columns 75'
 
-" let g:pandoc_indent_on_write = 1
-" function! PandocIndentOnWrite()
-"     if &ft == 'pandoc' && g:pandoc_indent_on_write == 1
-"         let save_cursor = getpos('.')
-"         normal! H
-"         let save_window = getpos('.')
-"         :normal! gg=G
-"         call setpos('.', save_window)
-"         normal! zt
-"         call setpos('.', save_cursor)
-"     endif
-" endfunction
-" function! PandocUpdateNoIndent()
-"     let g:pandoc_indent_on_write = 0
-"     update
-"     let g:pandoc_indent_on_write = 1
-" endfunction
-" autocmd BufWritePre * call PandocIndentOnWrite()
-" autocmd FileType pandoc inoremap <C-s> :call PandocUpdateNoIndent()<CR>
-
 " Use tab to jump to next link
 autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]\<bar><[^>]\+><CR>:nohlsearch<CR>
 autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]\<bar><[^>]\+><CR>:nohlsearch<CR>
@@ -177,6 +157,33 @@ function! s:new_journal_entry()
 endfunction
 command! NewJournalEntry call s:new_journal_entry()
 autocmd FileType pandoc nnoremap <Leader>nje  :NewJournalEntry<CR>
+
+" Create 'Today' page
+function! s:create_today_page()
+    let timestamp_filename = strftime( "~/Documents/todo/journal/%Y-%m-%d_%H-%M-%S_daily.md", localtime() )
+    execute "edit " . timestamp_filename
+    execute "buffer " . timestamp_filename
+    execute "read ~/Documents/todo/templates/daily.md"
+    execute "write"
+    execute "normal! ggmT"
+    execute "edit"
+endfunction
+command! NewDay call s:create_today_page()
+
+" Arrange windows
+function! s:arrange_windows()
+    execute "edit ~/Documents/todo/index.md"
+    execute "only"
+    execute "NERDTreeFocus"
+    execute "vertical resize 45"
+    execute "wincmd p"
+    execute "copen"
+    execute "wincmd p"
+    execute "wincmd v"
+    execute "wincmd p"
+    normal! 'T
+endfunction
+command! ArrangeWindows call s:arrange_windows()
 
 " Make quickfix list pretty
 function! s:todo_quickfix(command_name)
