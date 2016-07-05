@@ -8,13 +8,13 @@ set SCRIPT_DIR=%~dp0
 
 rem Get target dir
 set TARGET_DIR=%USERPROFILE%
-cd %TARGET_DIR%
 
 rem Reover dotfiles
 for %%x in (
-        vimrc
-        vimrc-plugins
-        gitconfig
-        ) do (
-            copy "%TARGET_DIR%.%%x" "%SCRIPT_DIR%%%x"
-            )
+    vimrc
+    vimrc-plugins
+    gitconfig
+) do (
+    echo Recovering %%x...
+    copy "%TARGET_DIR%\.%%x" "%SCRIPT_DIR%%%x"
+)
