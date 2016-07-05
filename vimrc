@@ -6,6 +6,9 @@ if !empty(glob("~/.vimrc-plugins"))
     source ~/.vimrc-plugins
 endif
 
+" Don't wrap pandoc docs (has to happen after plugins)
+autocmd FileType pandoc set nowrap
+
 " Editor Settings
 " ========================================================================
 set expandtab
@@ -94,11 +97,10 @@ fu! AAa_to_Aaa()
 endf
 :au CursorMovedI * call AAa_to_Aaa()
 
+
 " Import local .vimrc, if there is one
 " ========================================================================
 if !empty(glob("~/.vimrc-local"))
     source ~/.vimrc-local
 endif
 
-" Don't wrap pandoc docs (has to happen after plugins)
-autocmd FileType pandoc set nowrap
