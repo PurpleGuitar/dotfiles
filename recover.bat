@@ -9,7 +9,9 @@ set SCRIPT_DIR=%~dp0
 rem Get target dir
 set TARGET_DIR=%USERPROFILE%
 
-rem Reover dotfiles
+rem Recover dotfiles
+echo * * * "In use" errors mean the hardlinks are OK.
+echo * * * Successful copies means the hardlinks are broken.
 for %%x in (
     vimrc
     vimrc-plugins
