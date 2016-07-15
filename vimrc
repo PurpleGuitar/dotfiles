@@ -1,4 +1,5 @@
 " Welcome to Craig's .vimrc file.
+scriptencoding utf-8
 
 " Import plugins if available
 " ========================================================================
@@ -82,7 +83,7 @@ nnoremap <A-S-Right> >>
 
 " Load my colorscheme if available
 " Must be called after vundle#end()
-silent! colorscheme croz
+silent! colorscheme croz_dark
 
 
 " Correct two initial capitals
