@@ -99,6 +99,7 @@ endf
 :au CursorMovedI * call AAa_to_Aaa()
 
 
+
 " Import local .vimrc, if there is one
 " ========================================================================
 if !empty(glob("~/.vimrc-local"))

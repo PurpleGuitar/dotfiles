@@ -35,7 +35,6 @@ Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, 
 Plugin 'tpope/vim-unimpaired'              " Shortcuts, such as ]b (:bnext), ]q (:cnext), an ]e (exchange line)
 Plugin 'tomtom/tcomment_vim'               " Sophisticated commenting, e.g. Ctrl-// to comment
 Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm color codes
-Plugin 'vim-voom/VOoM'                     " Outliner for use with e.g. Pandoc/Markdown text files
 Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
 Plugin 'pangloss/vim-javascript'           " Syntax handler for JavaScript
 Plugin 'elzr/vim-json'                     " Syntax handling for JSON
@@ -44,21 +43,46 @@ Plugin 'Raimondi/delimitMate'              " Automatically close quote, parens, 
 Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 Plugin 'kshenoy/vim-signature'             " Show marks in gutter
 Plugin 'tpope/vim-speeddating'             " Increment/decrement dates
-Plugin 'kergoth/vim-hilinks'               " Show highlighting at the cursor
 Plugin 'wzhliang/ttfzoom.vim'              " Zoom with Ctrl-mousewheel
 Plugin 'severin-lemaignan/vim-minimap'     " Minimap
 Plugin 'ynkdir/vim-vimlparser'             " VimL parser
 Plugin 'syngan/vim-vimlint'                " Vim linter
+Plugin 'godlygeek/csapprox'                " Colorscheme gvim -> vim
+
+" ========================================================================
+" Voom outliner
+" ========================================================================
+Plugin 'vim-voom/VOoM'                     " Outliner for use with e.g. Pandoc/Markdown text files
+let g:voom_always_allow_move_left = 1
+
+" ========================================================================
+" Highlighting
+" ========================================================================
+Plugin 'kergoth/vim-hilinks'               " Show highlighting at the cursor
+let g:hilinks_nobeval= 1
 
 " ========================================================================
 " Autoformat
 " ========================================================================
 Plugin 'Chiel92/vim-autoformat'
 autocmd BufWrite * :Autoformat
-autocmd FileType cs,yaml,dosbatch let b:autoformat_autoindent=0
+autocmd FileType yaml,dosbatch let b:autoformat_autoindent=0
 
 " let g:formatdef_yaml2yaml = '"yaml2yaml.py"'
 " let g:formatters_yaml = ['yaml2yaml']
+
+let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=ansi --indent-namespaces"'
+let g:formatters_cs = ['my_custom_cs']
+
+" Trim extra whitespace on save -- workaround for astyle
+" From: http://stackoverflow.com/questions/7495932/how-can-i-trim-blank-lines-at-the-end-of-file-in-vim
+function TrimEndLines()
+    let save_cursor = getpos(".")
+    :silent! %s#\($\n\s*\)\+\%$##
+    call setpos('.', save_cursor)
+endfunction
+
+au BufWritePre *.cs call TrimEndLines()
 
 " ========================================================================
 " Easy Align
