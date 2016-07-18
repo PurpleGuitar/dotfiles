@@ -47,7 +47,6 @@ Plugin 'wzhliang/ttfzoom.vim'              " Zoom with Ctrl-mousewheel
 Plugin 'severin-lemaignan/vim-minimap'     " Minimap
 Plugin 'ynkdir/vim-vimlparser'             " VimL parser
 Plugin 'syngan/vim-vimlint'                " Vim linter
-Plugin 'godlygeek/csapprox'                " Colorscheme gvim -> vim
 
 " ========================================================================
 " Voom outliner
