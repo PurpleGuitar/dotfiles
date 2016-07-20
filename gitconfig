@@ -17,9 +17,9 @@
     lg1 = !"git lg1-specific --all"
     lg2 = !"git lg2-specific --all"
     lg3 = !"git lg3-specific --all"
-    lg1-specific = log --graph --abbrev-commit --decorate --date=short --format=format:'%C(blue)%h%C(reset) %C(green)%ad%C(reset) %C(white)%<(50,trunc)%s%C(reset) %C(magenta)%an%C(reset) %C(yellow)%d%C(reset)'
-    lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) %C(cyan)%aD%C(reset) %C(green)(%ad)%C(reset)%C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(magenta)- %an%C(reset)'
-    lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) %C(cyan)%aD%C(reset) %C(green)(%ad)%C(reset) %C(cyan)(committed: %cD)%C(reset) %C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(magenta)- %an <%ae> %C(reset) %C(magenta)(committer: %cn <%ce>)%C(reset)'
+    lg1-specific = log --graph --abbrev-commit --decorate --date=short --format=format:'%C(blue)%h%C(reset) %C(green)%ad%C(reset) %C(white)%<(50,trunc)%s%C(reset) %C(yellow)%an%C(reset) %C(magenta)%d%C(reset)'
+    lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) %C(cyan)%aD%C(reset) %C(green)(%ad)%C(reset)%C(magenta)%d%C(reset)%n''          %C(white)%s%C(reset) %C(yellow)- %an%C(reset)'
+    lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) %C(cyan)%aD%C(reset) %C(green)(%ad)%C(reset) %C(cyan)(committed: %cD)%C(reset) %C(magenta)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(yellow)- %an <%ae> %C(reset) %C(yellow)(committer: %cn <%ce>)%C(reset)'
 
 [credential]
     helper = cache
