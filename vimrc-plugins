@@ -48,6 +48,7 @@ Plugin 'severin-lemaignan/vim-minimap'     " Minimap
 Plugin 'ynkdir/vim-vimlparser'             " VimL parser
 Plugin 'syngan/vim-vimlint'                " Vim linter
 Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
+Plugin 'chrisbra/csv.vim'                  " csv file support
 
 
 " ========================================================================
@@ -67,7 +68,7 @@ let g:hilinks_nobeval= 1
 " ========================================================================
 Plugin 'Chiel92/vim-autoformat'
 autocmd BufWrite * :Autoformat
-autocmd FileType yaml,dosbatch let b:autoformat_autoindent=0
+autocmd FileType dosbatch,csv,yaml let b:autoformat_autoindent=0
 
 " let g:formatdef_yaml2yaml = '"yaml2yaml.py"'
 " let g:formatters_yaml = ['yaml2yaml']
@@ -344,5 +345,6 @@ nnoremap \ddu :DatePasteBefore 'sunday'<CR>
 " ========================================================================
 call vundle#end()
 filetype plugin indent on
+
 
 

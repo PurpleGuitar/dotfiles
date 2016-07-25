@@ -6,6 +6,7 @@ scriptencoding utf-8
 if !empty(glob("~/.vimrc-plugins"))
     source ~/.vimrc-plugins
 endif
+syntax on
 
 " Don't wrap pandoc docs (has to happen after plugins)
 autocmd FileType pandoc set nowrap
