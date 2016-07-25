@@ -66,7 +66,8 @@ if "%SETUP_VIM%"=="true" (
     vim "+PluginInstall" "+qall"
 )
 
-:end
-
 rem Restore old current directory
 chdir /d %OLDDIR%
+
+:end
+
