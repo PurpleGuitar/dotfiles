@@ -70,10 +70,7 @@ Plugin 'Chiel92/vim-autoformat'
 autocmd BufWrite * :Autoformat
 autocmd FileType dosbatch,csv,yaml let b:autoformat_autoindent=0
 
-" let g:formatdef_yaml2yaml = '"yaml2yaml.py"'
-" let g:formatters_yaml = ['yaml2yaml']
-
-let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=break --indent-namespaces --delete-empty-lines --break-blocks"'
+let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=break --indent-namespaces"'
 let g:formatters_cs = ['my_custom_cs']
 
 " Trim extra whitespace on save -- workaround for astyle
