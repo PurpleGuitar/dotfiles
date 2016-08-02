@@ -160,23 +160,6 @@ autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone --filter
 " ========================================================================
 Plugin  'PurpleGuitar/vim-pandoc-tasks'
 
-" autocmd FileType pandoc nnoremap <Leader>td  :PandocTaskListDoneSorted<CR>
-" autocmd FileType pandoc nnoremap <Leader>tl  :PandocTaskListTodo<CR>
-" autocmd FileType pandoc nnoremap <Leader>tlj :PandocTaskListTodo<CR>:cc<CR>
-" autocmd FileType pandoc nnoremap <Leader>tn  :PandocTaskListTodoSorted<CR>
-" autocmd FileType pandoc nnoremap <Leader>tnj :PandocTaskListTodoSorted<CR>:cc<CR>
-" autocmd FileType pandoc nnoremap <Leader>tu  :PandocTaskListUnfinished<CR>
-" autocmd FileType pandoc nnoremap <Leader>tun :PandocTaskListUnfinishedSorted<CR>
-" autocmd FileType pandoc nnoremap <Leader>tw  :PandocTaskListWaitSorted<CR>
-" autocmd FileType pandoc nnoremap <Leader>tda   :cd ~/Documents/todo<CR>:PandocTaskListDoneSorted       'project/**/*.md', 'journal/**/*.md'<CR>
-" autocmd FileType pandoc nnoremap <Leader>tla   :cd ~/Documents/todo<CR>:PandocTaskListTodo             'project/**/*.md', 'journal/**/*.md'<CR>
-" autocmd FileType pandoc nnoremap <Leader>tna   :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>
-" autocmd FileType pandoc nnoremap <Leader>tnaj  :cd ~/Documents/todo<CR>:PandocTaskListTodoSorted       'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
-" autocmd FileType pandoc nnoremap <Leader>tua   :cd ~/Documents/todo<CR>:PandocTaskListUnfinished       'project/**/*.md', 'journal/**/*.md'<CR>
-" autocmd FileType pandoc nnoremap <Leader>tuna  :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>
-" autocmd FileType pandoc nnoremap <Leader>tunaj :cd ~/Documents/todo<CR>:PandocTaskListUnfinishedSorted 'project/**/*.md', 'journal/**/*.md'<CR>:cc<CR>
-" autocmd FileType pandoc nnoremap <Leader>twa   :cd ~/Documents/todo<CR>:PandocTaskListWaitSorted       'project/**/*.md', 'journal/**/*.md'<CR>
-
 " Special commands for todoing
 autocmd FileType pandoc nnoremap <C-Space>   :PandocTaskToggle<CR>
 autocmd FileType pandoc vnoremap <C-Space>   :PandocTaskToggle<CR>gv
@@ -184,7 +167,6 @@ autocmd FileType pandoc nnoremap <NUL>       :PandocTaskToggle<CR>
 autocmd FileType pandoc vnoremap <NUL>       :PandocTaskToggle<CR>gv
 autocmd FileType pandoc nnoremap <Leader>tx  :PandocTaskDelete<CR>
 autocmd FileType pandoc vnoremap <Leader>tx  :PandocTaskDelete<CR>gv
-
 
 " Create insta-journal-entry for quick notes
 function! s:new_journal_entry()
@@ -243,10 +225,6 @@ nnoremap <Leader>qta :TodoQuickfixAll<CR>
 nnoremap <Leader>qtd :TodoQuickfixDone<CR>
 nnoremap <Leader>qtw :TodoQuickfixWait<CR>
 nnoremap <Leader>qtu :TodoQuickfixUnsorted<CR>
-" nnoremap <Leader>tq :TodoQuickfix<CR>
-" nnoremap <Leader>tqa :TodoQuickfixAll<CR>
-" nnoremap <Leader>tqd :TodoQuickfixDone<CR>
-" nnoremap <Leader>tqw :TodoQuickfixWait<CR>
 
 " Insert journal entry at bottom of file
 nnoremap <Leader>je Go<CR><C-o>0## <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
@@ -304,38 +282,7 @@ let g:shell_fullscreen_always_on_top = 0
 " Craig's Utils
 " ========================================================================
 Plugin  'PurpleGuitar/vim-croz-utils'
-
-inoremap \ddd <C-o>:DatePasteAfter<CR>
-inoremap \dd0 <C-o>:DatePasteAfter 'today'<CR>
-inoremap \dd1 <C-o>:DatePasteAfter 'tomorrow'<CR>
-inoremap \dd- <C-o>:DatePasteAfter 'tomorrow'<CR>
-inoremap \dd2 <C-o>:DatePasteAfter '2 day'<CR>
-inoremap \dd= <C-o>:DatePasteAfter '2 day'<CR>
-inoremap \dd3 <C-o>:DatePasteAfter '3 day'<CR>
-inoremap \dd4 <C-o>:DatePasteAfter '4 day'<CR>
-inoremap \ddm <C-o>:DatePasteAfter 'monday'<CR>
-inoremap \ddt <C-o>:DatePasteAfter 'tuesday'<CR>
-inoremap \ddw <C-o>:DatePasteAfter 'wednesday'<CR>
-inoremap \ddr <C-o>:DatePasteAfter 'thursday'<CR>
-inoremap \ddf <C-o>:DatePasteAfter 'friday'<CR>
-inoremap \dds <C-o>:DatePasteAfter 'saturday'<CR>
-inoremap \ddu <C-o>:DatePasteAfter 'sunday'<CR>
-
-nnoremap \ddd :DatePasteBefore<CR>
-nnoremap \dd0 :DatePasteBefore 'today'<CR>
-nnoremap \dd1 :DatePasteBefore 'tomorrow'<CR>
-nnoremap \dd- :DatePasteBefore 'tomorrow'<CR>
-nnoremap \dd2 :DatePasteBefore '2 day'<CR>
-nnoremap \dd= :DatePasteBefore '2 day'<CR>
-nnoremap \dd3 :DatePasteBefore '3 day'<CR>
-nnoremap \dd4 :DatePasteBefore '4 day'<CR>
-nnoremap \ddm :DatePasteBefore 'monday'<CR>
-nnoremap \ddt :DatePasteBefore 'tuesday'<CR>
-nnoremap \ddw :DatePasteBefore 'wednesday'<CR>
-nnoremap \ddr :DatePasteBefore 'thursday'<CR>
-nnoremap \ddf :DatePasteBefore 'friday'<CR>
-nnoremap \dds :DatePasteBefore 'saturday'<CR>
-nnoremap \ddu :DatePasteBefore 'sunday'<CR>
+let g:croz_utils_date_mappings = 1
 
 " ========================================================================
 " END VUNDLE PLUGINS
