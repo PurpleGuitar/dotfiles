@@ -11,7 +11,7 @@ shopt -s histappend
 # Aliases
 alias ls='ls -hF --color=tty' # classify files in colour
 alias cmatrix='cmatrix -b'    # Always use bold for cmatrix -- looks extra awesome
-alias h='history'  
+alias h='history'
 alias apt-check='/usr/lib/update-notifier/apt-check --human-readable'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 
@@ -47,6 +47,13 @@ fi
 
 # Use Vim.  Always.
 export EDITOR=vim
+
+
+# Use local man directory if it exists
+if [ -d $HOME/.local/share/man ]; then
+    MANPATH=$HOME/.local/share/man:$MANPATH
+    export MANPATH
+fi
 
 
 # Load bashrc prompt
