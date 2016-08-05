@@ -68,7 +68,7 @@ let g:hilinks_nobeval= 1
 " ========================================================================
 Plugin 'Chiel92/vim-autoformat'
 autocmd BufWrite * :Autoformat
-autocmd FileType dosbatch,csv,yaml let b:autoformat_autoindent=0
+autocmd FileType gitcommit,dosbatch,csv,yaml let b:autoformat_autoindent=0
 
 let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=break --indent-namespaces"'
 let g:formatters_cs = ['my_custom_cs']
