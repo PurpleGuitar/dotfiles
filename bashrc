@@ -72,5 +72,17 @@ fi
 if command -v tmux>/dev/null; then
     if [ ! -z "$PS1" ]; then # unless shell not loaded interactively, run tmux
         [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux new-session -A -s main
+        # If in TMUX, show MOTD if we haven't already
+        if [ -z "$_motd_listed" ]; then
+            case "$TMUX_PANE" in
+                %0) cat /run/motd.dynamic
+                    if [ -f /etc/motd ]; then
+                        cat /etc/motd
+                    fi
+                    export _motd_listed=yes
+                    ;;
+                *)  ;;
+            esac
+        fi
     fi
 fi
