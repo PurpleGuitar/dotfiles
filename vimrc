@@ -99,6 +99,9 @@ fu! AAa_to_Aaa()
 endf
 :au CursorMovedI * call AAa_to_Aaa()
 
+" Other corrections
+abbrev teh the
+
 
 
 " Import local .vimrc, if there is one
