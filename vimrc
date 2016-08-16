@@ -103,6 +103,9 @@ endf
 abbrev teh the
 
 
+" Grep current file for word under the cursor
+nnoremap gr :vimgrep "<C-r><C-w>" %<CR>
+
 
 " Import local .vimrc, if there is one
 " ========================================================================
