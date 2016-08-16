@@ -50,6 +50,13 @@ Plugin 'syngan/vim-vimlint'                " Vim linter
 Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
 Plugin 'chrisbra/csv.vim'                  " csv file support
 
+" ========================================================================
+" todo.txt
+" ========================================================================
+Plugin 'freitass/todo.txt-vim'
+
+" Add @ and + to keywords
+autocmd FileType todo set iskeyword+=@-@,+
 
 " ========================================================================
 " Voom outliner
