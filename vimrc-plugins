@@ -58,6 +58,23 @@ Plugin 'freitass/todo.txt-vim'
 " Add @ and + to keywords
 autocmd FileType todo set iskeyword+=@-@,+
 
+" Highlighting
+autocmd FileType todo hi link TodoPriorityA String
+autocmd FileType todo hi link TodoPriorityB Constant
+autocmd FileType todo hi link TodoPriorityC Identifier
+autocmd FileType todo hi link TodoPriorityP Statement
+
+" Autoalign projects at end of line
+autocmd FileType todo nnoremap <Leader>a+ :%EasyAlign * /+[^ ]*/dl<CR>
+autocmd FileType todo nnoremap <Leader>ua :%s/\s\+/ /g<CR>:nohlsearch<CR>
+
+" My own shortcuts
+autocmd FileType todo nnoremap <Leader>ss :sort<CR>:g/^\s*$/d<CR>:%s/\s\+/ /g<CR>:nohlsearch<CR>
+autocmd FileType todo nmap <Leader>sp \ss\s+\a+:%s/^\((P).*\)$/\1\r\r<CR>
+
+
+
+
 " ========================================================================
 " Voom outliner
 " ========================================================================
@@ -75,7 +92,7 @@ let g:hilinks_nobeval= 1
 " ========================================================================
 Plugin 'Chiel92/vim-autoformat'
 autocmd BufWrite * :Autoformat
-autocmd FileType gitcommit,dosbatch,csv,yaml let b:autoformat_autoindent=0
+autocmd FileType gitcommit,dosbatch,csv,yaml,todo let b:autoformat_autoindent=0
 
 let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=break --indent-namespaces"'
 let g:formatters_cs = ['my_custom_cs']
