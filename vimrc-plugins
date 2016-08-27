@@ -51,35 +51,11 @@ Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
 Plugin 'chrisbra/csv.vim'                  " csv file support
 
 " ========================================================================
-" todo.txt
-" ========================================================================
-Plugin 'freitass/todo.txt-vim'
-
-" Add @ and + to keywords
-autocmd FileType todo set iskeyword+=@-@,+
-
-" Highlighting
-autocmd FileType todo hi link TodoPriorityA String
-autocmd FileType todo hi link TodoPriorityB Constant
-autocmd FileType todo hi link TodoPriorityC Identifier
-autocmd FileType todo hi link TodoPriorityP Statement
-
-" Autoalign projects at end of line
-autocmd FileType todo nnoremap <Leader>a+ :%EasyAlign * /+[^ ]*/dl<CR>
-autocmd FileType todo nnoremap <Leader>ua :%s/\s\+/ /g<CR>:nohlsearch<CR>
-
-" My own shortcuts
-autocmd FileType todo nnoremap <Leader>ss :sort<CR>:g/^\s*$/d<CR>:%s/\s\+/ /g<CR>:nohlsearch<CR>
-autocmd FileType todo nmap <Leader>sp \ss\s+\a+:%s/^\((P).*\)$/\1\r\r<CR>
-
-
-
-
-" ========================================================================
 " Voom outliner
 " ========================================================================
 Plugin 'vim-voom/VOoM'                     " Outliner for use with e.g. Pandoc/Markdown text files
 let g:voom_always_allow_move_left = 1
+" let g:voom_tab_key = "<C-Tab>"
 
 " ========================================================================
 " Highlighting
@@ -92,7 +68,7 @@ let g:hilinks_nobeval= 1
 " ========================================================================
 Plugin 'Chiel92/vim-autoformat'
 autocmd BufWrite * :Autoformat
-autocmd FileType gitcommit,dosbatch,csv,yaml,todo let b:autoformat_autoindent=0
+autocmd FileType gitcommit,dosbatch,csv,yaml,todo,sql let b:autoformat_autoindent=0
 
 let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=break --indent-namespaces"'
 let g:formatters_cs = ['my_custom_cs']
@@ -158,15 +134,16 @@ let g:pandoc#formatting#mode = 'h'                               " hard line bre
 let g:pandoc#keyboard#sections#header_style = 's'                " Use setext style headers for 1 and 2
 let g:pandoc#formatting#textwidth = 75                           " Text width for Pandoc documents
 let g:pandoc#folding#level = 1
-let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes"] " Don't show dashes (they're invisible)
+let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes", "newline"]
 let g:pandoc#folding#fdc = 0                                     " Don't show foldlevel column
 let g:pandoc#formatting#equalprg='pandoc -t markdown --standalone --columns 75'
+let g:pandoc#formatting#extra_equalprg=''
 let g:pandoc#folding#fold_yaml = 1
 let g:pandoc#syntax#conceal#urls = 1
 
-" Use tab to jump to next link
-autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
-autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
+" " Use tab to jump to next link
+" autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
+" autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
 
 " Remap goto definition to goto link
 autocmd FileType pandoc nmap gd <Leader>gl
