@@ -174,7 +174,7 @@ if !empty($VIM_PANDOC_WIKI)
 
     " Create insta-journal-entry for quick notes
     function! s:new_journal_entry()
-        let timestamp_filename = strftime( "$VIM_PANDOC_WIKI/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
+        let timestamp_filename = strftime( "$VIM_PANDOC_WIKI/pages/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
         execute "e " . timestamp_filename
     endfunction
     command! NewJournalEntry call s:new_journal_entry()
@@ -182,7 +182,7 @@ if !empty($VIM_PANDOC_WIKI)
 
     " Create 'Today' page
     function! s:create_today_page()
-        let timestamp_filename = strftime( "$VIM_PANDOC_WIKI/journal/%Y-%m-%d_%H-%M-%S_daily.md", localtime() )
+        let timestamp_filename = strftime( "$VIM_PANDOC_WIKI/pages/journal/%Y-%m-%d_%H-%M-%S_daily.md", localtime() )
         execute "edit " . timestamp_filename
         " execute "buffer " . timestamp_filename
         execute "read $VIM_PANDOC_WIKI/templates/daily.md"
@@ -194,7 +194,7 @@ if !empty($VIM_PANDOC_WIKI)
 
     " Arrange windows
     function! s:arrange_windows()
-        execute "edit $VIM_PANDOC_WIKI/index.md"
+        execute "edit $VIM_PANDOC_WIKI/pages/index.md"
         execute "only"
         execute "NERDTreeFocus"
         execute "vertical resize 40"
@@ -212,7 +212,7 @@ if !empty($VIM_PANDOC_WIKI)
     function! s:todo_quickfix(command_name)
         copen
         cd $VIM_PANDOC_WIKI
-        execute a:command_name . " 'project/**/*.md', 'journal/**/*.md'"
+        execute a:command_name . " 'pages/**/*.md'"
         setlocal modifiable
         1,$EasyAlign 4/ /
         setlocal nomodifiable
