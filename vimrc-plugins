@@ -169,63 +169,72 @@ autocmd FileType pandoc vnoremap <NUL>       :PandocTaskToggle<CR>gv
 autocmd FileType pandoc nnoremap <Leader>tx  :PandocTaskDelete<CR>
 autocmd FileType pandoc vnoremap <Leader>tx  :PandocTaskDelete<CR>gv
 
-" Create insta-journal-entry for quick notes
-function! s:new_journal_entry()
-    let timestamp_filename = strftime( "~/Documents/todo/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
-    execute "e " . timestamp_filename
-endfunction
-command! NewJournalEntry call s:new_journal_entry()
-autocmd FileType pandoc nnoremap <Leader>nje  :NewJournalEntry<CR>
+" If the home directory of the wiki is set, set up our shortcuts
+if !empty($VIM_PANDOC_WIKI)
 
-" Create 'Today' page
-function! s:create_today_page()
-    let timestamp_filename = strftime( "~/Documents/todo/journal/%Y-%m-%d_%H-%M-%S_daily.md", localtime() )
-    execute "edit " . timestamp_filename
-    execute "buffer " . timestamp_filename
-    execute "read ~/Documents/todo/templates/daily.md"
-    execute "write"
-    execute "normal! ggmT"
-    execute "edit"
-endfunction
-command! NewDay call s:create_today_page()
+    " Create insta-journal-entry for quick notes
+    function! s:new_journal_entry()
+        let timestamp_filename = strftime( "$VIM_PANDOC_WIKI/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
+        execute "e " . timestamp_filename
+    endfunction
+    command! NewJournalEntry call s:new_journal_entry()
+    autocmd FileType pandoc nnoremap <Leader>nje  :NewJournalEntry<CR>
 
-" Arrange windows
-function! s:arrange_windows()
-    execute "edit ~/Documents/todo/index.md"
-    execute "only"
-    execute "NERDTreeFocus"
-    execute "vertical resize 40"
-    execute "wincmd p"
-    execute "copen"
-    execute "wincmd p"
-    " execute "wincmd v"
-    " normal! 'T
-endfunction
-command! ArrangeWindows call s:arrange_windows()
-nnoremap <Leader>aw :ArrangeWindows<CR>
-nnoremap <Leader>ar :ArrangeWindows<CR>
+    " Create 'Today' page
+    function! s:create_today_page()
+        let timestamp_filename = strftime( "$VIM_PANDOC_WIKI/journal/%Y-%m-%d_%H-%M-%S_daily.md", localtime() )
+        execute "edit " . timestamp_filename
+        " execute "buffer " . timestamp_filename
+        execute "read $VIM_PANDOC_WIKI/templates/daily.md"
+        execute "write"
+        execute "normal! ggmT"
+        execute "edit"
+    endfunction
+    command! NewDay call s:create_today_page()
 
-" Make quickfix list pretty
-function! s:todo_quickfix(command_name)
-    copen
-    cd ~/Documents/todo
-    execute a:command_name . " 'project/**/*.md', 'journal/**/*.md'"
-    setlocal modifiable
-    1,$EasyAlign 4/ /
-    setlocal nomodifiable
-    setlocal nomodified
-    execute "normal! WWWWzs"
-endfunction
-command! TodoQuickfix call s:todo_quickfix('PandocTaskListTodoSorted')
-command! TodoQuickfixAll call s:todo_quickfix('PandocTaskListUnfinishedSorted')
-command! TodoQuickfixWait call s:todo_quickfix('PandocTaskListWaitSorted')
-command! TodoQuickfixDone call s:todo_quickfix('PandocTaskListDoneSorted')
-command! TodoQuickfixUnsorted call s:todo_quickfix('PandocTaskListUnfinished')
-nnoremap <Leader>qtt :TodoQuickfix<CR>
-nnoremap <Leader>qta :TodoQuickfixAll<CR>
-nnoremap <Leader>qtd :TodoQuickfixDone<CR>
-nnoremap <Leader>qtw :TodoQuickfixWait<CR>
-nnoremap <Leader>qtu :TodoQuickfixUnsorted<CR>
+    " Arrange windows
+    function! s:arrange_windows()
+        execute "edit $VIM_PANDOC_WIKI/index.md"
+        execute "only"
+        execute "NERDTreeFocus"
+        execute "vertical resize 40"
+        execute "wincmd p"
+        execute "copen"
+        execute "wincmd p"
+        " execute "wincmd v"
+        " normal! 'T
+    endfunction
+    command! ArrangeWindows call s:arrange_windows()
+    nnoremap <Leader>aw :ArrangeWindows<CR>
+    nnoremap <Leader>ar :ArrangeWindows<CR>
+
+    " Make quickfix list pretty
+    function! s:todo_quickfix(command_name)
+        copen
+        cd $VIM_PANDOC_WIKI
+        execute a:command_name . " 'project/**/*.md', 'journal/**/*.md'"
+        setlocal modifiable
+        1,$EasyAlign 4/ /
+        setlocal nomodifiable
+        setlocal nomodified
+        execute "normal! WWWWzs"
+    endfunction
+    command! TodoQuickfix call s:todo_quickfix('PandocTaskListTodoSorted')
+    command! TodoQuickfixAll call s:todo_quickfix('PandocTaskListUnfinishedSorted')
+    command! TodoQuickfixWait call s:todo_quickfix('PandocTaskListWaitSorted')
+    command! TodoQuickfixDone call s:todo_quickfix('PandocTaskListDoneSorted')
+    command! TodoQuickfixUnsorted call s:todo_quickfix('PandocTaskListUnfinished')
+    nnoremap <Leader>qtt :TodoQuickfix<CR>
+    nnoremap <Leader>qta :TodoQuickfixAll<CR>
+    nnoremap <Leader>qtd :TodoQuickfixDone<CR>
+    nnoremap <Leader>qtw :TodoQuickfixWait<CR>
+    nnoremap <Leader>qtu :TodoQuickfixUnsorted<CR>
+
+else
+
+    echom "Environment variable VIM_PANDOC_WIKI not set, no wiki available"
+
+endif
 
 " Insert journal entry at bottom of file
 nnoremap <Leader>je Go<CR><C-o>0## <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
