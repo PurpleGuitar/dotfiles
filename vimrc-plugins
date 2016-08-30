@@ -159,9 +159,9 @@ autocmd FileType pandoc nmap gd <Leader>gl
 autocmd FileType pandoc set showbreak=....
 
 " Shortcuts for generating pandoc docs
-autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
-autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
-
+autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone --filter=~/repos/pandoc-include/IncludeFilter.hs --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
+autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone --filter=~/repos/pandoc-include/IncludeFilter.hs --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
+"
 
 " ========================================================================
 " Pandoc Tasks - task management in Pandoc
