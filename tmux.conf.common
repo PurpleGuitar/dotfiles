@@ -22,9 +22,6 @@ set -g mode-keys vi
 # Reload config file
 bind r source-file ~/.tmux.conf \; display-message "Config reloaded."
 
-# Clear scrollback
-bind -n C-k clear-history
-
 # hjkl pane traversal
 bind h select-pane -L
 bind j select-pane -D
@@ -36,7 +33,7 @@ set -g base-index 1
 set -g pane-base-index 1
 
 # Set colors
-set -g default-terminal "xterm-256color"
+set -g default-terminal "screen-256color"
 
 # Set window title
 set-option -g set-titles on
