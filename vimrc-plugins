@@ -177,11 +177,11 @@ autocmd FileType pandoc nnoremap <Leader>tx  :PandocTaskDelete<CR>
 autocmd FileType pandoc vnoremap <Leader>tx  :PandocTaskDelete<CR>gv
 
 " If the home directory of the wiki is set, set up our shortcuts
-if !empty($VIM_PANDOC_WIKI)
+if !empty($VP_WIKI)
 
     " Create insta-journal-entry for quick notes
     function! s:new_journal_entry()
-        let timestamp_filename = strftime( "$VIM_PANDOC_WIKI/pages/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
+        let timestamp_filename = strftime( "$VP_WIKI/pages/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
         execute "e " . timestamp_filename
     endfunction
     command! NewJournalEntry call s:new_journal_entry()
@@ -189,10 +189,10 @@ if !empty($VIM_PANDOC_WIKI)
 
     " Create 'Today' page
     function! s:create_today_page()
-        let timestamp_filename = strftime( "$VIM_PANDOC_WIKI/pages/journal/%Y-%m-%d_%H-%M-%S_daily.md", localtime() )
+        let timestamp_filename = strftime( "$VP_WIKI/pages/journal/%Y-%m-%d_%H-%M-%S_daily.md", localtime() )
         execute "edit " . timestamp_filename
         " execute "buffer " . timestamp_filename
-        execute "read $VIM_PANDOC_WIKI/templates/daily.md"
+        execute "read $VP_WIKI/templates/daily.md"
         execute "write"
         execute "normal! ggmT"
         execute "edit"
@@ -201,7 +201,7 @@ if !empty($VIM_PANDOC_WIKI)
 
     " Arrange windows
     function! s:arrange_windows()
-        execute "edit $VIM_PANDOC_WIKI/pages/index.md"
+        execute "edit $VP_WIKI/pages/index.md"
         execute "only"
         execute "NERDTreeFocus"
         execute "vertical resize 40"
@@ -218,7 +218,7 @@ if !empty($VIM_PANDOC_WIKI)
     " Make quickfix list pretty
     function! s:todo_quickfix(command_name)
         copen
-        cd $VIM_PANDOC_WIKI
+        cd $VP_WIKI
         execute a:command_name . " 'pages/**/*.md'"
         setlocal modifiable
         1,$EasyAlign 4/ /
@@ -239,7 +239,7 @@ if !empty($VIM_PANDOC_WIKI)
 
 else
 
-    echom "Environment variable VIM_PANDOC_WIKI not set, no wiki available"
+    echom "Environment variable VP_WIKI not set, no wiki available"
 
 endif
 
