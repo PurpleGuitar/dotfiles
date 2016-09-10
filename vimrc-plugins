@@ -228,14 +228,16 @@ if !empty($VP_WIKI)
     endfunction
     command! TodoQuickfix call s:todo_quickfix('PandocTaskListTodoSorted')
     command! TodoQuickfixAll call s:todo_quickfix('PandocTaskListUnfinishedSorted')
+    command! TodoQuickfixAllUnsorted call s:todo_quickfix('PandocTaskListUnfinished')
     command! TodoQuickfixWait call s:todo_quickfix('PandocTaskListWaitSorted')
     command! TodoQuickfixDone call s:todo_quickfix('PandocTaskListDoneSorted')
-    command! TodoQuickfixUnsorted call s:todo_quickfix('PandocTaskListUnfinished')
+    command! TodoQuickfixTasks call s:todo_quickfix('PandocTaskListTasksSorted')
     nnoremap <Leader>qtt :TodoQuickfix<CR>
     nnoremap <Leader>qta :TodoQuickfixAll<CR>
+    nnoremap <Leader>qtu :TodoQuickfixAllUnsorted<CR>
     nnoremap <Leader>qtd :TodoQuickfixDone<CR>
     nnoremap <Leader>qtw :TodoQuickfixWait<CR>
-    nnoremap <Leader>qtu :TodoQuickfixUnsorted<CR>
+    nnoremap <Leader>qte :TodoQuickfixTasks<CR>
 
 else
 
