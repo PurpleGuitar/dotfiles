@@ -242,7 +242,7 @@ if !empty($VP_WIKI)
 
 else
 
-    echom "Environment variable VP_WIKI not set, no wiki available"
+    " echom "Environment variable VP_WIKI not set, no wiki available"
 
 endif
 
