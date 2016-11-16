@@ -14,6 +14,7 @@ alias cmatrix='cmatrix -b'    # Always use bold for cmatrix -- looks extra aweso
 alias h='history'
 alias apt-check='/usr/lib/update-notifier/apt-check --human-readable'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
+alias in-vim-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
 
 # Google from the command line
 # From: http://superuser.com/a/47216
