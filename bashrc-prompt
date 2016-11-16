@@ -49,6 +49,14 @@ ${COLOR_GREEN}\
 ${USERNAME}@${HOSTNAME}\
 ${COLOR_RESET}"
 
+# Are we running in a Vim shell?
+if [[ $(env | grep VIMRUNTIME) ]] ; then
+    PS1=$PS1${SPACE}
+    PS1=$PS1$COLOR_LIGHT_RED
+    PS1=$PS1\(vim\)
+    PS1=$PS1$COLOR_RESET
+fi
+
 # Git branch if available
 if hash __git_ps1 2>/dev/null ; then
     PS1=$PS1$COLOR_CYAN
