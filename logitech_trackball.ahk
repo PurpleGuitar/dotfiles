@@ -11,14 +11,17 @@ XButton1::PgDn
 +XButton2::Send {Home}
 +XButton1::Send {End}
 
+; Ctrl-Shift-buttons -- close doc (ctrl-w), ???
+^+XButton2:: Send {Control Down}w{Control Up}
+; ^+XButton1::
+
 ; Alt-buttons -- Back (Alt-left) and Forward (Alt-right)
 !XButton2:: Send {Alt Down}{Left}{Alt Up}
 !XButton1:: Send {Alt Down}{Right}{Alt Up}
 
-; Ctrl-Alt-buttons -- close doc (ctrl-w), minimize window
-^!XButton2:: Send {Control Down}w{Control Up}
+; Ctrl-Alt-buttons -- close window (Alt-F4), minimize window
+^!XButton2:: Send {Alt Down}{F4}{Alt Up}
 ^!XButton1:: WinMinimize, A
-
 
 ; Control buttons -- (unmapped for now, ctrl-PgUp/Dn is useful in many apps)
 ; ^XButton2::
