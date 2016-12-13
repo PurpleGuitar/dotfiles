@@ -81,7 +81,9 @@ if command -v tmux>/dev/null; then
         # If in TMUX, show MOTD if we haven't already
         if [ -z "$_motd_listed" ]; then
             case "$TMUX_PANE" in
-                %0) cat /run/motd.dynamic
+                %0) if [ -f /run/motd.dynamic ]; then
+                        cat /run/motd.dynamic
+                    fi
                     if [ -f /etc/motd ]; then
                         cat /etc/motd
                     fi
