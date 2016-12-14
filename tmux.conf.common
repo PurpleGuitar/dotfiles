@@ -62,6 +62,6 @@ set-window-option -g clock-mode-style 12
 
 # Screen Saver :)
 set -g lock-after-time 300
-set -g lock-command "tty-clock -trS"
+set -g lock-command "tty-clock -trSC 7"
 
 # vim: filetype=tmux
