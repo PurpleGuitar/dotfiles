@@ -60,4 +60,8 @@ set-window-option -g window-status-current-fg white
 # Use 12 hour clock
 set-window-option -g clock-mode-style 12
 
+# Screen Saver :)
+set -g lock-after-time 300
+set -g lock-command "tty-clock -trS"
+
 # vim: filetype=tmux
