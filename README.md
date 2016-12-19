@@ -1,45 +1,36 @@
 dotfiles
 ========
 
-Craig's configuration files for Linux
+Craig's configuration files for Linux and Windows
 
-Setup
------
+Setup (Linux)
+-------------
 
 Make sure the following is already installed:
 
-- realpath (this may already be installed depending on your OS)
-- git
-- tmux
-- vim
+-   realpath (this may already be installed depending on your OS)
+-   git
+-   tmux
+-   vim
 
-Then run install.sh.  The following sections are only needed if you run
-into issues or want to install manually.
+Then run install.sh. The following sections are only needed if you run into
+issues or want to install manually.
 
-.profile
---------
+### .profile
 
-A simple .profile is included in case your system doesn't
-automatically call .bashrc.
+A simple .profile is included in case your system doesn't automatically
+call .bashrc.
 
+Setup (Windows)
+---------------
 
-tmux
-----
+Run `install.bat` as an administrator. This will hardlink a few files from
+your home directory to point to your dotfiles directory.
 
-Two different .tmux.conf files are given, depending on whether your install
-of tmux is pre-2.1 or 2.1+.  (The format of the mouse commands changed in
-2.1 and breaks backward compatibility.)  There is also a tmux.conf.common
-file, included by tmux.conf, that contains commands common to both
-versions.
+Note that Windows sometimes arbitrarily decides to unlink the files. The
+checklinks.bat and recover.bat files can help diagnose and figure out which
+version of the files are correct. Then you can run install.bat again to
+relink them.
 
-To find out what version of tmux you're running, execute:
-$ tmux -V
-
-To use these config files, do the following:
-
-- cd ~
-- ln -s /path/to/repo/.tmux.conf.21plus .tmux.conf
-- ln -s /path/to/repo/.tmux.conf.common .tmux.conf.common
-
-If you're running an older version of tmux (e.g. Ubuntu runs 1.8 as of this
-writing), replace "21plus" with "pre21".
+If you just want to link the files and not (re-)install Vim, you can use
+the --no-vim argument, e.g.: `install.bat --no-vim`
