@@ -3,6 +3,9 @@
 ;; =====================================
 ;; On Logitech wireless mouse, XButton2 is top button, XButton1 is bottom botton
 
+SetTitleMatchMode, 2
+
+
 ; Regular buttons -- page up, page down
 XButton2::PgUp
 XButton1::PgDn
@@ -11,9 +14,18 @@ XButton1::PgDn
 +XButton2::Send {Home}
 +XButton1::Send {End}
 
-; Ctrl-Shift-buttons -- close doc (ctrl-w), Done with Email (C-S-9)
-^+XButton2:: Send {Control Down}w
-^+XButton1:: Send {Control Down}{Shift Down}9
+; Ctrl-Shift-buttons -- down close current doc
+; ^+XButton2:: Send {Control Down}w
+^+XButton1::
+if WinActive("Outlook")
+{
+    Send {Control Down}{Shift Down}9
+} 
+else 
+{
+    Send {Control Down}w
+}
+Return
 
 ; Alt-buttons -- Back (Alt-left) and Forward (Alt-right)
 !XButton2:: Send {Alt Down}{Left}
