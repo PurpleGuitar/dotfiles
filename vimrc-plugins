@@ -49,7 +49,8 @@ Plugin 'ynkdir/vim-vimlparser'             " VimL parser
 Plugin 'syngan/vim-vimlint'                " Vim linter
 Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
 Plugin 'chrisbra/csv.vim'                  " csv file support
-Plugin 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'                 " Sidebar for code
+Plugin 'fatih/vim-go'                      " Golang tools
 
 " ========================================================================
 " Voom outliner
