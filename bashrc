@@ -45,8 +45,9 @@ else
     }
 fi
 
-# Ignore tty stop and start codes
-if tty --quiet; then
+# Disable Ctrl-S (TTY STOP) and Ctrl-Q (TTY START)
+# It was causing problems with PuTTY
+if [ -t 1 ]; then
     stty stop undef
     stty start undef
 fi
