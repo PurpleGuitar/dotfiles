@@ -67,5 +67,3 @@ Capslock & +::SendWithModifiers("{F12}")
 Capslock & SC027::SendWithModifiers("{Insert}") ; Semicolon
 Capslock & SC028::SendWithModifiers("{Delete}") ; Single quote
 Capslock & SC00E::SendWithModifiers("{Delete}") ; Backspace
-
-
