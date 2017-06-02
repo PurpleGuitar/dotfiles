@@ -51,8 +51,6 @@ Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
 Plugin 'chrisbra/csv.vim'                  " csv file support
 Plugin 'kovisoft/slimv'                    " Lisp/SLIME support
 Plugin 'tpope/vim-abolish'                 " Tools for smart replace, mangling/demangling, camelCasing, etc.
-Plugin 'majutsushi/tagbar'                 " Sidebar for code
-Plugin 'fatih/vim-go'                      " Golang tools
 
 
 " ========================================================================
