@@ -22,6 +22,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+
 # Google from the command line
 # From: http://superuser.com/a/47216
 google() {
@@ -31,6 +32,7 @@ google() {
     done
     lynx "http://google.com/search?q=$search" #for startpage result
 }
+
 
 # Load z if available
 # z allows you to jump to frecently used directories
@@ -45,8 +47,10 @@ else
     }
 fi
 
-# Ignore tty stop and start codes
-if tty --quiet; then
+
+# Disable Ctrl-S (TTY STOP) and Ctrl-Q (TTY START)
+# It was causing problems with PuTTY
+if [ -t 1 ]; then
     stty stop undef
     stty start undef
 fi

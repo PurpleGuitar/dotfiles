@@ -27,10 +27,10 @@
     username = PurpleGuitar
 [diff]
     tool = vimdiff
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+[mergetool]
+    prompt = false
 
 # vim: filetype=gitconfig
-[merge]
-	tool = vimdiff
-	conflictstyle = diff3
-[mergetool]
-	prompt = false

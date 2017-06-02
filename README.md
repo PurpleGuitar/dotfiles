@@ -27,7 +27,7 @@ Setup (Windows)
 Run `install.bat` as an administrator. This will hardlink a few files from
 your home directory to point to your dotfiles directory.
 
-Note that Windows sometimes arbitrarily decides to unlink the files. The
+Note that Windows sometimes unlinks the files without warning. The
 checklinks.bat and recover.bat files can help diagnose and figure out which
 version of the files are correct. Then you can run install.bat again to
 relink them.
