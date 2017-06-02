@@ -49,8 +49,7 @@ Plugin 'ynkdir/vim-vimlparser'             " VimL parser
 Plugin 'syngan/vim-vimlint'                " Vim linter
 Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
 Plugin 'chrisbra/csv.vim'                  " csv file support
-Plugin 'majutsushi/tagbar'                 " Sidebar for code
-Plugin 'fatih/vim-go'                      " Golang tools
+Plugin 'majutsushi/tagbar'
 
 " ========================================================================
 " Voom outliner
@@ -151,8 +150,8 @@ let g:pandoc#folding#fold_yaml = 1
 let g:pandoc#syntax#conceal#urls = 1
 
 " " Use tab to jump to next link
-" autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
-" autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
+autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
+autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
 
 " Remap goto definition to goto link
 autocmd FileType pandoc nmap gd <Leader>gl
@@ -161,8 +160,10 @@ autocmd FileType pandoc nmap gd <Leader>gl
 autocmd FileType pandoc set showbreak=....
 
 " Shortcuts for generating pandoc docs
-autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone --filter=~/repos/pandoc-include/IncludeFilter.hs --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
-autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone --filter=~/repos/pandoc-include/IncludeFilter.hs --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
+" autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone --filter=~/repos/pandoc-include/IncludeFilter.hs --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
+" autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone --filter=~/repos/pandoc-include/IncludeFilter.hs --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
+autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
+autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR> 
 "
 
 " ========================================================================
