@@ -49,6 +49,8 @@ Plugin 'ynkdir/vim-vimlparser'             " VimL parser
 Plugin 'syngan/vim-vimlint'                " Vim linter
 Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
 Plugin 'chrisbra/csv.vim'                  " csv file support
+Plugin 'kovisoft/slimv'                    " Lisp/SLIME support
+Plugin 'tpope/vim-abolish'                 " Tools for smart replace, mangling/demangling, camelCasing, etc.
 
 
 " ========================================================================

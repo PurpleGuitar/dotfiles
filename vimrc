@@ -107,6 +107,9 @@ abbrev teh the
 " Grep current file for word under the cursor
 nnoremap gr :vimgrep "\<<C-r><C-w>\>" %<CR>
 
+" Grep for word under the cursor in all files with matching extensions
+nnoremap gR :vimgrep "\<<C-r><C-w>\>" **/*.%:e<CR>
+
 " Fold everything around selected text
 " From: http://stackoverflow.com/questions/674613/vim-folds-for-everything-except-something
 vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
