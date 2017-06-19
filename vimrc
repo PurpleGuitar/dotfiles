@@ -101,6 +101,9 @@ endf
 
 " Other corrections
 abbrev teh the
+abbrev nad and
+abbrev pkmn Pokémon
+abbrev pokemon Pokémon
 
 
 " Grep current file for word under the cursor

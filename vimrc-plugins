@@ -156,7 +156,7 @@ Plugin 'vim-pandoc/vim-pandoc-syntax'
 let g:pandoc#formatting#mode = 'h'                               " hard line breaks
 let g:pandoc#keyboard#sections#header_style = 's'                " Use setext style headers for 1 and 2
 let g:pandoc#formatting#textwidth = 75                           " Text width for Pandoc documents
-let g:pandoc#folding#level = 1
+let g:pandoc#folding#level = 999
 let g:pandoc#syntax#conceal#blacklist = ["emdashes", "endashes", "newline", "image"]
 let g:pandoc#folding#fdc = 0                                     " Don't show foldlevel column
 let g:pandoc#formatting#equalprg='pandoc -t markdown --standalone --columns 75'
@@ -292,6 +292,12 @@ endfunction
 
 autocmd BufEnter * call s:syncTree()
 
+" ========================================================================
+" NERDTree Git plugin
+" ========================================================================
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+" let g:NERDTreeShowIgnoredStatus = 1
 
 " ========================================================================
 " Quick Scope - Highlights targets for f, F, t, and T motions
