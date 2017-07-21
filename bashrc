@@ -82,7 +82,7 @@ fi
 # Launch tmux if available
 if command -v tmux>/dev/null; then
     if [ ! -z "$PS1" ]; then # unless shell not loaded interactively, run tmux
-        [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux new-session -A -s main
+        [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux -2 new-session -A -s main
         # If in TMUX, show MOTD if we haven't already
         if [ -z "$_motd_listed" ]; then
             case "$TMUX_PANE" in
