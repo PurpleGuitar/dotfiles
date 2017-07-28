@@ -15,17 +15,8 @@ XButton1::PgDn
 +XButton1::Send {End}
 
 ; Ctrl-Shift-buttons -- down close current doc
-; ^+XButton2:: Send {Control Down}w
-^+XButton1::
-if WinActive("Outlook")
-{
-    Send {Control Down}{Shift Down}9
-} 
-else 
-{
-    Send {Control Down}w
-}
-Return
+^+XButton2:: Send {Control Down}w
+; ^+XButton1::
 
 ; Alt-buttons -- Back (Alt-left) and Forward (Alt-right)
 !XButton2:: Send {Alt Down}{Left}
