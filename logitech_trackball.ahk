@@ -15,8 +15,8 @@ XButton1::PgDn
 +XButton1::Send {End}
 
 ; Ctrl-Shift-buttons -- down close current doc
-^+XButton2:: Send {Control Down}w
-; ^+XButton1::
+; ^+XButton2::
+^+XButton1:: Send {Control Down}w
 
 ; Alt-buttons -- Back (Alt-left) and Forward (Alt-right)
 !XButton2:: Send {Alt Down}{Left}
