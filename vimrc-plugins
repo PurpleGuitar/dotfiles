@@ -296,8 +296,20 @@ autocmd BufEnter * call s:syncTree()
 " NERDTree Git plugin
 " ========================================================================
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-
 " let g:NERDTreeShowIgnoredStatus = 1
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "M",
+    \ "Staged"    : "S",
+    \ "Untracked" : "U",
+    \ "Renamed"   : "R",
+    \ "Unmerged"  : "U",
+    \ "Deleted"   : "D",
+    \ "Dirty"     : "R",
+    \ "Clean"     : "C",
+    \ 'Ignored'   : 'I',
+    \ "Unknown"   : "?"
+    \ }
+
 
 " ========================================================================
 " Quick Scope - Highlights targets for f, F, t, and T motions
