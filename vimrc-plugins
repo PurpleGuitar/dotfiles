@@ -143,7 +143,7 @@ let g:airline_powerline_fonts = 1
 " Git Gutter
 " ========================================================================
 Plugin 'airblade/vim-gitgutter'
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 nmap [h <Plug>GitGutterPrevHunk
 nmap ]h <Plug>GitGutterNextHunk
 
