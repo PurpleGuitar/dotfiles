@@ -43,13 +43,11 @@ Plugin 'Raimondi/delimitMate'              " Automatically close quote, parens, 
 Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 Plugin 'kshenoy/vim-signature'             " Show marks in gutter
 Plugin 'tpope/vim-speeddating'             " Increment/decrement dates
-Plugin 'wzhliang/ttfzoom.vim'              " Zoom with Ctrl-mousewheel
 Plugin 'severin-lemaignan/vim-minimap'     " Minimap
 Plugin 'ynkdir/vim-vimlparser'             " VimL parser
 Plugin 'syngan/vim-vimlint'                " Vim linter
 Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
 Plugin 'chrisbra/csv.vim'                  " csv file support
-Plugin 'kovisoft/slimv'                    " Lisp/SLIME support
 Plugin 'tpope/vim-abolish'                 " Tools for smart replace, mangling/demangling, camelCasing, etc.
 
 
@@ -120,9 +118,9 @@ nmap ga <Plug>(EasyAlign)
 " Syntastic
 " ========================================================================
 Plugin 'scrooloose/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
