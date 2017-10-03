@@ -1,16 +1,23 @@
 " Welcome to Craig's .vimrc file.
 scriptencoding utf-8
 
+" ========================================================================
 " Import plugins if available
 " ========================================================================
 if !empty(glob("~/.vimrc-plugins"))
     source ~/.vimrc-plugins
 endif
+if !empty(glob("~/.vimrc-plugins-local"))
+    source ~/.vimrc-plugins-local
+endif
+call vundle#end()
+filetype plugin indent on
 syntax on
 
 " Don't wrap pandoc docs (has to happen after plugins)
 autocmd FileType pandoc set nowrap
 
+" ========================================================================
 " Editor Settings
 " ========================================================================
 set expandtab
@@ -28,6 +35,7 @@ set hidden
 set complete+=k
 
 
+" ========================================================================
 " Why move fingers if you don't have to?
 " ========================================================================
 
@@ -60,10 +68,6 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
-autocmd FileType pandoc nnoremap j gj
-autocmd FileType pandoc nnoremap k gk
-autocmd FileType pandoc vnoremap j gj
-autocmd FileType pandoc vnoremap k gk
 
 " Window shortcuts
 nmap <C-w>- <C-w>s
@@ -86,7 +90,6 @@ nnoremap <A-S-Right> >>
 " Must be called after vundle#end()
 silent! colorscheme croz_dark
 
-
 " Correct two initial capitals
 " From: https://groups.google.com/forum/#!topic/comp.editors/L8_j0vrs2Hg
 fu! AAa_to_Aaa()
@@ -105,18 +108,12 @@ abbrev nad and
 abbrev pkmn Pokémon
 abbrev pokemon Pokémon
 
-
-" Grep current file for word under the cursor
-nnoremap gr :vimgrep "\<<C-r><C-w>\>" %<CR>
-
-" Grep for word under the cursor in all files with matching extensions
-nnoremap gR :vimgrep "\<<C-r><C-w>\>" **/*.%:e<CR>
-
 " Fold everything around selected text
 " From: http://stackoverflow.com/questions/674613/vim-folds-for-everything-except-something
 vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
 nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
 
+" ========================================================================
 " Import local .vimrc, if there is one
 " ========================================================================
 if !empty(glob("~/.vimrc-local"))

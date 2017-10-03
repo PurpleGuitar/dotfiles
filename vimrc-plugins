@@ -29,27 +29,27 @@ Plugin 'gmarik/Vundle.vim'                 " Vundle vundles Vundle
 " ========================================================================
 " Plugins that don't need configuring
 " ========================================================================
+
+" The Essentials
 Plugin 'PurpleGuitar/vim-croz-colorscheme' " Craig's color scheme
 Plugin 'tpope/vim-sensible'                " Sensible defaults for vim settings
-Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, etc.)
+
+" Making Editing a Pleasure
 Plugin 'tpope/vim-unimpaired'              " Shortcuts, such as ]b (:bnext), ]q (:cnext), an ]e (exchange line)
 Plugin 'tomtom/tcomment_vim'               " Sophisticated commenting, e.g. Ctrl-// to comment
-Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm color codes
-Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
-Plugin 'pangloss/vim-javascript'           " Syntax handler for JavaScript
-Plugin 'elzr/vim-json'                     " Syntax handling for JSON
-Plugin 'nblock/vim-dokuwiki'               " Syntax highlighting for Dokuwiki text files
 Plugin 'Raimondi/delimitMate'              " Automatically close quote, parens, brackets, etc.
-Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 Plugin 'kshenoy/vim-signature'             " Show marks in gutter
-Plugin 'tpope/vim-speeddating'             " Increment/decrement dates
-Plugin 'severin-lemaignan/vim-minimap'     " Minimap
-Plugin 'ynkdir/vim-vimlparser'             " VimL parser
-Plugin 'syngan/vim-vimlint'                " Vim linter
 Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
-Plugin 'chrisbra/csv.vim'                  " csv file support
 Plugin 'tpope/vim-abolish'                 " Tools for smart replace, mangling/demangling, camelCasing, etc.
+Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 
+" Commonly used Syntaxes
+Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
+
+" Other Stuff
+Plugin 'sjl/gundo.vim'                     " Visual undo
+Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, etc.)
+Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm color codes
 
 " ========================================================================
 " Tagbar
@@ -57,52 +57,6 @@ Plugin 'tpope/vim-abolish'                 " Tools for smart replace, mangling/d
 Plugin 'majutsushi/tagbar'                 " Sidebar for code
 let g:tagbar_sort = 0
 
-" ========================================================================
-" Golang support
-" ========================================================================
-Plugin 'fatih/vim-go'                      " Golang tools
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-" ========================================================================
-" Voom outliner
-" ========================================================================
-Plugin 'vim-voom/VOoM'                     " Outliner for use with e.g. Pandoc/Markdown text files
-let g:voom_always_allow_move_left = 1
-" let g:voom_tab_key = "<C-Tab>"
-
-" ========================================================================
-" Highlighting
-" ========================================================================
-Plugin 'kergoth/vim-hilinks'               " Show highlighting at the cursor
-let g:hilinks_nobeval= 1
-
-" ========================================================================
-" Autoformat
-" ========================================================================
-Plugin 'Chiel92/vim-autoformat'
-
-" Auto-format certain file types
-function s:maybe_auto_format()
-    let autoformat_filetypes = ['pandoc']
-    if index(autoformat_filetypes, &filetype) >= 0
-        :Autoformat
-    endif
-endfunction
-command! MaybeAutoformat call s:maybe_auto_format()
-autocmd BufWrite * :MaybeAutoformat
-
-let g:formatdef_my_custom_cs = '"astyle --mode=cs --style=break --indent-namespaces"'
-let g:formatters_cs = ['my_custom_cs']
-
-" Trim extra whitespace on save -- workaround for astyle
-" From: http://stackoverflow.com/questions/7495932/how-can-i-trim-blank-lines-at-the-end-of-file-in-vim
-function TrimEndLines()
-    let save_cursor = getpos(".")
-    :silent! %s#\($\n\s*\)\+\%$##
-    call setpos('.', save_cursor)
-endfunction
-au BufWritePre *.cs call TrimEndLines()
 
 " ========================================================================
 " Easy Align
@@ -118,9 +72,6 @@ nmap ga <Plug>(EasyAlign)
 " Syntastic
 " ========================================================================
 Plugin 'scrooloose/syntastic'
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -170,6 +121,12 @@ let g:pandoc#syntax#conceal#urls = 1
 autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
 autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
 
+" Linewise movement in pandoc
+autocmd FileType pandoc nnoremap j gj
+autocmd FileType pandoc nnoremap k gk
+autocmd FileType pandoc vnoremap j gj
+autocmd FileType pandoc vnoremap k gk
+
 " Remap goto definition to goto link
 autocmd FileType pandoc nmap gd <Leader>gl
 
@@ -177,104 +134,15 @@ autocmd FileType pandoc nmap gd <Leader>gl
 autocmd FileType pandoc set showbreak=....
 
 " Shortcuts for generating pandoc docs
-" autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone --filter=~/repos/pandoc-include/IncludeFilter.hs --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
-" autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone --filter=~/repos/pandoc-include/IncludeFilter.hs --filter=~/Dropbox/projects/pandoc-filters/graphviz.py<CR>
 autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
 autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR> 
-"
 
-" ========================================================================
-" Pandoc Tasks - task management in Pandoc
-" ========================================================================
-Plugin  'PurpleGuitar/vim-pandoc-tasks'
-
-" Special commands for todoing
-autocmd FileType pandoc nnoremap <C-Space>   :PandocTaskToggle<CR>
-autocmd FileType pandoc vnoremap <C-Space>   :PandocTaskToggle<CR>gv
-autocmd FileType pandoc nnoremap <NUL>       :PandocTaskToggle<CR>
-autocmd FileType pandoc vnoremap <NUL>       :PandocTaskToggle<CR>gv
-autocmd FileType pandoc nnoremap <Leader>tx  :PandocTaskDelete<CR>
-autocmd FileType pandoc vnoremap <Leader>tx  :PandocTaskDelete<CR>gv
-
-" If the home directory of the wiki is set, set up our shortcuts
-if !empty($VP_WIKI)
-
-    " Create insta-journal-entry for quick notes
-    function! s:new_journal_entry()
-        let timestamp_filename = strftime( "$VP_WIKI/pages/journal/%Y-%m-%d_%H-%M-%S.md", localtime() )
-        execute "e " . timestamp_filename
-    endfunction
-    command! NewJournalEntry call s:new_journal_entry()
-    autocmd FileType pandoc nnoremap <Leader>nje  :NewJournalEntry<CR>
-
-    " Create 'Today' page
-    function! s:create_today_page()
-        let timestamp_filename = strftime( "$VP_WIKI/pages/journal/%Y-%m-%d_%H-%M-%S_daily.md", localtime() )
-        execute "edit " . timestamp_filename
-        " execute "buffer " . timestamp_filename
-        execute "read $VP_WIKI/templates/daily.md"
-        execute "write"
-        execute "normal! ggmT"
-        execute "edit"
-    endfunction
-    command! NewDay call s:create_today_page()
-
-    " Arrange windows
-    function! s:arrange_windows()
-        execute "edit $VP_WIKI/pages/index.md"
-        execute "only"
-        execute "NERDTreeFocus"
-        execute "vertical resize 40"
-        execute "wincmd p"
-        execute "copen"
-        execute "wincmd p"
-        " execute "wincmd v"
-        " normal! 'T
-    endfunction
-    command! ArrangeWindows call s:arrange_windows()
-    nnoremap <Leader>aw :ArrangeWindows<CR>
-    nnoremap <Leader>ar :ArrangeWindows<CR>
-
-    " Make quickfix list pretty
-    function! s:todo_quickfix(command_name)
-        copen
-        cd $VP_WIKI
-        execute a:command_name . " 'pages/**/*.md'"
-        setlocal modifiable
-        1,$EasyAlign 4/ /
-        setlocal nomodifiable
-        setlocal nomodified
-        execute "normal! WWWWzs"
-    endfunction
-    command! TodoQuickfix call s:todo_quickfix('PandocTaskListTodoSorted')
-    command! TodoQuickfixAll call s:todo_quickfix('PandocTaskListUnfinishedSorted')
-    command! TodoQuickfixAllUnsorted call s:todo_quickfix('PandocTaskListUnfinished')
-    command! TodoQuickfixWait call s:todo_quickfix('PandocTaskListWaitSorted')
-    command! TodoQuickfixDone call s:todo_quickfix('PandocTaskListDoneSorted')
-    command! TodoQuickfixTasks call s:todo_quickfix('PandocTaskListTasksSorted')
-    nnoremap <Leader>qtt :TodoQuickfix<CR>
-    nnoremap <Leader>qta :TodoQuickfixAll<CR>
-    nnoremap <Leader>qtu :TodoQuickfixAllUnsorted<CR>
-    nnoremap <Leader>qtd :TodoQuickfixDone<CR>
-    nnoremap <Leader>qtw :TodoQuickfixWait<CR>
-    nnoremap <Leader>qte :TodoQuickfixTasks<CR>
-
-else
-
-    " echom "Environment variable VP_WIKI not set, no wiki available"
-
-endif
-
-" Insert journal entry at bottom of file
-nnoremap <Leader>je Go<CR><C-o>0## <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
-inoremap <Leader>je <Esc>Go<CR><C-o>0## <Esc>"=strftime("%a %b %d %Y %I:%M %p")<CR>po<CR>
 
 " ========================================================================
 " NERDTree file browser
 " ========================================================================
 Plugin 'scrooloose/nerdtree'
 nnoremap <Leader>nt :NERDTreeFind<CR>
-
 
 " From: http://superuser.com/questions/195022/vim-how-to-synchronize-nerdtree-with-current-opened-tab-file-path
 " returns true iff is NERDTree open/active
@@ -293,6 +161,7 @@ function! s:syncTree()
 endfunction
 
 autocmd BufEnter * call s:syncTree()
+
 
 " ========================================================================
 " NERDTree Git plugin
@@ -318,34 +187,4 @@ let g:NERDTreeIndicatorMapCustom = {
 " ========================================================================
 Plugin 'unblevable/quick-scope'
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
-
-" ========================================================================
-" Gundo -- navigate undo tree
-" ========================================================================
-Plugin 'sjl/gundo.vim'
-nnoremap <Leader>gu :GundoToggle<CR>
-
-
-
-" ========================================================================
-" Xolox shell - supports fullscreen, among other things
-" ========================================================================
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-shell'
-let g:shell_fullscreen_always_on_top = 0
-
-" ========================================================================
-" Craig's Utils
-" ========================================================================
-Plugin  'PurpleGuitar/vim-croz-utils'
-let g:croz_utils_date_mappings = 1
-
-" ========================================================================
-" END VUNDLE PLUGINS
-" ========================================================================
-call vundle#end()
-filetype plugin indent on
-
-
 
