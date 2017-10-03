@@ -4,6 +4,24 @@ scriptencoding utf-8
 " ========================================================================
 " Import plugins if available
 " ========================================================================
+" Vundle not installed?  Here's how to get it set up:
+" 1. mkdir -p ~/.vim/bundle
+" 2. cd ~/.vim/bundle
+" 3. git clone https://github.com/VundleVim/Vundle.vim.git
+" 4. Start Vim
+" 5. :PluginInstall
+" 6. Happy Vimming!
+
+" Helpful Vundle commands:
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" see :h vundle for more details or wiki for FAQ
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 if !empty(glob("~/.vimrc-plugins"))
     source ~/.vimrc-plugins
 endif
