@@ -63,7 +63,7 @@ if "%SETUP_VIM%"=="true" (
     git clone https://github.com/VundleVim/Vundle.vim.git
     git clone https://github.com/PurpleGuitar/vim-croz-colorscheme.git
     cd %TARGET_DIR%
-    gvim "+PluginInstall" "+qall"
+    gvim "+set nomore" "+PluginInstall" "+qall"
 )
 
 rem Restore old current directory
