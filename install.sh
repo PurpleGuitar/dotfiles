@@ -70,7 +70,7 @@ cd $VIM_DIR/bundle
 git clone https://github.com/VundleVim/Vundle.vim.git
 git clone https://github.com/PurpleGuitar/vim-croz-colorscheme.git
 cd $TARGET_DIR
-vim "+PluginInstall" "+qall"
+vim -T dumb "+set nomore" "+PluginInstall" "+qall"
 
 # Done
 echo "Done."
