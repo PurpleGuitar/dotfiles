@@ -22,7 +22,8 @@
     lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) %C(cyan)%aD%C(reset) %C(green)(%ad)%C(reset) %C(cyan)(committed: %cD)%C(reset) %C(magenta)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(yellow)- %an <%ae> %C(reset) %C(yellow)(committer: %cn <%ce>)%C(reset)'
 
 [credential]
-    helper = cache
+    # Cache passwords in memory for 8 hours
+    helper = cache --timeout=30000
 [credential "https://github.com"]
     username = PurpleGuitar
 [diff]
