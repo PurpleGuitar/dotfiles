@@ -39,5 +39,3 @@ WORKDIR /root/dotfiles
 RUN ./install.sh
 WORKDIR /root
 RUN rm -rf dotfiles-backup*
-
-WORKDIR /root
