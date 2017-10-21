@@ -19,18 +19,14 @@ RUN apt update && apt install -y \
  && update-command-not-found
 
 # Configure timezone and locale
-ENV TZ=America/New_York
 RUN echo $TZ > /etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata && \
     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     echo 'LANG="en_US.UTF-8"'>/etc/default/locale && \
     dpkg-reconfigure --frontend=noninteractive locales && \
     update-locale LANG=en_US.UTF-8
-
-# Copy fonts and X defaults
-COPY ["Inconsolata for Powerline.otf", "/usr/share/fonts/"]
-COPY [".Xdefaults", "/root/.Xdefaults"]
-COPY [".gvimrc", "/root/.gvimrc"]
+ENV TZ=America/New_York
+ENV LANG=en_US.UTF-8
 
 # Set up my dotfiles
 WORKDIR /root
@@ -39,3 +35,10 @@ WORKDIR /root/dotfiles
 RUN ./install.sh
 WORKDIR /root
 RUN rm -rf dotfiles-backup*
+
+# Copy fonts and X defaults
+COPY ["Inconsolata for Powerline.otf", "/usr/share/fonts/"]
+COPY [".Xdefaults", "/root/.Xdefaults"]
+COPY [".gvimrc", "/root/.gvimrc"]
+COPY [".bashrc-local", "/root/.bashrc-local"]
+

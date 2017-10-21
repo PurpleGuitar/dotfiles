@@ -6,9 +6,9 @@ docker run ^
        --rm ^
        --interactive ^
        --tty ^
-       --hostname docker-dev ^
+       --hostname debian-dev ^
        --env DISPLAY=%HostIP%:0 ^
        --volume C:/:/mnt/host ^
-       --volume %USERPROFILE%:/root/%USERNAME% ^
-       docker-dev ^
+       --volume %USERPROFILE%:/root/host-home ^
+       debian-dev ^
        bash
