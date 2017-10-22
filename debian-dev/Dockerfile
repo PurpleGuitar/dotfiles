@@ -37,7 +37,6 @@ ENV TZ=America/New_York
 ENV LANG=en_US.UTF-8
 
 # Set up my dotfiles
-RUN echo 1
 WORKDIR /root
 RUN git clone http://github.com/PurpleGuitar/dotfiles
 WORKDIR /root/dotfiles
