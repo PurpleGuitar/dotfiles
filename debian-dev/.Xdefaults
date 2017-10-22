@@ -1,4 +1,4 @@
 xterm*background:black
 xterm*foreground:white
 xterm*faceName: Inconsolata for Powerline:style=Medium
-xterm*faceSize: 16
+xterm*faceSize: 17
