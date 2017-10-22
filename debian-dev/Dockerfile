@@ -8,8 +8,12 @@ RUN apt update && apt install -y \
     git \
     htop \
     locales \
+    make \
     man-db \
     pandoc \
+    python \
+    python-pip \
+    python3 \
     tmux \
     tree \
     vim-gtk \
@@ -17,6 +21,10 @@ RUN apt update && apt install -y \
     xterm \
  && apt update \
  && update-command-not-found
+
+# Upgrade Python packages
+RUN pip install --upgrade pip \
+ && pip install pyyaml
 
 # Configure timezone and locale
 RUN echo $TZ > /etc/timezone && \
