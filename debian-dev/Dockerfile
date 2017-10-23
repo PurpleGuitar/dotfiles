@@ -28,27 +28,27 @@ RUN pip install --upgrade pip \
  && pip install pyyaml
 
 # Configure timezone and locale
-RUN echo $TZ > /etc/timezone && \
-    dpkg-reconfigure -f noninteractive tzdata && \
-    sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-    echo 'LANG="en_US.UTF-8"'>/etc/default/locale && \
-    dpkg-reconfigure --frontend=noninteractive locales && \
-    update-locale LANG=en_US.UTF-8
+RUN echo $TZ > /etc/timezone \
+ && dpkg-reconfigure -f noninteractive tzdata \
+ && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+ && echo 'LANG="en_US.UTF-8"'>/etc/default/locale \
+ && dpkg-reconfigure --frontend=noninteractive locales \
+ && update-locale LANG=en_US.UTF-8
 ENV TZ=America/New_York
 ENV LANG=en_US.UTF-8
 
 # Set up my dotfiles
 WORKDIR /root
-RUN git clone http://github.com/PurpleGuitar/dotfiles
-WORKDIR /root/dotfiles
-RUN ./install.sh
-WORKDIR /root
-RUN rm -rf dotfiles-backup*
+RUN git clone http://github.com/PurpleGuitar/dotfiles \
+ && cd dotfiles \
+ && ./install.sh \
+ && cd /root \
+ && rm -rf dotfiles-backup*
 VOLUME ["/root/dotfiles"]
 
 # Copy fonts and X defaults
 WORKDIR /usr/share/fonts
-RUN wget https://github.com/powerline/fonts/blob/master/Inconsolata/Inconsolata%20for%20Powerline.otf?raw=true
+RUN wget https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/Inconsolata%20for%20Powerline.otf
 COPY [".Xdefaults", "/root/.Xdefaults"]
 COPY [".gvimrc", "/root/.gvimrc"]
 COPY [".bashrc-local", "/root/.bashrc-local"]
