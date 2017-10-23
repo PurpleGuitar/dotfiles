@@ -17,12 +17,13 @@ RUN apt update && apt install -y \
     tmux \
     tree \
     vim-gtk \
+    wget \
     xclip \
     xterm \
  && apt update \
  && update-command-not-found
 
-# Upgrade Python packages
+# Setup Python packages
 RUN pip install --upgrade pip \
  && pip install pyyaml
 
@@ -43,10 +44,14 @@ WORKDIR /root/dotfiles
 RUN ./install.sh
 WORKDIR /root
 RUN rm -rf dotfiles-backup*
+VOLUME ["/root/dotfiles"]
 
 # Copy fonts and X defaults
-COPY ["Inconsolata for Powerline.otf", "/usr/share/fonts/"]
+WORKDIR /usr/share/fonts
+RUN wget https://github.com/powerline/fonts/blob/master/Inconsolata/Inconsolata%20for%20Powerline.otf?raw=true
 COPY [".Xdefaults", "/root/.Xdefaults"]
 COPY [".gvimrc", "/root/.gvimrc"]
 COPY [".bashrc-local", "/root/.bashrc-local"]
 
+# Start in home dir
+WORKDIR /root
