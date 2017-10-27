@@ -14,6 +14,7 @@ RUN apt update && apt install -y \
     python \
     python-pip \
     python3 \
+    python3-pip \
     tmux \
     tree \
     vim-gtk \
@@ -23,9 +24,13 @@ RUN apt update && apt install -y \
  && apt update \
  && update-command-not-found
 
-# Setup Python packages
+# Setup Python2 packages
 RUN pip install --upgrade pip \
  && pip install pyyaml
+
+# Setup Python3 packages
+RUN pip3 install --upgrade pip \
+ && pip3 install requests
 
 # Configure timezone and locale
 RUN echo $TZ > /etc/timezone \
