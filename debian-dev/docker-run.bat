@@ -1,3 +1,5 @@
+@echo off
+
 rem get IP of Windows host
 for /f "delims=[] tokens=2" %%a in ('ping -4 -n 1 %ComputerName% ^| findstr [') do set HostIP=%%a
 
@@ -12,4 +14,4 @@ docker run ^
        --volume C:/:/mnt/host ^
        --volume %USERPROFILE%:/root/host-home ^
        debian-dev ^
-       bash
+       bash %*

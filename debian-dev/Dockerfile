@@ -2,11 +2,13 @@ FROM debian:latest
 
 # Install packages and populate command-not-found db
 RUN apt update && apt install -y \
+    apt-utils \
     bash-completion \
     colortest \
     command-not-found \
     git \
     htop \
+    jq \
     locales \
     make \
     man-db \
@@ -24,12 +26,9 @@ RUN apt update && apt install -y \
  && apt update \
  && update-command-not-found
 
-# Setup Python2 packages
-RUN pip install --upgrade pip \
- && pip install pyyaml
-
 # Setup Python3 packages
 RUN pip3 install --upgrade pip \
+ && pip3 install pylint \
  && pip3 install requests
 
 # Configure timezone and locale
