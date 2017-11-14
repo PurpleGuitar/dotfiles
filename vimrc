@@ -51,6 +51,7 @@ set diffopt+=iwhite
 set textwidth=75
 set hidden
 set complete+=k
+set modeline
 
 
 " ========================================================================
