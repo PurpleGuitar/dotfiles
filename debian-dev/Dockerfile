@@ -13,6 +13,7 @@ RUN apt update && apt install -y \
     make \
     man-db \
     pandoc \
+    procps \
     python \
     python-pip \
     python3 \
