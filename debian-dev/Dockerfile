@@ -4,6 +4,7 @@ FROM debian:latest
 RUN apt update && apt install -y \
     apt-utils \
     bash-completion \
+    ccze \
     colortest \
     command-not-found \
     git \
@@ -29,6 +30,7 @@ RUN apt update && apt install -y \
 
 # Setup Python3 packages
 RUN pip3 install --upgrade pip \
+ && pip3 install coverage \
  && pip3 install pylint \
  && pip3 install requests
 
@@ -58,6 +60,9 @@ RUN wget https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/In
 COPY [".Xdefaults", "/root/.Xdefaults"]
 COPY [".gvimrc", "/root/.gvimrc"]
 COPY [".bashrc-local", "/root/.bashrc-local"]
+RUN chmod 600 /root/.Xdefaults \
+ && chmod 600 /root/.gvimrc \
+ && chmod 600 /root/.bashrc-local
 
 # Start in home dir
 WORKDIR /root
