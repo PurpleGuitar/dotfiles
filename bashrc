@@ -10,6 +10,7 @@ shopt -s histappend
 
 # Aliases
 alias ls='ls -hF --color=tty' # classify files in colour
+alias grep='grep --color=auto' # Show grep matches in color
 alias cmatrix='cmatrix -b'    # Always use bold for cmatrix -- looks extra awesome
 alias h='history'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
