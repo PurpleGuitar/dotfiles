@@ -8,18 +8,21 @@ RUN apt update && apt install -y \
     colortest \
     command-not-found \
     curl \
+    figlet \
     git \
     htop \
     jq \
     locales \
     make \
     man-db \
+    ncdu \
     pandoc \
     procps \
     python \
     python-pip \
     python3 \
     python3-pip \
+    ranger \
     tig \
     tmux \
     tree \
