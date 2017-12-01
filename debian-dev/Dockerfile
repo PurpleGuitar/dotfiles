@@ -7,6 +7,7 @@ RUN apt update && apt install -y \
     ccze \
     colortest \
     command-not-found \
+    curl \
     git \
     htop \
     jq \
