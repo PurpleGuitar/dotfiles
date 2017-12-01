@@ -20,6 +20,7 @@ RUN apt update && apt install -y \
     python-pip \
     python3 \
     python3-pip \
+    tig \
     tmux \
     tree \
     vim-gtk \
