@@ -32,9 +32,6 @@ call vundle#end()
 filetype plugin indent on
 syntax on
 
-" Don't wrap pandoc docs (has to happen after plugins)
-autocmd FileType pandoc set nowrap
-
 " ========================================================================
 " Editor Settings
 " ========================================================================
@@ -61,26 +58,10 @@ set modeline
 " jj -> Esc
 inoremap jj <ESC>
 
-" Invoke make
-nnoremap <Leader>m :wa<CR>:make<CR>
-inoremap <Leader>m <Esc>:wa<CR>:make<CR>
-
 " Use ctrl-s to save (Windows muscle memory)
 nnoremap <C-s> :update<CR>
 inoremap <C-s> :update<CR>
 vnoremap <C-s> <Esc>:update<CR>gv
-
-" Fixup whitespace, ASCII
-nnoremap <Leader>fix<Space> :silent! %s/\s\+$//<CR>:silent! %s/[\xa0]/ /g<CR>
-nnoremap <Leader>fix' :%s/[\x92’]/'/g<CR>
-nnoremap <Leader>fix" :%s/[\x93\x94“”]/"/g<CR>
-nnoremap <Leader>fix- :%s/[\x96\xb7]/-/g<CR>
-nnoremap <leader>fa /[^\x00-\x7F]<CR>
-nnoremap <leader>ga ga
-
-
-" Search for visually selected text with //
-vnoremap // y/<C-R>"<CR>
 
 " Handle linewise movement
 nnoremap j gj
@@ -105,13 +86,16 @@ nnoremap <A-Right> >>
 nnoremap <A-S-Left> <<
 nnoremap <A-S-Right> >>
 
-" Load my colorscheme if available
-" Must be called after vundle#end()
-silent! colorscheme croz_dark
+" Tools for fixing up wierd ASCII or whitespace
+nnoremap <Leader>fix<Space> :silent! %s/\s\+$//<CR>:silent! %s/[\xa0]/ /g<CR>
+nnoremap <Leader>fix' :%s/[\x92’]/'/g<CR>
+nnoremap <Leader>fix" :%s/[\x93\x94“”]/"/g<CR>
+nnoremap <Leader>fix- :%s/[\x96\xb7]/-/g<CR>
+command FindAscii /[^\x00-\x7F]
 
 " Correct two initial capitals
 " From: https://groups.google.com/forum/#!topic/comp.editors/L8_j0vrs2Hg
-fu! AAa_to_Aaa()
+function! AAa_to_Aaa()
     let c = getline(".")[0:col(".")-2]
     if c =~ '\v\C<[[:upper:]]{2}[[:lower:]]$'
         let pos = getpos('.')
@@ -127,14 +111,22 @@ abbrev nad and
 abbrev pkmn Pokémon
 abbrev pokemon Pokémon
 
+" Invoke make
+nnoremap <Leader>m :wa<CR>:make<CR>
+inoremap <Leader>m <Esc>:wa<CR>:make<CR>
+
+" Search for visually selected text with //
+vnoremap // y/<C-R>"<CR>
+
 " Fold everything around selected text
 " From: http://stackoverflow.com/questions/674613/vim-folds-for-everything-except-something
 vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
 nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
 
-"
+
+" ========================================================================
 " Python2 vs. Python3
-"
+" ========================================================================
 function Py2()
   let g:syntastic_python_python_exec = '/usr/local/bin/python2.7'
 endfunction
@@ -145,10 +137,22 @@ endfunction
 
 call Py3()   " default to Py3 because I try to use it when possible
 
+
+" ========================================================================
+" Other Misc Stuff
+" ========================================================================
+"
+" Load my colorscheme if available (Must be called after vundle#end())
+silent! colorscheme croz_dark
+"
+" Don't wrap pandoc docs (Must be called after plugins are loaded)
+autocmd FileType pandoc set nowrap
+
+
 " ========================================================================
 " Import local .vimrc, if there is one
+" (this section should always be last)
 " ========================================================================
 if !empty(glob("~/.vimrc-local"))
     source ~/.vimrc-local
 endif
-
