@@ -12,6 +12,7 @@ RUN apt update && apt install -y \
     git \
     htop \
     jq \
+    libxml2-utils \
     locales \
     make \
     man-db \
