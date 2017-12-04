@@ -33,12 +33,6 @@ RUN apt update && apt install -y \
  && apt update \
  && update-command-not-found
 
-# Setup Python3 packages
-RUN pip3 install --upgrade pip \
- && pip3 install coverage \
- && pip3 install pylint \
- && pip3 install requests
-
 # Configure timezone and locale
 RUN echo $TZ > /etc/timezone \
  && dpkg-reconfigure -f noninteractive tzdata \
@@ -49,14 +43,15 @@ RUN echo $TZ > /etc/timezone \
 ENV TZ=America/New_York
 ENV LANG=en_US.UTF-8
 
-# Set up my dotfiles
-WORKDIR /root
-RUN git clone http://github.com/PurpleGuitar/dotfiles \
- && cd dotfiles \
- && ./install.sh \
- && cd /root \
- && rm -rf dotfiles-backup*
-VOLUME ["/root/dotfiles"]
+# Setup Python3 packages
+RUN pip3 install --upgrade pip \
+ && pip3 install coverage \
+ && pip3 install pylint \
+ && pip3 install requests
+
+# Setup Node.js
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+ && apt-get install -y nodejs
 
 # Copy fonts and X defaults
 WORKDIR /usr/share/fonts
@@ -68,6 +63,15 @@ COPY [".bashrc-local", "/root/.bashrc-local"]
 RUN chmod 600 /root/.Xdefaults \
  && chmod 600 /root/.gvimrc \
  && chmod 600 /root/.bashrc-local
+
+# Set up my dotfiles
+WORKDIR /root
+RUN git clone http://github.com/PurpleGuitar/dotfiles \
+ && cd dotfiles \
+ && ./install.sh \
+ && cd /root \
+ && rm -rf dotfiles-backup*
+VOLUME ["/root/dotfiles"]
 
 # Start in home dir
 WORKDIR /root
