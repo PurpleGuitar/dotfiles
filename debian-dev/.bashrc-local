@@ -1,1 +1,0 @@
-alias xt='xterm -e "tmux -2" &'

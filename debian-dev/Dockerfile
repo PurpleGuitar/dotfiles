@@ -60,30 +60,31 @@ RUN wget https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/In
  && wget https://raw.githubusercontent.com/powerline/fonts/master/UbuntuMono/Ubuntu%20Mono%20derivative%20Powerline.ttf
 COPY [".Xdefaults", "/root/.Xdefaults"]
 COPY [".gvimrc", "/root/.gvimrc"]
-COPY [".bashrc-local", "/root/.bashrc-local"]
 RUN chmod 600 /root/.Xdefaults \
- && chmod 600 /root/.gvimrc \
- && chmod 600 /root/.bashrc-local
+ && chmod 600 /root/.gvimrc
 
-# Set up my dotfiles
+# Set up my dotfiles and configure vim
 WORKDIR /root/working
-COPY [".vimrc-local", "/root/.vimrc-local"]
 RUN git clone http://github.com/PurpleGuitar/dotfiles \
  && cd dotfiles \
  && ./install.sh \
  && cd /root \
- && rm -rf dotfiles-backup*
+ && rm -rf dotfiles-backup* \
+ && echo "set viminfo+=n/root/working/.viminfo" >> /root/.vimrc-local
 
 # Set up z tool and persist dir list between sessions
 WORKDIR /root/working
 ENV _Z_DATA=/root/working/.z
-RUN git clone https://github.com/rupa/z
+RUN git clone https://github.com/rupa/z \
+ && echo ". /root/working/z/z.sh" >> /root/.bashrc-local
 
 # Persist bash history between sessions
 WORKDIR /root/working
 RUN touch .bash_history \
  && cd /root \
  && ln -s working/.bash_history
+
+# Setup persistent working area
 VOLUME ["/root/working"]
 
 # Start in home dir

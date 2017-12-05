@@ -15,36 +15,12 @@ alias cmatrix='cmatrix -b'    # Always use bold for cmatrix -- looks extra aweso
 alias h='history'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 alias in-vim-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
+alias xt='xterm -e "tmux -2" &'
 
 
 # Enable programmable completion features
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
-fi
-
-
-# Google from the command line
-# From: http://superuser.com/a/47216
-google() {
-    search=""
-    for term in $*; do
-        search="$search%20$term"
-    done
-    lynx "http://google.com/search?q=$search" #for startpage result
-}
-
-
-# Load z if available
-# z allows you to jump to frecently used directories
-# https://github.com/rupa/z
-Z_SCRIPT_FILENAME=~/working/z/z.sh
-if [ -f $Z_SCRIPT_FILENAME ]; then
-    . $Z_SCRIPT_FILENAME
-else
-    z() {
-        echo "z not found (expected $Z_SCRIPT_FILENAME)."
-        echo "Get it from https://github.com/rupa/z"
-    }
 fi
 
 
