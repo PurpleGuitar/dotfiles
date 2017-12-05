@@ -58,25 +58,32 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 WORKDIR /usr/share/fonts
 RUN wget https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/Inconsolata%20for%20Powerline.otf \
  && wget https://raw.githubusercontent.com/powerline/fonts/master/UbuntuMono/Ubuntu%20Mono%20derivative%20Powerline.ttf
-COPY [".Xdefaults", "/root/.Xdefaults"]
-COPY [".gvimrc", "/root/.gvimrc"]
+COPY ["Xdefaults", "/root/.Xdefaults"]
+COPY ["gvimrc", "/root/.gvimrc"]
 RUN chmod 600 /root/.Xdefaults \
  && chmod 600 /root/.gvimrc
 
 # Set up my dotfiles and configure vim
 WORKDIR /root/working
 RUN git clone http://github.com/PurpleGuitar/dotfiles \
+ && echo "set viminfo+=n/root/working/.viminfo" >> /root/.vimrc-local \
  && cd dotfiles \
  && ./install.sh \
  && cd /root \
- && rm -rf dotfiles-backup* \
- && echo "set viminfo+=n/root/working/.viminfo" >> /root/.vimrc-local
+ && rm -rf dotfiles-backup*
 
 # Set up z tool and persist dir list between sessions
 WORKDIR /root/working
 ENV _Z_DATA=/root/working/.z
 RUN git clone https://github.com/rupa/z \
  && echo ". /root/working/z/z.sh" >> /root/.bashrc-local
+
+# Set up w3m tool and persist settings between sessions
+WORKDIR /root/working
+COPY ["w3m_keymap", "/root/working/.w3m/keymap"]
+RUN chmod 600 /root/working/.w3m/keymap \
+ && cd /root \
+ && ln -s working/.w3m
 
 # Persist bash history between sessions
 WORKDIR /root/working
