@@ -37,12 +37,12 @@ google() {
 # Load z if available
 # z allows you to jump to frecently used directories
 # https://github.com/rupa/z
-Z_SCRIPT=~/repos/z/z.sh
-if [ -f $Z_SCRIPT ]; then
-    . $Z_SCRIPT
+Z_SCRIPT_FILENAME=~/working/z/z.sh
+if [ -f $Z_SCRIPT_FILENAME ]; then
+    . $Z_SCRIPT_FILENAME
 else
     z() {
-        echo "z not found (expected $Z_SCRIPT)."
+        echo "z not found (expected $Z_SCRIPT_FILENAME)."
         echo "Get it from https://github.com/rupa/z"
     }
 fi

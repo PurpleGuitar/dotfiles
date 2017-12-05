@@ -66,13 +66,25 @@ RUN chmod 600 /root/.Xdefaults \
  && chmod 600 /root/.bashrc-local
 
 # Set up my dotfiles
-WORKDIR /root
+WORKDIR /root/working
+COPY [".vimrc-local", "/root/.vimrc-local"]
 RUN git clone http://github.com/PurpleGuitar/dotfiles \
  && cd dotfiles \
  && ./install.sh \
  && cd /root \
  && rm -rf dotfiles-backup*
-VOLUME ["/root/dotfiles"]
+
+# Set up z tool and persist dir list between sessions
+WORKDIR /root/working
+ENV _Z_DATA=/root/working/.z
+RUN git clone https://github.com/rupa/z
+
+# Persist bash history between sessions
+WORKDIR /root/working
+RUN touch .bash_history \
+ && cd /root \
+ && ln -s working/.bash_history
+VOLUME ["/root/working"]
 
 # Start in home dir
 WORKDIR /root

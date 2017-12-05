@@ -21,7 +21,8 @@ docker run ^
        --tty ^
        --hostname debian-dev ^
        --env DISPLAY=%HostIP%:0 ^
-       --volume %DOTFILES_LOC%:/root/dotfiles ^
+       --volume debian-dev-working:/root/working ^
+       --volume %DOTFILES_LOC%:/root/working/dotfiles ^
        --volume C:/:/mnt/host ^
        --volume %USERPROFILE%:/root/host-home ^
        debian-dev ^
