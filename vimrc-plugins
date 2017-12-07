@@ -90,6 +90,9 @@ nmap ]h <Plug>GitGutterNextHunk
 " ========================================================================
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'vim-voom/VOoM'
+
+" Setup pandoc
 let g:pandoc#formatting#mode = 'h'                               " hard line breaks
 let g:pandoc#keyboard#sections#header_style = 's'                " Use setext style headers for 1 and 2
 let g:pandoc#formatting#textwidth = 75                           " Text width for Pandoc documents
@@ -118,8 +121,8 @@ autocmd FileType pandoc nmap gd <Leader>gl
 autocmd FileType pandoc set showbreak=....
 
 " Shortcuts for generating pandoc docs
-autocmd FileType pandoc nnoremap <Leader>pp  :Pandoc  html --standalone<CR>
-autocmd FileType pandoc nnoremap <Leader>pb  :Pandoc! html --standalone<CR> 
+autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --to=html --out=%.html %<CR>
+autocmd FileType pandoc nnoremap <Leader>pf  :%!pandoc --standalone --to=markdown<CR>
 
 
 " ========================================================================
