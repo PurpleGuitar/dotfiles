@@ -8,6 +8,7 @@ RUN apt update && apt install -y \
     colortest \
     command-not-found \
     curl \
+    exuberant-ctags \
     figlet \
     git \
     htop \

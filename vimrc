@@ -141,7 +141,7 @@ call Py3()   " default to Py3 because I try to use it when possible
 " ========================================================================
 " Other Misc Stuff
 " ========================================================================
-"
+
 " Load my colorscheme if available (Must be called after vundle#end())
 silent! colorscheme croz_dark
 "

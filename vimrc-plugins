@@ -24,6 +24,7 @@ Plugin 'kshenoy/vim-signature'             " Show marks in gutter
 Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
 Plugin 'tpope/vim-abolish'                 " Tools for smart replace, mangling/demangling, camelCasing, etc.
 Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
+Plugin 'tpope/vim-vinegar'                 " Make netrw better
 
 " Commonly used Syntaxes
 Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
@@ -50,16 +51,6 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " Remap normal ga (display info of character under cursor)
 nnoremap <leader>ga ga
-
-
-" ========================================================================
-" Syntastic
-" ========================================================================
-Plugin 'scrooloose/syntastic'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
 
 
 " ========================================================================
@@ -122,51 +113,7 @@ autocmd FileType pandoc set showbreak=....
 
 " Shortcuts for generating pandoc docs
 autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --to=html --out=%.html %<CR>
-autocmd FileType pandoc nnoremap <Leader>pf  :%!pandoc --standalone --to=markdown<CR>
-
-
-" ========================================================================
-" NERDTree file browser
-" ========================================================================
-Plugin 'scrooloose/nerdtree'
-nnoremap <Leader>nt :NERDTreeFind<CR>
-
-" From: http://superuser.com/questions/195022/vim-how-to-synchronize-nerdtree-with-current-opened-tab-file-path
-" returns true iff is NERDTree open/active
-function! s:isNTOpen()
-    return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
-
-" calls NERDTreeFind iff NERDTree is active, current window contains a modifiable file, and we're not in vimdiff
-function! s:syncTree()
-    if &modifiable && s:isNTOpen() && strlen(expand('%')) > 0 && !&diff
-        let l:curwinnr = winnr()
-        NERDTreeFind
-        exec l:curwinnr . "wincmd w"
-        "wincmd p
-    endif
-endfunction
-
-autocmd BufEnter * call s:syncTree()
-
-
-" ========================================================================
-" NERDTree Git plugin
-" ========================================================================
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-" let g:NERDTreeShowIgnoredStatus = 1
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "M",
-    \ "Staged"    : "S",
-    \ "Untracked" : "U",
-    \ "Renamed"   : "R",
-    \ "Unmerged"  : "U",
-    \ "Deleted"   : "D",
-    \ "Dirty"     : "R",
-    \ "Clean"     : "C",
-    \ 'Ignored'   : 'I',
-    \ "Unknown"   : "?"
-    \ }
+autocmd FileType pandoc nnoremap <Leader>pf  :let @l=line(".")<CR>:%!pandoc --standalone --to=markdown<CR>:<C-r>l<CR>zz
 
 
 " ========================================================================
