@@ -33,6 +33,7 @@ Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
 Plugin 'sjl/gundo.vim'                     " Visual undo
 Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, etc.)
 Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm color codes
+Plugin 'severin-lemaignan/vim-minimap'     " Silly but fun
 
 " ========================================================================
 " Tagbar

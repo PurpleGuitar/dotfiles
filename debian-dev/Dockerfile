@@ -11,6 +11,7 @@ RUN apt update && apt install -y \
     exuberant-ctags \
     figlet \
     git \
+    golang-go \
     htop \
     jq \
     libxml2-utils \
@@ -25,9 +26,12 @@ RUN apt update && apt install -y \
     python3 \
     python3-pip \
     ranger \
+    texlive \
+    texlive-latex-extra \
     tig \
     tmux \
     tree \
+    uuid-runtime \
     vim-gtk \
     wget \
     xclip \
