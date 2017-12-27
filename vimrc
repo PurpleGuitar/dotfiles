@@ -40,6 +40,7 @@ set shiftwidth=4
 set softtabstop=4
 set hlsearch
 set ignorecase
+set number
 set mouse=a
 set ttymouse=xterm2
 set nowrap
