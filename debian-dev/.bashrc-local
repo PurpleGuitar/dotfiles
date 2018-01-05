@@ -1,2 +1,2 @@
 # Add more directories to cd's search path
-export CDPATH=.:~/working:~/host-home:~/host-home/Source/Repos
+export CDPATH=.:~/working:~/host-home:~/host-home/Source/Repos:~/host-home/AppData/Local

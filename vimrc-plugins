@@ -99,8 +99,8 @@ let g:pandoc#folding#fold_yaml = 1
 let g:pandoc#syntax#conceal#urls = 1
 
 " " Use tab to jump to next link
-autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
-autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
+autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\]\zs[[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
+autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\]\zs[[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
 
 " Linewise movement in pandoc
 autocmd FileType pandoc nnoremap j gj
