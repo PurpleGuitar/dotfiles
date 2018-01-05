@@ -51,9 +51,11 @@ ENV LANG=en_US.UTF-8
 
 # Setup Python3 packages
 RUN pip3 install --upgrade pip \
- && pip3 install coverage \
- && pip3 install pylint \
- && pip3 install requests
+ && pip3 install \
+         coverage \
+         pylint \
+         requests \
+         xmlrunner
 
 # Setup Node.js
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
@@ -77,11 +79,10 @@ RUN git clone http://github.com/PurpleGuitar/dotfiles \
  && cd /root \
  && rm -rf dotfiles-backup*
 
-# Set up z tool and persist dir list between sessions
-WORKDIR /root/working
-ENV _Z_DATA=/root/working/.z
-RUN git clone https://github.com/rupa/z \
- && echo ". /root/working/z/z.sh" >> /root/.bashrc-local
+# Persist vim dir between sessions
+WORKDIR /root/
+RUN mv .vim working/ \
+ && ln -s working/.vim/
 
 # Set up w3m tool and persist settings between sessions
 WORKDIR /root/working

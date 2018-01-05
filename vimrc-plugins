@@ -35,6 +35,7 @@ Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, 
 Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm color codes
 Plugin 'severin-lemaignan/vim-minimap'     " Silly but fun
 Plugin 'fatih/vim-go'                      " Golang development
+Plugin 'keith/swift.vim'                   " Swift syntax highlighting
 
 " ========================================================================
 " Tagbar
@@ -107,14 +108,8 @@ autocmd FileType pandoc nnoremap k gk
 autocmd FileType pandoc vnoremap j gj
 autocmd FileType pandoc vnoremap k gk
 
-" Remap goto definition to goto link
-autocmd FileType pandoc nmap gd <Leader>gl
-
-" Show line breaks
-autocmd FileType pandoc set showbreak=....
-
 " Shortcuts for generating pandoc docs
-autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --to=html --out=%.html %<CR>
+autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --to=html --out=%:r.html %<CR>
 autocmd FileType pandoc nnoremap <Leader>pf  :let @l=line(".")<CR>:%!pandoc --standalone --to=markdown<CR>:<C-r>l<CR>zz
 
 
