@@ -36,11 +36,8 @@ fi
 export EDITOR=vim
 
 
-# Use local man directory if it exists
-if [ -d $HOME/.local/share/man ]; then
-    MANPATH=$HOME/.local/share/man:$MANPATH
-    export MANPATH
-fi
+# Correct some typos when using cd
+shopt -s cdspell
 
 
 # Load bashrc prompt

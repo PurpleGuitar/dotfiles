@@ -78,6 +78,7 @@ RUN git clone http://github.com/PurpleGuitar/dotfiles \
  && ./install.sh \
  && cd /root \
  && rm -rf dotfiles-backup*
+COPY [".bashrc-local", "/root/.bashrc-local"]
 
 # Persist vim dir between sessions
 WORKDIR /root/
