@@ -124,7 +124,6 @@ vnoremap // y/<C-R>"<CR>
 vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
 nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
 
-
 " ========================================================================
 " Python2 vs. Python3
 " ========================================================================
