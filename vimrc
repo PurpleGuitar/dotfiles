@@ -59,26 +59,22 @@ set laststatus=2
 
 " Left side
 set statusline=
-set statusline+=%n " Buffer number
-set statusline+=:  " :
-set statusline+=%f " File name
-set statusline+=%m " Modified
-set statusline+=%r " Read-only
-set statusline+=%h " Help
-set statusline+=%w " Preview
-set statusline+=\  "
-set statusline+=%y " File type
-set statusline+=%q " quickfix/location
+set statusline+=%n\   " Buffer number
+set statusline+=%f    " File name
+set statusline+=%m    " Modified
+set statusline+=%r    " Read-only
+set statusline+=%h    " Help
+set statusline+=%w    " Preview
+set statusline+=%q    " quickfix/location
 
 " Right side
 set statusline+=%=
-set statusline+=%{fugitive#head()} " Name of current branch, if any
-set statusline+=\                  "
-set statusline+=%l/%L              " Line/Max
-set statusline+=\                  "
-set statusline+=%c                 " Column
-set statusline+=\                  "
-set statusline+=%P                 " Percentage
+set statusline+=%{fugitive#head()!=''?'('.fugitive#head().')\ ':''} " Name of current branch, if any
+set statusline+=%y                        " File type
+set statusline+=[%{&fenc!=''?&fenc:&enc}] " Encoding
+set statusline+=[%{&ff}]\                 " Format
+set statusline+=%l,%c\                    " Line,Column
+set statusline+=%P                        " Percentage
 
 
 " ========================================================================
