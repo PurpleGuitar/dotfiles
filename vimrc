@@ -53,6 +53,35 @@ set modeline
 
 
 " ========================================================================
+" Statusline
+" ========================================================================
+set laststatus=2
+
+" Left side
+set statusline=
+set statusline+=%n " Buffer number
+set statusline+=:  " :
+set statusline+=%f " File name
+set statusline+=%m " Modified
+set statusline+=%r " Read-only
+set statusline+=%h " Help
+set statusline+=%w " Preview
+set statusline+=\  "
+set statusline+=%y " File type
+set statusline+=%q " quickfix/location
+
+" Right side
+set statusline+=%=
+set statusline+=%{fugitive#head()} " Name of current branch, if any
+set statusline+=\                  "
+set statusline+=%l/%L              " Line/Max
+set statusline+=\                  "
+set statusline+=%c                 " Column
+set statusline+=\                  "
+set statusline+=%P                 " Percentage
+
+
+" ========================================================================
 " Why move fingers if you don't have to?
 " ========================================================================
 
@@ -92,7 +121,7 @@ nnoremap <Leader>fix<Space> :silent! %s/\s\+$//<CR>:silent! %s/[\xa0]/ /g<CR>
 nnoremap <Leader>fix' :%s/[\x92’]/'/g<CR>
 nnoremap <Leader>fix" :%s/[\x93\x94“”]/"/g<CR>
 nnoremap <Leader>fix- :%s/[\x96\xb7]/-/g<CR>
-command FindAscii /[^\x00-\x7F]
+command FindNonAscii /[^\x00-\x7F]
 
 " Correct two initial capitals
 " From: https://groups.google.com/forum/#!topic/comp.editors/L8_j0vrs2Hg
@@ -105,6 +134,12 @@ function! AAa_to_Aaa()
     endif
 endf
 :au CursorMovedI * call AAa_to_Aaa()
+
+" Syntax highlighting under the cursor
+function! SyntaxItem()
+  return synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+nnoremap <Leader>hlt :echo SyntaxItem()<CR>
 
 " Other corrections
 abbrev teh the
@@ -123,19 +158,6 @@ vnoremap // y/<C-R>"<CR>
 " From: http://stackoverflow.com/questions/674613/vim-folds-for-everything-except-something
 vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
 nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
-
-" ========================================================================
-" Python2 vs. Python3
-" ========================================================================
-function Py2()
-  let g:syntastic_python_python_exec = '/usr/local/bin/python2.7'
-endfunction
-
-function Py3()
-  let g:syntastic_python_python_exec = '/usr/local/bin/python3.6'
-endfunction
-
-call Py3()   " default to Py3 because I try to use it when possible
 
 
 " ========================================================================
