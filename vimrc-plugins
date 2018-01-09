@@ -100,11 +100,22 @@ autocmd FileType pandoc vnoremap k gk
 
 " Shortcuts for generating pandoc docs
 autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --to=html --out=%:r.html %<CR>
-autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --to=html --out=%:r.html %<CR>:!xdg-open %:r.html<CR>
 autocmd FileType pandoc nnoremap <Leader>pf  :let @l=line(".")<CR>:%!pandoc --standalone --to=markdown<CR>:<C-r>l<CR>zz
 
-autocmd FileType pandoc nmap <Return> <Leader>gl
+if has('win32')
+    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --to=html --out=%:r.html %<CR>:!start %:r.html<CR>
+elseif has('unix')
+    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --to=html --out=%:r.html %<CR>:!xdg-open %:r.html<CR>
+endif
 
+Plugin 'PurpleGuitar/vim-pandoc-tasks'
+nnoremap <C-Space> :PandocTaskToggle<CR>
+vnoremap <C-Space> :PandocTaskToggle<CR>
+nnoremap <Leader><Space> :PandocTaskToggle<CR>
+vnoremap <Leader><Space> :PandocTaskToggle<CR>
+
+Plugin 'PurpleGuitar/vim-croz-utils'
+let g:croz_utils_date_mappings = 1
 
 " ========================================================================
 " Quick Scope - Highlights targets for f, F, t, and T motions

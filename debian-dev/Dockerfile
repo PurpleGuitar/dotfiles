@@ -8,6 +8,7 @@ RUN apt update && apt install -y \
     colortest \
     command-not-found \
     curl \
+    diffstat \
     exuberant-ctags \
     figlet \
     git \
