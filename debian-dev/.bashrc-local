@@ -1,2 +1,3 @@
+# vim: nowrap textwidth=0
 # Add more directories to cd's search path
-export CDPATH=.:~/working:~/host-home:~/host-home/Source/Repos:~/host-home/OneDrive\ -\ Wycliffe\ Associates\,\ Inc/:~/host-home/AppData/Local
+export CDPATH=.:~/working:~/host-home:~/host-home/Source/Repos:~/host-home/OneDrive\ -\ Wycliffe\ Associates\,\ Inc/:~/host-home/AppData/Local:~/host-home/Dropbox/projects

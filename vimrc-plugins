@@ -21,7 +21,6 @@ Plugin 'tpope/vim-unimpaired'              " Shortcuts, such as ]b (:bnext), ]q 
 Plugin 'tomtom/tcomment_vim'               " Sophisticated commenting, e.g. Ctrl-// to comment
 Plugin 'Raimondi/delimitMate'              " Automatically close quote, parens, brackets, etc.
 Plugin 'kshenoy/vim-signature'             " Show marks in gutter
-Plugin 'ctrlpvim/ctrlp.vim'                " Fast file finder
 Plugin 'tpope/vim-abolish'                 " Tools for smart replace, mangling/demangling, camelCasing, etc.
 Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 Plugin 'tpope/vim-vinegar'                 " Make netrw better
@@ -75,6 +74,7 @@ nmap ]h <Plug>GitGutterNextHunk
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'vim-voom/VOoM'
+autocmd FileType voomtree set nonumber
 
 " Setup pandoc
 let g:pandoc#formatting#mode = 'h'                               " hard line breaks
@@ -89,8 +89,8 @@ let g:pandoc#folding#fold_yaml = 1
 let g:pandoc#syntax#conceal#urls = 1
 
 " " Use tab to jump to next link
-autocmd FileType pandoc nnoremap <Tab> /\[[^]]\+\]\zs[[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
-autocmd FileType pandoc nnoremap <S-Tab> ?\[[^]]\+\]\zs[[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
+autocmd FileType pandoc nnoremap <Tab> /\[\zs[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
+autocmd FileType pandoc nnoremap <S-Tab> ?\[\zs[^]]\+\][[(]\<bar><[^!>]\+><CR>:nohlsearch<CR>
 
 " Linewise movement in pandoc
 autocmd FileType pandoc nnoremap j gj
@@ -99,27 +99,26 @@ autocmd FileType pandoc vnoremap j gj
 autocmd FileType pandoc vnoremap k gk
 
 " Shortcuts for generating pandoc docs
-autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --to=html --out=%:r.html %<CR>
+autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>
 autocmd FileType pandoc nnoremap <Leader>pf  :let @l=line(".")<CR>:%!pandoc --standalone --to=markdown<CR>:<C-r>l<CR>zz
 
 if has('win32')
-    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --to=html --out=%:r.html %<CR>:!start %:r.html<CR>
+    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>:!start %:r.html<CR>
 elseif has('unix')
-    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --to=html --out=%:r.html %<CR>:!xdg-open %:r.html<CR>
+    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>:!xdg-open %:r.html<CR>
 endif
 
-Plugin 'PurpleGuitar/vim-pandoc-tasks'
-nnoremap <C-Space> :PandocTaskToggle<CR>
-vnoremap <C-Space> :PandocTaskToggle<CR>
-nnoremap <Leader><Space> :PandocTaskToggle<CR>
-vnoremap <Leader><Space> :PandocTaskToggle<CR>
-
-Plugin 'PurpleGuitar/vim-croz-utils'
-let g:croz_utils_date_mappings = 1
+" Other settings
+autocmd FileType pandoc set nonumber
 
 " ========================================================================
 " Quick Scope - Highlights targets for f, F, t, and T motions
 " ========================================================================
 Plugin 'unblevable/quick-scope'
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+
+" ========================================================================
+" Experimentation
+" ========================================================================
 

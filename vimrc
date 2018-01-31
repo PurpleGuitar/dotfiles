@@ -40,17 +40,25 @@ set shiftwidth=4
 set softtabstop=4
 set hlsearch
 set ignorecase
-set number
 set mouse=a
 set ttymouse=xterm2
-set nowrap
 set title
 set diffopt+=iwhite
 set textwidth=75
 set hidden
 set complete+=k
 set modeline
+set sidescrolloff=0
+set number
+set nowrap
 
+" Don't show line numbers for certain files
+autocmd FileType qf set nonumber
+
+" Re-assert settings for pandoc files
+autocmd FileType pandoc set nowrap
+autocmd FileType pandoc set nonumber
+autocmd FileType pandoc set sidescrolloff=0
 
 " ========================================================================
 " Statusline
@@ -60,7 +68,7 @@ set laststatus=2
 " Left side
 set statusline=
 set statusline+=%n\   " Buffer number
-set statusline+=%f    " File name
+set statusline+=%t    " File name tail
 set statusline+=%m    " Modified
 set statusline+=%r    " Read-only
 set statusline+=%h    " Help
@@ -75,6 +83,38 @@ set statusline+=[%{&fenc!=''?&fenc:&enc}] " Encoding
 set statusline+=[%{&ff}]\                 " Format
 set statusline+=%l,%c\                    " Line,Column
 set statusline+=%P                        " Percentage
+
+
+" ========================================================================
+" Sort quickfix results
+" ========================================================================
+" Adapted from: https://stackoverflow.com/a/15394482/4183435
+"     and from: https://stackoverflow.com/a/4479072/4183435
+function! SortQuickfix(fn)
+    call setqflist(sort(getqflist(), a:fn))
+endfunction
+function! QfStrCmpTrim(text)
+    let text = a:text
+    " Ignore leading and trailing whitespace
+    let text = substitute(text, '^\s*\(.\{-}\)\s*$', '\1', '')
+    " Ignore signal markers at beginning of line
+    let text = substitute(text, '^[^a-zA-Z0-9]\s\+', '', '')
+    return text
+endfunction
+function! QfStrCmp(e1, e2)
+    let [t1, t2] = [a:e1.text, a:e2.text]
+    let t1 = QfStrCmpTrim(t1)
+    let t2 = QfStrCmpTrim(t2)
+    return t1 <? t2 ? -1 : t1 ==? t2 ? 0 : 1
+endfunction
+function! QfStrCmpDesc(e1, e2)
+    let [t1, t2] = [a:e1.text, a:e2.text]
+    let t1 = QfStrCmpTrim(t1)
+    let t2 = QfStrCmpTrim(t2)
+    return t1 >? t2 ? -1 : t1 ==? t2 ? 0 : 1
+endfunction
+command! SortQuickFix call SortQuickfix('QfStrCmp')
+command! SortQuickFixDesc call SortQuickfix('QfStrCmpDesc')
 
 
 " ========================================================================
@@ -147,8 +187,18 @@ abbrev pokemon Pokémon
 nnoremap <Leader>m :wa<CR>:make<CR>
 inoremap <Leader>m <Esc>:wa<CR>:make<CR>
 
-" Search for visually selected text with //
-vnoremap // y/<C-R>"<CR>
+" Search for selected text, forwards or backwards.
+" from: http://vim.wikia.com/wiki/Search_for_visually_selected_text
+vnoremap <silent> * :<C-U>
+            \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+            \gvy/<C-R><C-R>=substitute(
+            \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+            \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+            \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+            \gvy?<C-R><C-R>=substitute(
+            \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+            \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " Fold everything around selected text
 " From: http://stackoverflow.com/questions/674613/vim-folds-for-everything-except-something
@@ -162,9 +212,6 @@ nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
 
 " Load my colorscheme if available (Must be called after vundle#end())
 silent! colorscheme croz_dark
-"
-" Don't wrap pandoc docs (Must be called after plugins are loaded)
-autocmd FileType pandoc set nowrap
 
 
 " ========================================================================

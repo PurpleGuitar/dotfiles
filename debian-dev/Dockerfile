@@ -15,6 +15,7 @@ RUN apt update && apt install -y \
     golang-go \
     htop \
     jq \
+    libgit2-dev \
     libxml2-utils \
     locales \
     make \
