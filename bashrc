@@ -10,13 +10,17 @@ shopt -s histappend
 
 # Aliases
 alias ls='ls -hF --color=tty' # classify files in colour
-alias grep='grep --color=auto' # Show grep matches in color
 alias cmatrix='cmatrix -b'    # Always use bold for cmatrix -- looks extra awesome
 alias h='history'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 alias in-vim-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
 alias xt='xterm -e "tmux -2" &'
 
+# Show grep in color if possible
+grep --version --color=auto &> /dev/null
+if [ $? -eq 0 ]; then
+    alias grep='grep --color=auto'
+fi
 
 # Enable programmable completion features
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
