@@ -124,6 +124,9 @@ command! SortQuickFixDesc call SortQuickfix('QfStrCmpDesc')
 " jj -> Esc
 inoremap jj <ESC>
 
+" <Backspace> to switch windows
+nnoremap <Backspace> <C-^>
+
 " Use ctrl-s to save (Windows muscle memory)
 nnoremap <C-s> :update<CR>
 inoremap <C-s> :update<CR>
