@@ -1,7 +1,9 @@
 FROM debian:latest
 
 # Install packages and populate command-not-found db
-RUN apt update && apt install -y \
+RUN apt update \
+ && apt upgrade -y \
+ && apt install -y \
     apt-utils \
     bash-completion \
     ccze \
