@@ -27,6 +27,7 @@ Plugin 'tpope/vim-vinegar'                 " Make netrw better
 
 " Commonly used Syntaxes
 Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
+Plugin 'OrangeT/vim-csharp'                " Syntax support for C# files
 
 " Other Stuff
 Plugin 'sjl/gundo.vim'                     " Visual undo
@@ -42,6 +43,31 @@ Plugin 'keith/swift.vim'                   " Swift syntax highlighting
 Plugin 'majutsushi/tagbar'                 " Sidebar for code
 let g:tagbar_sort = 0
 let g:tagbar_iconchars = ['+', '-']
+
+" Windows boxes don't usually have ctags
+if has('unix') && !&diff
+
+    " Automatically open TagBar with supported files
+    autocmd FileType * nested :call tagbar#autoopen(0)
+
+    " Add support for markdown files in tagbar.
+    let g:tagbar_type_pandoc = {
+        \ 'ctagstype': 'pandoc',
+        \ 'ctagsbin' : 'markdown2ctags',
+        \ 'ctagsargs' : '-f - --sort=yes',
+        \ 'kinds' : [
+            \ 's:sections',
+            \ 'i:images'
+        \ ],
+        \ 'sro' : '|',
+        \ 'kind2scope' : {
+            \ 's' : 'section',
+        \ },
+        \ 'sort': 0,
+    \ }
+
+endif
+
 
 
 " ========================================================================
@@ -123,3 +149,5 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " Experimentation
 " ========================================================================
 
+Plugin 'jlanzarotta/bufexplorer'           " Buffer explorer
+nmap _ \be
