@@ -57,6 +57,7 @@ ENV LANG=en_US.UTF-8
 RUN pip3 install --upgrade pip \
  && pip3 install \
          coverage \
+         markdown2ctags \
          pylint \
          requests \
          xmlrunner
@@ -87,7 +88,7 @@ COPY [".bashrc-local", "/root/.bashrc-local"]
 # Persist vim dir between sessions
 WORKDIR /root/
 RUN mv .vim working/ \
- && ln -s working/.vim/
+ && ln -s working/.vim
 
 # Set up w3m tool and persist settings between sessions
 WORKDIR /root/working
@@ -101,6 +102,13 @@ WORKDIR /root/working
 RUN touch .bash_history \
  && cd /root \
  && ln -s working/.bash_history
+
+# Persist ssh keys between sessions
+WORKDIR /root/working
+RUN mkdir .ssh \
+ && chmod 600 .ssh \
+ && cd /root \
+ && ln -s working/.ssh
 
 # Setup persistent working area
 VOLUME ["/root/working"]
