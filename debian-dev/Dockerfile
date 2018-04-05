@@ -13,6 +13,8 @@ RUN apt update \
     diffstat \
     exuberant-ctags \
     figlet \
+    firefox-esr \
+    gcj-jdk \
     git \
     golang-go \
     htop \
