@@ -68,15 +68,6 @@ RUN pip3 install --upgrade pip \
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
  && apt-get install -y nodejs
 
-# Copy fonts and X defaults
-WORKDIR /usr/share/fonts
-RUN wget https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/Inconsolata%20for%20Powerline.otf \
- && wget https://raw.githubusercontent.com/powerline/fonts/master/UbuntuMono/Ubuntu%20Mono%20derivative%20Powerline.ttf
-COPY ["Xdefaults", "/root/.Xdefaults"]
-COPY ["gvimrc", "/root/.gvimrc"]
-RUN chmod 600 /root/.Xdefaults \
- && chmod 600 /root/.gvimrc
-
 # Set up my dotfiles and configure vim
 WORKDIR /root/working
 RUN git clone http://github.com/PurpleGuitar/dotfiles \
@@ -86,6 +77,18 @@ RUN git clone http://github.com/PurpleGuitar/dotfiles \
  && cd /root \
  && rm -rf dotfiles-backup*
 COPY [".bashrc-local", "/root/.bashrc-local"]
+
+# Copy fonts and X defaults
+WORKDIR /usr/share/fonts
+RUN wget https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/Inconsolata%20for%20Powerline.otf \
+ && wget https://raw.githubusercontent.com/powerline/fonts/master/UbuntuMono/Ubuntu%20Mono%20derivative%20Powerline.ttf
+WORKDIR /root
+COPY ["Xdefaults", "/root/working/.Xdefaults"]
+COPY ["gvimrc", "/root/working/.gvimrc"]
+RUN chmod 600 /root/working/.Xdefaults \
+ && chmod 600 /root/working/.gvimrc \
+ && ln -s working/.Xdefaults \
+ && ln -s working/.gvimrc
 
 # Persist vim dir between sessions
 WORKDIR /root/

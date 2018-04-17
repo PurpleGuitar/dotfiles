@@ -1,4 +1,4 @@
 xterm*background:black
 xterm*foreground:white
-xterm*faceName: Ubuntu Mono derivative Powerline:style=Medium
-xterm*faceSize: 16
+xterm*faceName: DejaVu Sans Mono
+xterm*faceSize: 15
