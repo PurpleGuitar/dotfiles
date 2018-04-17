@@ -162,18 +162,6 @@ nnoremap <Leader>fix" :%s/[\x93\x94“”]/"/g<CR>
 nnoremap <Leader>fix- :%s/[\x96\xb7]/-/g<CR>
 command FindNonAscii /[^\x00-\x7F]
 
-" Correct two initial capitals
-" From: https://groups.google.com/forum/#!topic/comp.editors/L8_j0vrs2Hg
-function! AAa_to_Aaa()
-    let c = getline(".")[0:col(".")-2]
-    if c =~ '\v\C<[[:upper:]]{2}[[:lower:]]$'
-        let pos = getpos('.')
-        normal hh~
-        call setpos('.',pos)
-    endif
-endf
-:au CursorMovedI * call AAa_to_Aaa()
-
 " Syntax highlighting under the cursor
 function! SyntaxItem()
   return synIDattr(synID(line("."),col("."),1),"name")
