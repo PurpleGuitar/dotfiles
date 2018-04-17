@@ -59,10 +59,10 @@ fi
 
 # Git branch if available
 if hash __git_ps1 2>/dev/null ; then
-    export GIT_PS1_SHOWDIRTYSTATE=Y
-    export GIT_PS1_SHOWSTASHSTATE=Y
-    export GIT_PS1_SHOWUNTRACKEDFILES=Y
-    export GIT_PS1_SHOWUPSTREAM=Y
+    # export GIT_PS1_SHOWDIRTYSTATE=Y
+    # export GIT_PS1_SHOWSTASHSTATE=Y
+    # export GIT_PS1_SHOWUNTRACKEDFILES=Y
+    # export GIT_PS1_SHOWUPSTREAM=Y
     PS1=$PS1$COLOR_CYAN
     PS1=$PS1'$(__git_ps1)'
     PS1=$PS1$COLOR_RESET
