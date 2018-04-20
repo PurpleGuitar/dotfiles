@@ -6,6 +6,7 @@ RUN apt update \
  && apt install -y \
     apt-utils \
     bash-completion \
+    boxes \
     ccze \
     colortest \
     command-not-found \
@@ -56,13 +57,12 @@ ENV TZ=America/New_York
 ENV LANG=en_US.UTF-8
 
 # Setup Python3 packages
-RUN pip3 install --upgrade pip \
- && pip3 install \
-         coverage \
-         markdown2ctags \
-         pylint \
-         requests \
-         xmlrunner
+RUN pip3 install \
+    coverage \
+    markdown2ctags \
+    pylint \
+    requests \
+    xmlrunner
 
 # Setup Node.js
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
@@ -79,9 +79,6 @@ RUN git clone http://github.com/PurpleGuitar/dotfiles \
 COPY [".bashrc-local", "/root/.bashrc-local"]
 
 # Copy fonts and X defaults
-WORKDIR /usr/share/fonts
-RUN wget https://raw.githubusercontent.com/powerline/fonts/master/Inconsolata/Inconsolata%20for%20Powerline.otf \
- && wget https://raw.githubusercontent.com/powerline/fonts/master/UbuntuMono/Ubuntu%20Mono%20derivative%20Powerline.ttf
 WORKDIR /root
 COPY ["Xdefaults", "/root/working/.Xdefaults"]
 COPY ["gvimrc", "/root/working/.gvimrc"]
