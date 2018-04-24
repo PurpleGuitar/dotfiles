@@ -43,14 +43,31 @@ Plugin 'keith/swift.vim'                   " Swift syntax highlighting
 Plugin 'majutsushi/tagbar'                 " Sidebar for code
 let g:tagbar_sort = 0
 let g:tagbar_iconchars = ['+', '-']
+let g:tagbar_left = 1
 
-" Windows boxes don't usually have ctags
-if has('unix') && !&diff
+autocmd FileType pandoc nnoremap <buffer> <Return> :TagbarOpen fj<CR>
 
-    " Automatically open TagBar with supported files
+" Automatically open TagBar with supported files, if not in diff mode
+if !&diff
     autocmd FileType * nested :call tagbar#autoopen(0)
+endif
 
-    " Add support for markdown files in tagbar.
+if has('win32')
+    let g:tagbar_type_pandoc = {
+        \ 'ctagstype': 'pandoc',
+        \ 'ctagsbin' : 'python',
+        \ 'ctagsargs' : 'C:\Users\oliverc\Programs\markdown2ctags\markdown2ctags.py -f - --sort=yes',
+        \ 'kinds' : [
+            \ 's:sections',
+            \ 'i:images'
+        \ ],
+        \ 'sro' : '|',
+        \ 'kind2scope' : {
+            \ 's' : 'section',
+        \ },
+        \ 'sort': 0,
+    \ }
+elseif has('unix')
     let g:tagbar_type_pandoc = {
         \ 'ctagstype': 'pandoc',
         \ 'ctagsbin' : 'markdown2ctags',
@@ -65,7 +82,6 @@ if has('unix') && !&diff
         \ },
         \ 'sort': 0,
     \ }
-
 endif
 
 
@@ -151,3 +167,17 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 Plugin 'jlanzarotta/bufexplorer'           " Buffer explorer
 nmap _ \be
+
+" Plugin 'PurpleGuitar/vim-pandoc-tasks'
+" nnoremap <C-Space> :PandocTaskToggle<CR>
+" vnoremap <C-Space> :PandocTaskToggle<CR>
+" nnoremap <Leader><Space> :PandocTaskToggle<CR>
+" vnoremap <Leader><Space> :PandocTaskToggle<CR>
+"
+" autocmd FileType pandoc nnoremap <Leader>todo :PandocTaskListTodoSorted '*.md'<CR>:cc<CR>
+" autocmd FileType pandoc nnoremap <Leader>open :PandocTaskListUnfinishedSorted '*.md'<CR>:cc<CR>
+" autocmd FileType pandoc nnoremap <Leader>wait :PandocTaskListWaitSorted '*.md'<CR>:cc<CR>
+" autocmd FileType pandoc nnoremap <Leader>done :PandocTaskListDoneSorted '*.md'<CR>:cc<CR>
+
+Plugin 'PurpleGuitar/vim-zk'
+let g:vim_zk_create_mappings=1

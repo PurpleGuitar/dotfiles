@@ -193,8 +193,8 @@ vnoremap <silent> # :<C-U>
 
 " Fold everything around selected text
 " From: http://stackoverflow.com/questions/674613/vim-folds-for-everything-except-something
-vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
-nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
+" vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
+" nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
 
 
 " ========================================================================
