@@ -28,6 +28,7 @@ Plugin 'tpope/vim-vinegar'                 " Make netrw better
 " Commonly used Syntaxes
 Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
 Plugin 'OrangeT/vim-csharp'                " Syntax support for C# files
+Plugin 'leafgarland/typescript-vim'        " Syntax for typescript
 
 " Other Stuff
 Plugin 'sjl/gundo.vim'                     " Visual undo
@@ -43,7 +44,6 @@ Plugin 'keith/swift.vim'                   " Swift syntax highlighting
 Plugin 'majutsushi/tagbar'                 " Sidebar for code
 let g:tagbar_sort = 0
 let g:tagbar_iconchars = ['+', '-']
-let g:tagbar_left = 1
 
 autocmd FileType pandoc nnoremap <buffer> <Return> :TagbarOpen fj<CR>
 
@@ -162,22 +162,11 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 
 " ========================================================================
-" Experimentation
+" Buffer Explorer
 " ========================================================================
-
 Plugin 'jlanzarotta/bufexplorer'           " Buffer explorer
 nmap _ \be
 
-" Plugin 'PurpleGuitar/vim-pandoc-tasks'
-" nnoremap <C-Space> :PandocTaskToggle<CR>
-" vnoremap <C-Space> :PandocTaskToggle<CR>
-" nnoremap <Leader><Space> :PandocTaskToggle<CR>
-" vnoremap <Leader><Space> :PandocTaskToggle<CR>
-"
-" autocmd FileType pandoc nnoremap <Leader>todo :PandocTaskListTodoSorted '*.md'<CR>:cc<CR>
-" autocmd FileType pandoc nnoremap <Leader>open :PandocTaskListUnfinishedSorted '*.md'<CR>:cc<CR>
-" autocmd FileType pandoc nnoremap <Leader>wait :PandocTaskListWaitSorted '*.md'<CR>:cc<CR>
-" autocmd FileType pandoc nnoremap <Leader>done :PandocTaskListDoneSorted '*.md'<CR>:cc<CR>
-
-Plugin 'PurpleGuitar/vim-zk'
-let g:vim_zk_create_mappings=1
+" ========================================================================
+" Experimentation
+" ========================================================================

@@ -65,6 +65,17 @@ autocmd FileType pandoc set sidescrolloff=0
 " ========================================================================
 set laststatus=2
 
+" Return '[paste]' if we're in paste mode
+" From: https://nkantar.com/blog/my-vim-statusline/
+function! PasteForStatusline()
+    let paste_status = &paste
+    if paste_status == 1
+        return "[paste]"
+    else
+        return ""
+    endif
+endfunction
+
 " Left side
 set statusline=
 set statusline+=%n\   " Buffer number
@@ -78,6 +89,8 @@ set statusline+=%q    " quickfix/location
 " Right side
 set statusline+=%=
 set statusline+=%{fugitive#head()!=''?'('.fugitive#head().')\ ':''} " Name of current branch, if any
+set statusline+=%{PasteForStatusline()}   " paste flag
+set statusline+=\[%{mode()}\]             " Edit mode
 set statusline+=%y                        " File type
 set statusline+=[%{&fenc!=''?&fenc:&enc}] " Encoding
 set statusline+=[%{&ff}]\                 " Format
