@@ -65,8 +65,39 @@ autocmd FileType pandoc set sidescrolloff=0
 " ========================================================================
 set laststatus=2
 
+" Left side
+set statusline=
+set statusline+=%n                                                  " Buffer number
+set statusline+=\                                                   " Space
+set statusline+=%t                                                  " File name tail
+set statusline+=%m                                                  " Modified
+set statusline+=%r                                                  " Read-only
+set statusline+=%h                                                  " Help
+set statusline+=%w                                                  " Preview
+set statusline+=%q                                                  " quickfix/location
+set statusline+=\                                                   " Space
+set statusline+=\[%{mode()}\]                                       " Edit mode
+set statusline+=%y                                                  " File type
+set statusline+=[%{&ff}]                                            " Format
+set statusline+=%#error#
+set statusline+=%{PasteForStatusline()}                             " paste flag
+set statusline+=%{StatuslineTabWarning()}                           " Mix-indent or wrong expandtab
+set statusline+=%{StatuslineTrailingSpaceWarning()}                 " Trailing spaces
+set statusline+=%*
+set statusline+=\                                                   " Space
+set statusline+=%{fugitive#head()!=''?'('.fugitive#head().')\ ':''} " Name of current branch, if any
+
+" Right side
+set statusline+=%=
+set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')} " Highlight under cursor
+set statusline+=\                                                " Space
+set statusline+=0x%B/%b                                          " Byte under cursor
+set statusline+=\                                                " Space
+set statusline+=%l,%c\                                           " Line,Column under cursor
+set statusline+=%P                                               " Percentage into file
+
+" From https://nkantar.com/blog/my-vim-statusline/
 " Return '[paste]' if we're in paste mode
-" From: https://nkantar.com/blog/my-vim-statusline/
 function! PasteForStatusline()
     let paste_status = &paste
     if paste_status == 1
@@ -76,33 +107,49 @@ function! PasteForStatusline()
     endif
 endfunction
 
-" Left side
-set statusline=
-set statusline+=%n\   " Buffer number
-set statusline+=%t    " File name tail
-set statusline+=%m    " Modified
-set statusline+=%r    " Read-only
-set statusline+=%h    " Help
-set statusline+=%w    " Preview
-set statusline+=%q    " quickfix/location
+"From http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
+"return '[&et]' if &et is set wrong
+"return '[mix]' if both spaces and tabs are used to indent
+"return an empty string if everything is fine
+function! StatuslineTabWarning()
+    if !exists("b:statusline_tab_warning")
+        let tabs = search('^\t', 'nw') != 0
+        let spaces = search('^ ', 'nw') != 0
+        if tabs && spaces
+            let b:statusline_tab_warning =  '[mix]'
+        elseif (spaces && !&et) || (tabs && &et)
+            let b:statusline_tab_warning = '[&et]'
+        else
+            let b:statusline_tab_warning = ''
+        endif
+    endif
+    return b:statusline_tab_warning
+endfunction
+"recalculate the tab warning flag when idle and after writing
+autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
 
-" Right side
-set statusline+=%=
-set statusline+=%{fugitive#head()!=''?'('.fugitive#head().')\ ':''} " Name of current branch, if any
-set statusline+=%{PasteForStatusline()}   " paste flag
-set statusline+=\[%{mode()}\]             " Edit mode
-set statusline+=%y                        " File type
-set statusline+=[%{&fenc!=''?&fenc:&enc}] " Encoding
-set statusline+=[%{&ff}]\                 " Format
-set statusline+=%l,%c\                    " Line,Column
-set statusline+=%P                        " Percentage
+"From http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
+"return '[\s]' if trailing white space is detected
+"return '' otherwise
+function! StatuslineTrailingSpaceWarning()
+    if !exists("b:statusline_trailing_space_warning")
+        if search('\s\+$', 'nw') != 0
+            let b:statusline_trailing_space_warning = '[\s]'
+        else
+            let b:statusline_trailing_space_warning = ''
+        endif
+    endif
+    return b:statusline_trailing_space_warning
+endfunction
+"recalculate the trailing whitespace warning when idle, and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 
 
 " ========================================================================
 " Sort quickfix results
 " ========================================================================
-" Adapted from: https://stackoverflow.com/a/15394482/4183435
-"     and from: https://stackoverflow.com/a/4479072/4183435
+" Adapted from https://stackoverflow.com/a/15394482/4183435
+"     and from https://stackoverflow.com/a/4479072/4183435
 function! SortQuickfix(fn)
     call setqflist(sort(getqflist(), a:fn))
 endfunction
@@ -192,7 +239,7 @@ nnoremap <Leader>m :wa<CR>:make<CR>
 inoremap <Leader>m <Esc>:wa<CR>:make<CR>
 
 " Search for selected text, forwards or backwards.
-" from: http://vim.wikia.com/wiki/Search_for_visually_selected_text
+" from http://vim.wikia.com/wiki/Search_for_visually_selected_text
 vnoremap <silent> * :<C-U>
             \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
             \gvy/<C-R><C-R>=substitute(
@@ -205,7 +252,7 @@ vnoremap <silent> # :<C-U>
             \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " Fold everything around selected text
-" From: http://stackoverflow.com/questions/674613/vim-folds-for-everything-except-something
+" From http://stackoverflow.com/questions/674613/vim-folds-for-everything-except-something
 " vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
 " nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
 
@@ -213,6 +260,11 @@ vnoremap <silent> # :<C-U>
 " ========================================================================
 " Other Misc Stuff
 " ========================================================================
+
+" Show tabs and trailing spaces
+" From http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
+set list
+set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
 
 " Load my colorscheme if available (Must be called after vundle#end())
 silent! colorscheme croz_dark
