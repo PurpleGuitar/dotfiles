@@ -79,11 +79,12 @@ set statusline+=\                                                   " Space
 set statusline+=\[%{mode()}\]                                       " Edit mode
 set statusline+=%y                                                  " File type
 set statusline+=[%{&ff}]                                            " Format
-set statusline+=%#error#                                            " Higlight as error
+set statusline+=%#StatusLineWarn#                                   " Highlight as warning
 set statusline+=%{PasteForStatusline()}                             " paste flag
-set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}     " Encoding isn't UTF-8
-set statusline+=%{StatuslineTabWarning()}                           " Mix-indent or wrong expandtab
 set statusline+=%{StatuslineTrailingSpaceWarning()}                 " Trailing spaces
+set statusline+=%#StatusLineErr#                                    " Highlight as error
+set statusline+=%{StatuslineTabWarning()}                           " Mix-indent or wrong expandtab
+set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}     " Encoding isn't UTF-8
 set statusline+=%*                                                  " Highlight normal
 set statusline+=\                                                   " Space
 set statusline+=%{fugitive#head()!=''?'('.fugitive#head().')\ ':''} " Name of current branch, if any
