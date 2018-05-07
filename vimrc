@@ -71,6 +71,7 @@ set statusline+=%n                                                  " Buffer num
 set statusline+=\                                                   " Space
 set statusline+=%t                                                  " File name tail
 set statusline+=%m                                                  " Modified
+set statusline+=%<                                                  " Cut here
 set statusline+=%r                                                  " Read-only
 set statusline+=%h                                                  " Help
 set statusline+=%w                                                  " Preview
@@ -266,7 +267,7 @@ vnoremap <silent> # :<C-U>
 " Show tabs and trailing spaces
 " From http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
 set list
-set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
+set listchars=tab:>.,trail:.,nbsp:.
 
 " Load my colorscheme if available (Must be called after vundle#end())
 silent! colorscheme croz_dark
