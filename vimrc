@@ -66,9 +66,7 @@ autocmd FileType pandoc set sidescrolloff=0
 set laststatus=2
 
 " Left side
-set statusline=
-set statusline+=%n                                                  " Buffer number
-set statusline+=\                                                   " Space
+set statusline=                                                     " Clear previous statusline if any
 set statusline+=%t                                                  " File name tail
 set statusline+=%m                                                  " Modified
 set statusline+=%<                                                  " Cut here
