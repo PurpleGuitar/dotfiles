@@ -12,9 +12,10 @@ bind C-y run-shell -b "tmux show-buffer | xclip -selection clipboard -i"
 bind C-p run-shell -b "xclip -o -selection clipboard | tmux load-buffer - ; tmux paste-buffer"
 
 # better splits with | and -
-bind-key | split-window -h
-bind-key \ split-window -h # | with no shift
-bind-key - split-window -v
+bind-key | split-window -h -c "#{pane_current_path}"
+bind-key \ split-window -h -c "#{pane_current_path}" # | with no shift
+bind-key - split-window -v -c "#{pane_current_path}"
+bind-key c new-window -c "#{pane_current_path}"
 
 # Use vi-like key bindings
 set -g mode-keys vi
@@ -60,8 +61,7 @@ set-window-option -g window-status-current-fg white
 # Use 12 hour clock
 set-window-option -g clock-mode-style 12
 
-# Screen Saver :)
-set -g lock-after-time 600
-set -g lock-command "tty-clock -trSC 7"
+# Other options
+set -g history-limit 5000
 
 # vim: filetype=tmux
