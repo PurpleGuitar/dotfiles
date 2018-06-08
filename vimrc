@@ -75,7 +75,6 @@ set statusline+=%h                                                  " Help
 set statusline+=%w                                                  " Preview
 set statusline+=%q                                                  " quickfix/location
 set statusline+=\                                                   " Space
-set statusline+=\[%{mode()}\]                                       " Edit mode
 set statusline+=%y                                                  " File type
 set statusline+=[%{&ff}]                                            " Format
 set statusline+=%#StatusLineWarn#                                   " Highlight as warning
@@ -230,6 +229,7 @@ endfunction
 nnoremap <Leader>hlt :echo SyntaxItem()<CR>
 
 " Other corrections
+abbrev THe The
 abbrev teh the
 abbrev nad and
 abbrev pkmn Pokémon

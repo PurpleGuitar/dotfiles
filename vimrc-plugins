@@ -29,6 +29,7 @@ Plugin 'tpope/vim-vinegar'                 " Make netrw better
 Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
 Plugin 'OrangeT/vim-csharp'                " Syntax support for C# files
 Plugin 'leafgarland/typescript-vim'        " Syntax for typescript
+Plugin 'udalov/kotlin-vim'                 " Syntax for Kotlin
 
 " Other Stuff
 Plugin 'sjl/gundo.vim'                     " Visual undo
@@ -46,11 +47,6 @@ let g:tagbar_sort = 0
 let g:tagbar_iconchars = ['+', '-']
 
 autocmd FileType pandoc nnoremap <buffer> <Return> :TagbarOpen fj<CR>
-
-" Automatically open TagBar with supported files, if not in diff mode
-if !&diff
-    autocmd FileType * nested :call tagbar#autoopen(0)
-endif
 
 if has('win32')
     let g:tagbar_type_pandoc = {
