@@ -15,6 +15,7 @@ RUN apt update \
     exuberant-ctags \
     figlet \
     firefox-esr \
+    fonts-noto \
     gcj-jdk \
     git \
     golang-go \
@@ -35,6 +36,7 @@ RUN apt update \
     ranger \
     texlive \
     texlive-latex-extra \
+    texlive-xetex \
     tig \
     tmux \
     tree \
@@ -55,6 +57,13 @@ RUN echo $TZ > /etc/timezone \
  && update-locale LANG=en_US.UTF-8
 ENV TZ=America/New_York
 ENV LANG=en_US.UTF-8
+
+# Setup Python packages
+RUN pip install \
+    bs4 \
+    markdown \
+    pyyaml \
+    usfm_tools
 
 # Setup Python3 packages
 RUN pip3 install \
