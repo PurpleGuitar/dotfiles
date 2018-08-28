@@ -38,6 +38,7 @@ Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm colo
 Plugin 'severin-lemaignan/vim-minimap'     " Silly but fun
 Plugin 'fatih/vim-go'                      " Golang development
 Plugin 'keith/swift.vim'                   " Swift syntax highlighting
+Plugin 'kovisoft/slimv'                    " LISP development
 
 " ========================================================================
 " Tagbar
@@ -64,6 +65,7 @@ if has('win32')
         \ 'sort': 0,
     \ }
 elseif has('unix')
+    " sudo pip3 install markdown2ctags
     let g:tagbar_type_pandoc = {
         \ 'ctagstype': 'pandoc',
         \ 'ctagsbin' : 'markdown2ctags',
