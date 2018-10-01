@@ -1,21 +1,8 @@
-;; =================================================================
-;; Key shortcuts from POK3R using Capslock as virtual Fn key
-;; =================================================================
 ;; Online keyboard tester: http://www.keyboardtester.com/tester.html
 
 ; Disable capslock by itself
 SetCapsLockState, Off
 SetCapsLockState, AlwaysOff
-CapsLock::
-return
-
-; EXPERIMENTAL: Turn capslock off: Ctrl-Alt-Shift-Capslock
-^!+CapsLock::
-SetCapsLockState, Off
-SetCapsLockState, AlwaysOff
-return
-
-+Esc::Send ~
 
 SendWithModifiers(keycode)
 {
@@ -31,14 +18,17 @@ SendWithModifiers(keycode)
     return
 }
 
+;; =================================================================
+;; Key shortcuts from POK3R using Capslock as virtual Fn key
+;; =================================================================
 
 Capslock & Esc::SendWithModifiers("``")
 Capslock & z::SendWithModifiers("{Appskey}")
 Capslock & i::SendWithModifiers("{Up}")
-Capslock & j::SendWithModifiers("{Left}")
-Capslock & k::SendWithModifiers("{Down}")
-Capslock & l::SendWithModifiers("{Right}")
-Capslock & u::SendWithModifiers("{PgUp}")
+;;Capslock & j::SendWithModifiers("{Left}")
+;;Capslock & k::SendWithModifiers("{Down}")
+;;Capslock & l::SendWithModifiers("{Right}")
+;;Capslock & u::SendWithModifiers("{PgUp}")
 Capslock & o::SendWithModifiers("{PgDn}")
 Capslock & q::SendWithModifiers("{Media_Prev}")
 Capslock & w::SendWithModifiers("{Media_Play_Pause}")
@@ -67,3 +57,34 @@ Capslock & +::SendWithModifiers("{F12}")
 Capslock & SC027::SendWithModifiers("{Insert}") ; Semicolon
 Capslock & SC028::SendWithModifiers("{Delete}") ; Single quote
 Capslock & SC00E::SendWithModifiers("{Delete}") ; Backspace
+
+;; =================================================================
+;; Key shortcuts from Chromebook
+;; =================================================================
+
+; Cursor movement
+Capslock & Left::SendWithModifiers("{Home}")
+Capslock & Right::SendWithModifiers("{End}")
+Capslock & Up::SendWithModifiers("{PgUp}")
+Capslock & Down::SendWithModifiers("{PgDn}")
+
+; Window movement and docking
+![::Send {LWin Down}{Left}{LWin Up}
+!]::Send {LWin Down}{Right}{LWin Up}
+!=::Send {LWin Down}{Up}{LWin Up}
+!-::Send {LWin Down}{Down}{LWin Up}
+
+;; =================================================================
+;; Graveyard
+;; =================================================================
+
+; EXPERIMENTAL: Turn capslock off: Ctrl-Alt-Shift-Capslock
+; ^!+CapsLock::
+; SetCapsLockState, Off
+; SetCapsLockState, AlwaysOff
+; return
+
+; +Esc::Send ~
+
+; The "Find" key on the Chromebook is where CapsLock is on most keyboards
+; CapsLock::Send {LWin}

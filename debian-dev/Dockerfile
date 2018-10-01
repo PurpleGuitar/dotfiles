@@ -16,7 +16,6 @@ RUN apt update \
     figlet \
     firefox-esr \
     fonts-noto \
-    gcj-jdk \
     git \
     golang-go \
     htop \
@@ -27,6 +26,7 @@ RUN apt update \
     make \
     man-db \
     ncdu \
+    openjdk-8-jdk \
     pandoc \
     procps \
     python \
