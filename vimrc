@@ -267,9 +267,12 @@ vnoremap <silent> # :<C-U>
 set list
 set listchars=tab:>.,trail:.,nbsp:.
 
+" Number selected list
+" From: //stackoverflow.com/a/4224454
+command! -nargs=0 -range=% NumberLines <line1>,<line2>s/^\s*\zs/\=(line('.') - <line1>+1).'. '
+
 " Load my colorscheme if available (Must be called after vundle#end())
 silent! colorscheme croz_dark
-
 
 " ========================================================================
 " Import local .vimrc, if there is one
