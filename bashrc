@@ -11,6 +11,7 @@ shopt -s histappend
 # Aliases
 alias ls='ls -hF --color=tty' # classify files in colour
 alias cmatrix='cmatrix -b'    # Always use bold for cmatrix -- looks extra awesome
+alias tree='tree -C'          # Always use color for tree
 alias h='history'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 alias in-vim-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
