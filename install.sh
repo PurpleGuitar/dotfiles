@@ -32,7 +32,7 @@ backup_if_exists()
 
 # Backup and link to regular dotfiles
 cd $TARGET_DIR
-FILES="bashrc bashrc-prompt gitconfig gvimrc inputrc vimrc vimrc-plugins profile tmux.conf.common"
+FILES="bashrc bashrc-prompt gitconfig gvimrc inputrc vimrc vimrc-plugins profile tmux.conf.common w3m Xresources"
 for FILENAME in $FILES
 do
     SCRIPT_DIR_FILENAME=$SCRIPT_DIR/$FILENAME
@@ -71,6 +71,9 @@ git clone https://github.com/VundleVim/Vundle.vim.git
 git clone https://github.com/PurpleGuitar/vim-croz-colorscheme.git
 cd $TARGET_DIR
 vim -T dumb "+set nomore" "+PluginInstall" "+qall"
+
+# Set Xterm defaults if xrdb exists
+command -v xrdb && echo "Setting up .Xresources..." && xrdb -merge $TARGET_DIR/.Xresources
 
 # Done
 echo "Done."

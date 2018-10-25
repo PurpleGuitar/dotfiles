@@ -1,0 +1,4 @@
+keymap C-d NEXT_PAGE
+keymap C-u PREV_PAGE
+keymap C-o BACK
+keymap C-] GOTO_LINK
