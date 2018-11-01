@@ -1,5 +1,23 @@
+#!/bin/bash
+
 # Abort on any error.
 set -e
+
+# Initialize arguments
+SETUP_VIM="true"
+
+# Check options
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --no-vim) SETUP_VIM="false"; shift 1;;
+        -h|--help)
+            echo "Installs dotfiles.";
+            echo "--no-vim: Don't set up .vim directory"
+            exit 0;;
+        -*) echo "unknown option: $1" >&2; exit 1;;
+        *) echo "unknown argument: $1" >&2; exit 1;;
+    esac
+done
 
 # Check for required tools.
 REQUIRED_TOOLS="realpath git tmux vim"
@@ -59,18 +77,22 @@ ln -s $SCRIPT_DIR_FILENAME .tmux.conf
 echo "Created link to $SCRIPT_DIR_FILENAME"
 
 # Vim
-echo "Setting up vim..."
-VIM_DIR=$TARGET_DIR/.vim
-if [ -d $VIM_DIR ] ; then
-   mv $VIM_DIR $BACKUP_DIR
-   echo "Backed up $VIM_DIR"
+if [ "$SETUP_VIM" = "true" ] ; then
+    echo "Setting up .vim directory..."
+    VIM_DIR=$TARGET_DIR/.vim
+    if [ -d $VIM_DIR ] ; then
+       mv $VIM_DIR $BACKUP_DIR
+       echo "Backed up $VIM_DIR"
+    fi
+    mkdir -p $VIM_DIR/bundle
+    cd $VIM_DIR/bundle
+    git clone https://github.com/VundleVim/Vundle.vim.git
+    git clone https://github.com/PurpleGuitar/vim-croz-colorscheme.git
+    cd $TARGET_DIR
+    vim -T dumb "+set nomore" "+PluginInstall" "+qall"
+else
+    echo "Skipping setup of .vim directory..."
 fi
-mkdir -p $VIM_DIR/bundle
-cd $VIM_DIR/bundle
-git clone https://github.com/VundleVim/Vundle.vim.git
-git clone https://github.com/PurpleGuitar/vim-croz-colorscheme.git
-cd $TARGET_DIR
-vim -T dumb "+set nomore" "+PluginInstall" "+qall"
 
 # Set Xterm defaults if xrdb exists
 command -v xrdb && echo "Setting up .Xresources..." && xrdb -merge $TARGET_DIR/.Xresources
