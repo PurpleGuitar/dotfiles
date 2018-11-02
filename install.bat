@@ -26,7 +26,7 @@ IF "%~1"=="--help" (
     echo Usage: install.bat
     echo Options:
     echo   --help: Print this help and exit
-    echo   --no-vim: Don't setup vim
+    echo   --no-vim: Don't setup .vim directory
     goto end
 )
 IF "%~1"=="--no-vim" (
@@ -40,6 +40,7 @@ GOTO parse
 rem Link to dotfiles
 cd %TARGET_DIR%
 for %%x in (
+    gvimrc
     vimrc
     vimrc-plugins
     gitconfig
