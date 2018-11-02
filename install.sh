@@ -94,8 +94,5 @@ else
     echo "Skipping setup of .vim directory..."
 fi
 
-# Set Xterm defaults if xrdb exists
-command -v xrdb && echo "Setting up .Xresources..." && xrdb -merge $TARGET_DIR/.Xresources
-
 # Done
 echo "Done."
