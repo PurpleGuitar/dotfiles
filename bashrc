@@ -9,12 +9,13 @@ shopt -s histappend
 
 
 # Aliases
-alias ls='ls -hF --color=tty'    # classify files in colour
 alias cmatrix='cmatrix -b'       # Always use bold for cmatrix -- looks extra awesome
-alias tree='tree -C --dirsfirst' # Always use color for tree, sort dirs first
 alias h='history'
-alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 alias in-vim-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
+alias ls='ls -hF --color=tty'    # classify files in colour
+alias nyancat='nyancat --no-counter --no-title' # Behave, kitty!
+alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
+alias tree='tree -C --dirsfirst' # Always use color for tree, sort dirs first
 alias xt='xterm -e "tmux -u2" &'
 
 # Show grep in color if possible
