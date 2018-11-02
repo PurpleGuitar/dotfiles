@@ -50,7 +50,19 @@ backup_if_exists()
 
 # Backup and link to regular dotfiles
 cd $TARGET_DIR
-FILES="bashrc bashrc-prompt gitconfig gvimrc inputrc vimrc vimrc-plugins profile tmux.conf.common w3m Xresources"
+FILES="\
+    Xresources \
+    bashrc \
+    bashrc-prompt \
+    gitconfig \
+    gvimrc \
+    inputrc \
+    profile \
+    tmux.conf.common \
+    vimrc \
+    vimrc-plugins \
+    w3m \
+    "
 for FILENAME in $FILES
 do
     SCRIPT_DIR_FILENAME=$SCRIPT_DIR/$FILENAME

@@ -76,7 +76,7 @@ fi
 # Set Xterm defaults if xrdb exists
 # =================================
 # (We load this after .bashrc-local since it often sets the DISPLAY variable.)
-command -v xrdb> /dev/null 2>&1 && xrdb -merge .Xresources
+command -v xrdb> /dev/null 2>&1 && xrdb -merge ~/.Xresources
 
 
 # Launch tmux if available

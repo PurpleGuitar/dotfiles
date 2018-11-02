@@ -14,6 +14,10 @@ set OLDDIR=%CD%
 rem Get script dir
 set SCRIPT_DIR=%~dp0
 
+rem Get source dir (that is, the parent dir of this script)
+rem Adapted from https://stackoverflow.com/questions/34942604/get-parent-directory-of-a-specific-path-in-batch-script#comment57629146_34948844
+for %%a in ("%SCRIPT_DIR%\.") do set "SOURCE_DIR=%%~dpa"
+
 rem Get target dir
 set TARGET_DIR=%USERPROFILE%
 
@@ -48,7 +52,7 @@ for %%x in (
     rem Delete old file if it exists
     del .%%x >nul 2>&1
     rem Create hardlink to new file
-    mklink /H ".%%x" %SCRIPT_DIR%%%x"
+    mklink /H ".%%x" %SOURCE_DIR%%%x"
 )
 
 
