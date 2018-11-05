@@ -28,6 +28,7 @@ fi
 
 # Other aliases
 alias h='history'
+alias htopu='htop -u $USER'
 alias in-vim-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 
@@ -76,7 +77,7 @@ fi
 # Set Xterm defaults if xrdb exists
 # =================================
 # (We load this after .bashrc-local since it often sets the DISPLAY variable.)
-command -v xrdb> /dev/null 2>&1 && xrdb -merge ~/.Xresources
+command -v xrdb> /dev/null 2>&1 && [ "$DISPLAY" ] && xrdb -merge ~/.Xresources
 
 
 # Launch tmux if available
