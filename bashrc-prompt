@@ -1,11 +1,13 @@
+#!/bin/bash
+
 # Bash prompt constants
 SPACE=' '
 NEWLINE='\n'
-
 WORKING_DIRECTORY='\w'
 WORKING_DIRECTORY_BASENAME='\W'
 USERNAME='\u'
 HOSTNAME='\h'
+HISTORY_NUMBER='\!'
 PROMPT_CHARACTER='\$'
 TIME_AMPM='\@'
 
@@ -32,29 +34,38 @@ COLOR_WHITE="\[\e[1;37m\]"
 
 COLOR_RESET="\[\e[0;0m\]"
 
+# Prompt command function.
+PROMPT_COMMAND=__prompt_command
+__prompt_command() {
+# (We don't indent the contents because we're using continuation strings.)
+
+# Get return code from last command.
+local RC_OF_LAST_COMMAND="$?"
+
 # Start with empty prompt
 PS1=""
 
 # Window title: "~ user@host"
-PS1="${PS1}\
-${WINDOW_TITLE_BEGIN}\
+PS1+="${WINDOW_TITLE_BEGIN}\
 ${WORKING_DIRECTORY_BASENAME}\
 ${SPACE}\
 ${USERNAME}@${HOSTNAME}\
 ${WINDOW_TITLE_END}"
 
-# User@host
-PS1="${PS1}\
-${COLOR_GREEN}\
-${USERNAME}@${HOSTNAME}\
-${COLOR_RESET}"
+# Newline
+PS1+="${NEWLINE}"
 
-# Are we running in a Vim shell?
-if [[ $(env | grep VIMRUNTIME) ]] ; then
-    PS1=$PS1${SPACE}
-    PS1=$PS1$COLOR_LIGHT_RED
-    PS1=$PS1\(vim\)
-    PS1=$PS1$COLOR_RESET
+# User@host
+PS1+="${COLOR_LIGHT_GREEN}${USERNAME}@${HOSTNAME}${COLOR_RESET}"
+
+# Return code of last command, if non-zero
+if [ $RC_OF_LAST_COMMAND != 0 ]; then
+    PS1+="${SPACE}${COLOR_RED}(rc:${RC_OF_LAST_COMMAND})${COLOR_RESET}"
+fi
+
+# Shell level, if greater than 1
+if [ $SHLVL -gt 1 ]; then
+    PS1+="${SPACE}${COLOR_YELLOW}(sh:${SHLVL})${COLOR_RESET}"
 fi
 
 # Git branch if available
@@ -63,22 +74,24 @@ if hash __git_ps1 2>/dev/null ; then
     # export GIT_PS1_SHOWSTASHSTATE=Y
     # export GIT_PS1_SHOWUNTRACKEDFILES=Y
     # export GIT_PS1_SHOWUPSTREAM=Y
-    PS1=$PS1$COLOR_CYAN
-    PS1=$PS1'$(__git_ps1)'
-    PS1=$PS1$COLOR_RESET
+    PS1+="${COLOR_CYAN}$(__git_ps1)${COLOR_RESET}"
 fi
 
+# Time of prompt
+PS1+="${SPACE}${COLOR_DARK_GRAY}${TIME_AMPM}${COLOR_RESET}"
+
+# Newline
+PS1+="${NEWLINE}"
+
 # Working directory
-PS1="${PS1}\
-${SPACE}\
-${COLOR_YELLOW}\
-${WORKING_DIRECTORY}\
-${COLOR_RESET}"
+PS1+="${COLOR_GREEN}${WORKING_DIRECTORY}${COLOR_RESET}"
+
+# Newline
+PS1+="${NEWLINE}"
 
 # Prompt
-PS1="${PS1}\
-${NEWLINE}\
-${PROMPT_CHARACTER}\
-${SPACE}"
+PS1+="${PROMPT_CHARACTER}${SPACE}"
+
+}
 
 # vim: filetype=sh
