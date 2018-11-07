@@ -18,7 +18,7 @@ alias nyancat='nyancat --no-counter --no-title'
 alias cmatrix='cmatrix -b'
 
 # Custom xterm that attaches to current tmux session
-alias xt='xterm -e "tmux -u2" &'
+alias xt='xterm -e "tmux -2" &'
 
 # Show grep in color if possible
 grep --version --color=auto &> /dev/null
@@ -84,7 +84,7 @@ command -v xrdb> /dev/null 2>&1 && [ "$DISPLAY" ] && xrdb -merge ~/.Xresources
 # ========================
 if command -v tmux>/dev/null; then
     if [ ! -z "$PS1" ]; then # unless shell not loaded interactively, run tmux
-        [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux -u2 new-session
+        [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux -2 new-session
         # Show motd if we haven't already
         if [ -z "$_motd_listed" ]; then
             case "$TMUX_PANE" in
