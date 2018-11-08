@@ -34,6 +34,11 @@ COLOR_LIGHT_GRAY="\[\e[0;37m\]"
 COLOR_WHITE="\[\e[1;37m\]"
 COLOR_RESET="\[\e[0;0m\]"
 
+# CPU load information
+SYSLOAD_NUM_CPU_CORES=$(grep -c ^processor /proc/cpuinfo)
+SYSLOAD_THRESHOLD_1=$(( 70 * ${SYSLOAD_NUM_CPU_CORES} ))
+SYSLOAD_THRESHOLD_2=$(( 100 * ${SYSLOAD_NUM_CPU_CORES} ))
+
 # Prompt command function.
 PROMPT_COMMAND=__prompt_command
 __prompt_command() {
@@ -61,6 +66,15 @@ PS1+="${COLOR_LIGHT_GREEN}${USERNAME}@${HOSTNAME}${COLOR_RESET}"
 # Note return code of last command, if non-zero
 if [ $RC_OF_LAST_COMMAND != 0 ]; then
     PS1+="${SPACE}${COLOR_RED}(rc:${RC_OF_LAST_COMMAND})${COLOR_RESET}"
+fi
+
+# Note CPU load, if too high
+CPU_LOAD=$(cat /proc/loadavg | cut -d " " -f 1)
+NORMALIZED_CPU_LOAD=${CPU_LOAD//./}
+if [ $NORMALIZED_CPU_LOAD -gt $SYSLOAD_THRESHOLD_2 ]; then
+    PS1+="${SPACE}${COLOR_RED}(load:${CPU_LOAD})${COLOR_RESET}"
+elif [ $NORMALIZED_CPU_LOAD -gt $SYSLOAD_THRESHOLD_1 ]; then
+    PS1+="${SPACE}${COLOR_YELLOW}(load:${CPU_LOAD})${COLOR_RESET}"
 fi
 
 # Note shell depth, if greater than 1
