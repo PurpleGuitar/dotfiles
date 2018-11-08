@@ -11,10 +11,11 @@ HISTORY_NUMBER='\!'
 PROMPT_CHARACTER='\$'
 TIME_AMPM='\@'
 
-# Window and color constants
+# Window constants
 WINDOW_TITLE_BEGIN="\[\e]0;"
 WINDOW_TITLE_END="\a\]"
 
+# Color constants
 COLOR_BLACK="\[\e[0;30m\]"
 COLOR_DARK_GRAY="\[\e[1;30m\]"
 COLOR_RED="\[\e[0;31m\]"
@@ -31,7 +32,6 @@ COLOR_CYAN="\[\e[0;36m\]"
 COLOR_LIGHT_CYAN="\[\e[1;36m\]"
 COLOR_LIGHT_GRAY="\[\e[0;37m\]"
 COLOR_WHITE="\[\e[1;37m\]"
-
 COLOR_RESET="\[\e[0;0m\]"
 
 # Prompt command function.
@@ -58,14 +58,20 @@ PS1+="${NEWLINE}"
 # User@host
 PS1+="${COLOR_LIGHT_GREEN}${USERNAME}@${HOSTNAME}${COLOR_RESET}"
 
-# Return code of last command, if non-zero
+# Note return code of last command, if non-zero
 if [ $RC_OF_LAST_COMMAND != 0 ]; then
     PS1+="${SPACE}${COLOR_RED}(rc:${RC_OF_LAST_COMMAND})${COLOR_RESET}"
 fi
 
-# Shell level, if greater than 1
+# Note shell depth, if greater than 1
 if [ $SHLVL -gt 1 ]; then
-    PS1+="${SPACE}${COLOR_YELLOW}(sh:${SHLVL})${COLOR_RESET}"
+    PS1+="${SPACE}${COLOR_YELLOW}(shell:${SHLVL})${COLOR_RESET}"
+fi
+
+# Note number of tmux sessions, if greater than 1
+TMUX_SESSION_COUNT=$(tmux ls | wc -l)
+if [ $TMUX_SESSION_COUNT -gt 1 ]; then
+    PS1+="${SPACE}${COLOR_YELLOW}(tmux:${TMUX_SESSION_COUNT})${COLOR_RESET}"
 fi
 
 # Git branch if available
