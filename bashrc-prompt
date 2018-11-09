@@ -40,7 +40,7 @@ SYSLOAD_THRESHOLD_1=$(( 70 * ${SYSLOAD_NUM_CPU_CORES} ))
 SYSLOAD_THRESHOLD_2=$(( 100 * ${SYSLOAD_NUM_CPU_CORES} ))
 
 # Total system memory
-SYSMEM_MAX=$(free -m | awk 'NR==2 {print $2}')
+SYSMEM_MAX=$(cat /proc/meminfo | awk 'NR==1 {print $2}')
 SYSMEM_THRESHOLD_1=70
 SYSMEM_THRESHOLD_2=90
 
@@ -83,7 +83,7 @@ elif [ $NORMALIZED_CPU_LOAD -gt $SYSLOAD_THRESHOLD_1 ]; then
 fi
 
 # Note memory load, if too high
-SYSMEM_USED=$(( $(free -m | awk 'NR==2 {print $3}') * 100 ))
+SYSMEM_USED=$(( $(cat /proc/meminfo | awk 'NR==2 {print $2}') * 100 ))
 SYSMEM_USED_PERCENT=$(( $SYSMEM_USED / $SYSMEM_MAX))
 if [ $SYSMEM_USED_PERCENT -gt $SYSMEM_THRESHOLD_2 ]; then
     PS1+="${SPACE}${COLOR_RED}(mem:${SYSMEM_USED_PERCENT}%)${COLOR_RESET}"
