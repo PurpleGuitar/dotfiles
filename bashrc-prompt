@@ -35,14 +35,20 @@ COLOR_WHITE="\[\e[1;37m\]"
 COLOR_RESET="\[\e[0;0m\]"
 
 # CPU load information
-SYSLOAD_NUM_CPU_CORES=$(grep -c ^processor /proc/cpuinfo)
-SYSLOAD_THRESHOLD_WARN=$((   70 * ${SYSLOAD_NUM_CPU_CORES} ))
-SYSLOAD_THRESHOLD_ALERT=$(( 100 * ${SYSLOAD_NUM_CPU_CORES} ))
+if [[ -r /proc/cpuinfo ]] && [[ -r /proc/loadavg ]]; then
+    SYSLOAD_AVAILABLE="true"
+    SYSLOAD_NUM_CPU_CORES=$(grep -c ^processor /proc/cpuinfo)
+    SYSLOAD_THRESHOLD_WARN=$((   70 * ${SYSLOAD_NUM_CPU_CORES} ))
+    SYSLOAD_THRESHOLD_ALERT=$(( 100 * ${SYSLOAD_NUM_CPU_CORES} ))
+fi
 
 # Total system memory
-SYSMEM_FREE_MAX=$(cat /proc/meminfo | awk 'NR==1 {print $2}')
-SYSMEM_FREE_THRESHOLD_WARN=$((  ${SYSMEM_FREE_MAX} * 20 / 100 ))
-SYSMEM_FREE_THRESHOLD_ALERT=$(( ${SYSMEM_FREE_MAX} * 10 / 100 ))
+if [[ -r /proc/meminfo ]]; then
+    SYSMEM_AVAILABLE="true"
+    SYSMEM_FREE_MAX=$(cat /proc/meminfo | awk 'NR==1 {print $2}')
+    SYSMEM_FREE_THRESHOLD_WARN=$((  ${SYSMEM_FREE_MAX} * 20 / 100 ))
+    SYSMEM_FREE_THRESHOLD_ALERT=$(( ${SYSMEM_FREE_MAX} * 10 / 100 ))
+fi
 
 # Prompt command function.
 PROMPT_COMMAND=__prompt_command
@@ -74,22 +80,26 @@ if [ ${RC_OF_LAST_COMMAND} != 0 ]; then
 fi
 
 # Note CPU load, if too high
-CPU_LOAD=$(cat /proc/loadavg | cut -d " " -f 1)
-NORMALIZED_CPU_LOAD=${CPU_LOAD//./}
-if [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_ALERT} ]; then
-    PS1+="${SPACE}${COLOR_RED}(load:${CPU_LOAD})${COLOR_RESET}"
-elif [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_WARN} ]; then
-    PS1+="${SPACE}${COLOR_YELLOW}(load:${CPU_LOAD})${COLOR_RESET}"
+if [[ ${SYSLOAD_AVAILABLE} ]]; then
+    CPU_LOAD=$(cat /proc/loadavg | cut -d " " -f 1)
+    NORMALIZED_CPU_LOAD=${CPU_LOAD//./}
+    if [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_ALERT} ]; then
+        PS1+="${SPACE}${COLOR_RED}(load:${CPU_LOAD})${COLOR_RESET}"
+    elif [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_WARN} ]; then
+        PS1+="${SPACE}${COLOR_YELLOW}(load:${CPU_LOAD})${COLOR_RESET}"
+    fi
 fi
 
 # Note memory load, if too high
-SYSMEM_FREE=$(( $(cat /proc/meminfo | awk 'NR==2 {print $2}') ))
-if [ ${SYSMEM_FREE} -lt ${SYSMEM_FREE_THRESHOLD_ALERT} ]; then
-    SYSMEM_FREE_MB=$(( ${SYSMEM_FREE} / 1000 ))
-    PS1+="${SPACE}${COLOR_RED}(mem<${SYSMEM_FREE_MB}MB)${COLOR_RESET}"
-elif [ ${SYSMEM_FREE} -lt ${SYSMEM_FREE_THRESHOLD_WARN} ]; then
-    SYSMEM_FREE_MB=$(( ${SYSMEM_FREE} / 1000 ))
-    PS1+="${SPACE}${COLOR_YELLOW}(mem<${SYSMEM_FREE_MB}MB)${COLOR_RESET}"
+if [[ ${SYSMEM_AVAILABLE} ]]; then
+    SYSMEM_FREE=$(( $(cat /proc/meminfo | awk 'NR==2 {print $2}') ))
+    if [ ${SYSMEM_FREE} -lt ${SYSMEM_FREE_THRESHOLD_ALERT} ]; then
+        SYSMEM_FREE_MB=$(( ${SYSMEM_FREE} / 1000 ))
+        PS1+="${SPACE}${COLOR_RED}(mem<${SYSMEM_FREE_MB}MB)${COLOR_RESET}"
+    elif [ ${SYSMEM_FREE} -lt ${SYSMEM_FREE_THRESHOLD_WARN} ]; then
+        SYSMEM_FREE_MB=$(( ${SYSMEM_FREE} / 1000 ))
+        PS1+="${SPACE}${COLOR_YELLOW}(mem<${SYSMEM_FREE_MB}MB)${COLOR_RESET}"
+    fi
 fi
 
 # Note shell depth, if greater than 1
