@@ -69,36 +69,37 @@ PS1+="${NEWLINE}"
 PS1+="${COLOR_LIGHT_GREEN}${USERNAME}@${HOSTNAME}${COLOR_RESET}"
 
 # Note return code of last command, if non-zero
-if [ $RC_OF_LAST_COMMAND != 0 ]; then
+if [ ${RC_OF_LAST_COMMAND} != 0 ]; then
     PS1+="${SPACE}${COLOR_RED}(rc:${RC_OF_LAST_COMMAND})${COLOR_RESET}"
 fi
 
 # Note CPU load, if too high
 CPU_LOAD=$(cat /proc/loadavg | cut -d " " -f 1)
 NORMALIZED_CPU_LOAD=${CPU_LOAD//./}
-if [ $NORMALIZED_CPU_LOAD -gt $SYSLOAD_THRESHOLD_2 ]; then
+if [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_2} ]; then
     PS1+="${SPACE}${COLOR_RED}(load:${CPU_LOAD})${COLOR_RESET}"
-elif [ $NORMALIZED_CPU_LOAD -gt $SYSLOAD_THRESHOLD_1 ]; then
+elif [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_1} ]; then
     PS1+="${SPACE}${COLOR_YELLOW}(load:${CPU_LOAD})${COLOR_RESET}"
 fi
 
 # Note memory load, if too high
-SYSMEM_USED=$(( $(cat /proc/meminfo | awk 'NR==2 {print $2}') * 100 ))
-SYSMEM_USED_PERCENT=$(( $SYSMEM_USED / $SYSMEM_MAX))
-if [ $SYSMEM_USED_PERCENT -gt $SYSMEM_THRESHOLD_2 ]; then
+SYSMEM_FREE=$(( $(cat /proc/meminfo | awk 'NR==2 {print $2}') ))
+SYSMEM_USED=$(( ${SYSMEM_MAX} - ${SYSMEM_FREE} ))
+SYSMEM_USED_PERCENT=$(( (${SYSMEM_USED} * 100) / ${SYSMEM_MAX} ))
+if [ ${SYSMEM_USED_PERCENT} -gt ${SYSMEM_THRESHOLD_2} ]; then
     PS1+="${SPACE}${COLOR_RED}(mem:${SYSMEM_USED_PERCENT}%)${COLOR_RESET}"
-elif [ $SYSMEM_USED_PERCENT -gt $SYSMEM_THRESHOLD_1 ]; then
+elif [ ${SYSMEM_USED_PERCENT} -gt ${SYSMEM_THRESHOLD_1} ]; then
     PS1+="${SPACE}${COLOR_YELLOW}(mem:${SYSMEM_USED_PERCENT}%)${COLOR_RESET}"
 fi
 
 # Note shell depth, if greater than 1
-if [ $SHLVL -gt 1 ]; then
+if [ ${SHLVL} -gt 1 ]; then
     PS1+="${SPACE}${COLOR_YELLOW}(shell:${SHLVL})${COLOR_RESET}"
 fi
 
 # Note number of tmux sessions, if greater than 1
 TMUX_SESSION_COUNT=$(tmux ls | wc -l)
-if [ $TMUX_SESSION_COUNT -gt 1 ]; then
+if [ ${TMUX_SESSION_COUNT} -gt 1 ]; then
     PS1+="${SPACE}${COLOR_YELLOW}(tmux:${TMUX_SESSION_COUNT})${COLOR_RESET}"
 fi
 
