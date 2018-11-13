@@ -11,4 +11,4 @@ xterm*foreground:white
 
 ! Set font
 xterm*faceName: DejaVu Sans Mono
-xterm*faceSize: 14
+xterm*faceSize: 12
