@@ -2,6 +2,7 @@
 [ -z "$PS1" ] && return
 
 
+# =======
 # Aliases
 # =======
 
@@ -17,9 +18,6 @@ alias nyancat='nyancat --no-counter --no-title'
 # cmatrix looks extra awesome with bold
 alias cmatrix='cmatrix -b'
 
-# Custom xterm that attaches to current tmux session
-alias xt='xterm -e "tmux -2" &'
-
 # Show grep in color if possible
 grep --version --color=auto &> /dev/null
 if [ $? -eq 0 ]; then
@@ -33,6 +31,7 @@ alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running i
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 
 
+# ===========
 # Other Stuff
 # ===========
 
@@ -60,6 +59,7 @@ export EDITOR=vim
 shopt -s cdspell
 
 
+# ==================
 # Load bashrc prompt
 # ==================
 if [ -f ~/.bashrc-prompt ]; then
@@ -67,6 +67,7 @@ if [ -f ~/.bashrc-prompt ]; then
 fi
 
 
+# =====================================
 # Load local bashrc script if it exists
 # =====================================
 if [ -f ~/.bashrc-local ]; then
@@ -74,30 +75,45 @@ if [ -f ~/.bashrc-local ]; then
 fi
 
 
+# =================================
 # Set Xterm defaults if xrdb exists
 # =================================
+
 # (We load this after .bashrc-local since it often sets the DISPLAY variable.)
 command -v xrdb> /dev/null 2>&1 && [ "$DISPLAY" ] && xrdb -merge ~/.Xresources
 
 
-# Launch tmux if available
-# ========================
+# ==========
+# Tmux utils
+# ==========
+
+# Get tmux session for this tty
+function tmux_session_id() {
+    TTY=$(tty)
+    for TTY_TMUX_SESSION in $(tmux list-sessions -F "#{session_name}" 2>/dev/null); do
+        tmux list-panes -F "#{pane_tty} #{session_id}" -t "${TTY_TMUX_SESSION}"
+    done | grep ${TTY} | awk '{print $2}'
+}
+
+# Get tmux pane for this TTY
+# (we can't use $TMUX_PANE because it might have been set by a parent shell, not this tty.)
+function tmux_pane_id() {
+    TTY=$(tty)
+    tmux list-panes -F "#{pane_tty} #{pane_id}" -t "${TMUX_SESSION}" | grep ${TTY} | awk '{print $2}'
+}
+
+# Start in tmux if available
 if command -v tmux>/dev/null; then
-    if [ ! -z "$PS1" ]; then # unless shell not loaded interactively, run tmux
-        [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux -2 new-session
-        # Show motd if we haven't already
-        if [ -z "$_motd_listed" ]; then
-            case "$TMUX_PANE" in
-                %0) if [ -f /run/motd.dynamic ]; then
-                        cat /run/motd.dynamic
-                    fi
-                    if [ -f /etc/motd ]; then
-                        cat /etc/motd
-                    fi
-                    export _motd_listed=yes
-                    ;;
-                *)  ;;
-            esac
+    if [ ! -z "$PS1" ]; then
+        TTY_TMUX_PANE=$(tmux_pane_id)
+        [ -z $TTY_TMUX_PANE ] && exec tmux -2 new-session
+        if [ "$TMUX_PANE" == "%0" ]; then
+            if [ -f /run/motd.dynamic ]; then
+                cat /run/motd.dynamic
+            fi
+            if [ -f /etc/motd ]; then
+                cat /etc/motd
+            fi
         fi
     fi
 fi
