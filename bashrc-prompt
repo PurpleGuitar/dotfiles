@@ -34,6 +34,14 @@ COLOR_LIGHT_GRAY="\[\e[0;37m\]"
 COLOR_WHITE="\[\e[1;37m\]"
 COLOR_RESET="\[\e[0;0m\]"
 
+# Meta-colors
+COLOR_THEME=${COLOR_GREEN}
+COLOR_THEME_LIGHT=${COLOR_LIGHT_GREEN}
+COLOR_NOTE=${COLOR_DARK_GRAY}
+COLOR_STATUS=${COLOR_CYAN}
+COLOR_WARN=${COLOR_YELLOW}
+COLOR_ALERT=${COLOR_RED}
+
 # CPU load information
 if [[ -r /proc/cpuinfo ]] && [[ -r /proc/loadavg ]]; then
     SYSLOAD_DISPLAY="true"
@@ -72,11 +80,11 @@ ${WINDOW_TITLE_END}"
 PS1+="${NEWLINE}"
 
 # User@host
-PS1+="${COLOR_LIGHT_GREEN}${USERNAME}@${HOSTNAME}${COLOR_RESET}"
+PS1+="${COLOR_THEME}${USERNAME}@${HOSTNAME}${COLOR_RESET}"
 
 # Note return code of last command, if non-zero
 if [ ${RC_OF_LAST_COMMAND} != 0 ]; then
-    PS1+="${SPACE}${COLOR_RED}(rc:${RC_OF_LAST_COMMAND})${COLOR_RESET}"
+    PS1+="${SPACE}${COLOR_ALERT}(rc:${RC_OF_LAST_COMMAND})${COLOR_RESET}"
 fi
 
 # Note CPU load, if too high
@@ -84,9 +92,9 @@ if [[ ${SYSLOAD_DISPLAY} ]]; then
     CPU_LOAD=$(cat /proc/loadavg | cut -d " " -f 1)
     NORMALIZED_CPU_LOAD=${CPU_LOAD//./}
     if [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_ALERT} ]; then
-        PS1+="${SPACE}${COLOR_RED}(load:${CPU_LOAD})${COLOR_RESET}"
+        PS1+="${SPACE}${COLOR_ALERT}(load:${CPU_LOAD})${COLOR_RESET}"
     elif [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_WARN} ]; then
-        PS1+="${SPACE}${COLOR_YELLOW}(load:${CPU_LOAD})${COLOR_RESET}"
+        PS1+="${SPACE}${COLOR_WARN}(load:${CPU_LOAD})${COLOR_RESET}"
     fi
 fi
 
@@ -95,22 +103,11 @@ if [[ ${SYSMEM_DISPLAY} ]]; then
     SYSMEM_AVAILABLE=$(( $(cat /proc/meminfo | grep MemAvailable | awk '{print $2}') ))
     if [ ${SYSMEM_AVAILABLE} -lt ${SYSMEM_AVAILABLE_THRESHOLD_ALERT} ]; then
         SYSMEM_AVAILABLE_MB=$(( ${SYSMEM_AVAILABLE} / 1000 ))
-        PS1+="${SPACE}${COLOR_RED}(mem<${SYSMEM_AVAILABLE_MB}MB)${COLOR_RESET}"
+        PS1+="${SPACE}${COLOR_ALERT}(mem<${SYSMEM_AVAILABLE_MB}MB)${COLOR_RESET}"
     elif [ ${SYSMEM_AVAILABLE} -lt ${SYSMEM_AVAILABLE_THRESHOLD_WARN} ]; then
         SYSMEM_AVAILABLE_MB=$(( ${SYSMEM_AVAILABLE} / 1000 ))
-        PS1+="${SPACE}${COLOR_YELLOW}(mem<${SYSMEM_AVAILABLE_MB}MB)${COLOR_RESET}"
+        PS1+="${SPACE}${COLOR_WARN}(mem<${SYSMEM_AVAILABLE_MB}MB)${COLOR_RESET}"
     fi
-fi
-
-# Note shell depth, if greater than 1
-if [ ${SHLVL} -gt 1 ]; then
-    PS1+="${SPACE}${COLOR_YELLOW}(shell:${SHLVL})${COLOR_RESET}"
-fi
-
-# Note number of tmux sessions, if greater than 1
-TMUX_SESSION_COUNT=$(tmux ls | wc -l)
-if [ ${TMUX_SESSION_COUNT} -gt 1 ]; then
-    PS1+="${SPACE}${COLOR_YELLOW}(tmux:${TMUX_SESSION_COUNT})${COLOR_RESET}"
 fi
 
 # Git branch if available
@@ -119,17 +116,28 @@ if hash __git_ps1 2>/dev/null ; then
     # export GIT_PS1_SHOWSTASHSTATE=Y
     # export GIT_PS1_SHOWUNTRACKEDFILES=Y
     # export GIT_PS1_SHOWUPSTREAM=Y
-    PS1+="${COLOR_CYAN}$(__git_ps1)${COLOR_RESET}"
+    PS1+="${COLOR_STATUS}$(__git_ps1)${COLOR_RESET}"
+fi
+
+# Note shell depth, if greater than 1
+if [ ${SHLVL} -gt 1 ]; then
+    PS1+="${SPACE}${COLOR_NOTE}(shell:${SHLVL})${COLOR_RESET}"
+fi
+
+# Note number of tmux sessions, if greater than 1
+TMUX_SESSION_COUNT=$(tmux ls | wc -l)
+if [ ${TMUX_SESSION_COUNT} -gt 1 ]; then
+    PS1+="${SPACE}${COLOR_NOTE}(tmux:${TMUX_SESSION_COUNT})${COLOR_RESET}"
 fi
 
 # Time of prompt
-PS1+="${SPACE}${COLOR_DARK_GRAY}${TIME_AMPM}${COLOR_RESET}"
+PS1+="${SPACE}${COLOR_NOTE}${TIME_AMPM}${COLOR_RESET}"
 
 # Newline
 PS1+="${NEWLINE}"
 
 # Working directory
-PS1+="${COLOR_GREEN}${WORKING_DIRECTORY}${COLOR_RESET}"
+PS1+="${COLOR_THEME_LIGHT}${WORKING_DIRECTORY}${COLOR_RESET}"
 
 # Newline
 PS1+="${NEWLINE}"
