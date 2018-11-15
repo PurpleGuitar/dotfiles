@@ -58,6 +58,21 @@ if [[ -r /proc/meminfo ]] && cat /proc/meminfo | grep -q MemAvailable; then
     SYSMEM_AVAILABLE_THRESHOLD_ALERT=$(( ${SYSMEM_AVAILABLE_MAX} * 10 / 100 ))
 fi
 
+# Flag strings
+if [[ ${PROMPT_USE_UNICODE} ]]; then
+    STR_RCODE="☹"
+    STR_SYSLOAD="⚒"
+    STR_SYSMEM="✎"
+    STR_SHLVL="»"
+    STR_TMUX_SESSIONS="◫"
+else
+    STR_RCODE="rc:"
+    STR_SYSLOAD="load:"
+    STR_SYSMEM="mem<"
+    STR_SHLVL="shlvl:"
+    STR_TMUX_SESSIONS="tmuxs:"
+fi
+
 # Prompt command function.
 PROMPT_COMMAND=__prompt_command
 __prompt_command() {
@@ -84,7 +99,7 @@ PS1+="${COLOR_THEME}${USERNAME}@${HOSTNAME}${COLOR_RESET}"
 
 # Note return code of last command, if non-zero
 if [ ${RC_OF_LAST_COMMAND} != 0 ]; then
-    PS1+="${SPACE}${COLOR_ALERT}(rc:${RC_OF_LAST_COMMAND})${COLOR_RESET}"
+    PS1+="${SPACE}${COLOR_ALERT}${STR_RCODE}${RC_OF_LAST_COMMAND}${COLOR_RESET}"
 fi
 
 # Note CPU load, if too high
@@ -92,9 +107,9 @@ if [[ ${SYSLOAD_DISPLAY} ]]; then
     CPU_LOAD=$(cat /proc/loadavg | cut -d " " -f 1)
     NORMALIZED_CPU_LOAD=${CPU_LOAD//./}
     if [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_ALERT} ]; then
-        PS1+="${SPACE}${COLOR_ALERT}(load:${CPU_LOAD})${COLOR_RESET}"
+        PS1+="${SPACE}${COLOR_ALERT}${STR_SYSLOAD}${CPU_LOAD}${COLOR_RESET}"
     elif [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_WARN} ]; then
-        PS1+="${SPACE}${COLOR_WARN}(load:${CPU_LOAD})${COLOR_RESET}"
+        PS1+="${SPACE}${COLOR_WARN}${STR_SYSLOAD}${CPU_LOAD}${COLOR_RESET}"
     fi
 fi
 
@@ -103,10 +118,10 @@ if [[ ${SYSMEM_DISPLAY} ]]; then
     SYSMEM_AVAILABLE=$(( $(cat /proc/meminfo | grep MemAvailable | awk '{print $2}') ))
     if [ ${SYSMEM_AVAILABLE} -lt ${SYSMEM_AVAILABLE_THRESHOLD_ALERT} ]; then
         SYSMEM_AVAILABLE_MB=$(( ${SYSMEM_AVAILABLE} / 1000 ))
-        PS1+="${SPACE}${COLOR_ALERT}(mem<${SYSMEM_AVAILABLE_MB}MB)${COLOR_RESET}"
+        PS1+="${SPACE}${COLOR_ALERT}${STR_SYSMEM}${SYSMEM_AVAILABLE_MB}MB${COLOR_RESET}"
     elif [ ${SYSMEM_AVAILABLE} -lt ${SYSMEM_AVAILABLE_THRESHOLD_WARN} ]; then
         SYSMEM_AVAILABLE_MB=$(( ${SYSMEM_AVAILABLE} / 1000 ))
-        PS1+="${SPACE}${COLOR_WARN}(mem<${SYSMEM_AVAILABLE_MB}MB)${COLOR_RESET}"
+        PS1+="${SPACE}${COLOR_WARN}${STR_SYSMEM}${SYSMEM_AVAILABLE_MB}MB${COLOR_RESET}"
     fi
 fi
 
@@ -121,13 +136,13 @@ fi
 
 # Note shell depth, if greater than 1
 if [ ${SHLVL} -gt 1 ]; then
-    PS1+="${SPACE}${COLOR_NOTE}(shell:${SHLVL})${COLOR_RESET}"
+    PS1+="${SPACE}${COLOR_NOTE}${STR_SHLVL}${SHLVL}${COLOR_RESET}"
 fi
 
 # Note number of tmux sessions, if greater than 1
 TMUX_SESSION_COUNT=$(tmux ls | wc -l)
 if [ ${TMUX_SESSION_COUNT} -gt 1 ]; then
-    PS1+="${SPACE}${COLOR_NOTE}(tmux:${TMUX_SESSION_COUNT})${COLOR_RESET}"
+    PS1+="${SPACE}${COLOR_NOTE}${STR_TMUX_SESSIONS}${TMUX_SESSION_COUNT}${COLOR_RESET}"
 fi
 
 # Time of prompt

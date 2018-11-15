@@ -59,19 +59,20 @@ export EDITOR=vim
 shopt -s cdspell
 
 
-# ==================
-# Load bashrc prompt
-# ==================
-if [ -f ~/.bashrc-prompt ]; then
-    source ~/.bashrc-prompt
-fi
-
-
 # =====================================
 # Load local bashrc script if it exists
 # =====================================
 if [ -f ~/.bashrc-local ]; then
     source ~/.bashrc-local
+fi
+
+
+# ==================
+# Load bashrc prompt
+# ==================
+# (We load this after .bashrc-local so that preferences can be set)
+if [ -f ~/.bashrc-prompt ]; then
+    source ~/.bashrc-prompt
 fi
 
 
