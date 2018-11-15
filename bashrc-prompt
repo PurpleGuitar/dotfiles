@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# The following environment variables are respected by this prompt:
+# PROMPT_USE_UNICODE: if set, use Unicode symbols in the prompt.
+# PROMPT_NO_DISPLAY: If set, the prompt will not show a warning if DISPLAY is not set.
+
 # Bash prompt constants
 SPACE=' '
 NEWLINE='\n'
@@ -60,16 +64,18 @@ fi
 
 # Flag strings
 if [[ ${PROMPT_USE_UNICODE} ]]; then
+    STR_NO_DISPLAY="✘"
     STR_RCODE="☹"
+    STR_SHLVL="»"
     STR_SYSLOAD="⚒"
     STR_SYSMEM="✎"
-    STR_SHLVL="»"
     STR_TMUX_SESSIONS="◫"
 else
+    STR_NO_DISPLAY="nox"
     STR_RCODE="rc:"
+    STR_SHLVL="shlvl:"
     STR_SYSLOAD="load:"
     STR_SYSMEM="mem<"
-    STR_SHLVL="shlvl:"
     STR_TMUX_SESSIONS="tmuxs:"
 fi
 
@@ -102,8 +108,8 @@ if [ ${RC_OF_LAST_COMMAND} != 0 ]; then
     PS1+="${SPACE}${COLOR_ALERT}${STR_RCODE}${RC_OF_LAST_COMMAND}${COLOR_RESET}"
 fi
 
-# Note CPU load, if too high
-if [[ ${SYSLOAD_DISPLAY} ]]; then
+# Warn CPU load, if too high
+if [ ${SYSLOAD_DISPLAY} ]; then
     CPU_LOAD=$(cat /proc/loadavg | cut -d " " -f 1)
     NORMALIZED_CPU_LOAD=${CPU_LOAD//./}
     if [ ${NORMALIZED_CPU_LOAD} -gt ${SYSLOAD_THRESHOLD_ALERT} ]; then
@@ -113,8 +119,8 @@ if [[ ${SYSLOAD_DISPLAY} ]]; then
     fi
 fi
 
-# Note memory load, if too high
-if [[ ${SYSMEM_DISPLAY} ]]; then
+# Warn memory load, if too high
+if [ ${SYSMEM_DISPLAY} ]; then
     SYSMEM_AVAILABLE=$(( $(cat /proc/meminfo | grep MemAvailable | awk '{print $2}') ))
     if [ ${SYSMEM_AVAILABLE} -lt ${SYSMEM_AVAILABLE_THRESHOLD_ALERT} ]; then
         SYSMEM_AVAILABLE_MB=$(( ${SYSMEM_AVAILABLE} / 1000 ))
@@ -123,6 +129,11 @@ if [[ ${SYSMEM_DISPLAY} ]]; then
         SYSMEM_AVAILABLE_MB=$(( ${SYSMEM_AVAILABLE} / 1000 ))
         PS1+="${SPACE}${COLOR_WARN}${STR_SYSMEM}${SYSMEM_AVAILABLE_MB}MB${COLOR_RESET}"
     fi
+fi
+
+# Warn if DISPLAY is not set
+if [ -z ${DISPLAY} ] && [ -z ${PROMPT_NO_DISPLAY} ]; then
+    PS1+="${SPACE}${COLOR_WARN}${STR_NO_DISPLAY}${COLOR_RESET}"
 fi
 
 # Git branch if available
