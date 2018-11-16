@@ -103,12 +103,12 @@ PS1+="${NEWLINE}"
 # User@host
 PS1+="${COLOR_THEME}${USERNAME}@${HOSTNAME}${COLOR_RESET}"
 
-# Note return code of last command, if non-zero
+# Alert return code of last command, if non-zero
 if [ ${RC_OF_LAST_COMMAND} != 0 ]; then
     PS1+="${SPACE}${COLOR_ALERT}${STR_RCODE}${RC_OF_LAST_COMMAND}${COLOR_RESET}"
 fi
 
-# Warn CPU load, if too high
+# Warn or alert CPU load, if too high
 if [ ${SYSLOAD_DISPLAY} ]; then
     CPU_LOAD=$(cat /proc/loadavg | cut -d " " -f 1)
     NORMALIZED_CPU_LOAD=${CPU_LOAD//./}
@@ -119,7 +119,7 @@ if [ ${SYSLOAD_DISPLAY} ]; then
     fi
 fi
 
-# Warn memory load, if too high
+# Warn or alert memory load, if too high
 if [ ${SYSMEM_DISPLAY} ]; then
     SYSMEM_AVAILABLE=$(( $(cat /proc/meminfo | grep MemAvailable | awk '{print $2}') ))
     if [ ${SYSMEM_AVAILABLE} -lt ${SYSMEM_AVAILABLE_THRESHOLD_ALERT} ]; then
