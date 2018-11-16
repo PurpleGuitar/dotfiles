@@ -38,6 +38,7 @@ alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboo
 # History options
 export HISTCONTROL=ignorespace:ignoredups:erasedups
 export HISTFILESIZE=5000
+export HISTTIMEFORMAT="%a %Y-%m-%d %H:%M:%S "
 shopt -s histappend
 
 # Enable programmable completion features
