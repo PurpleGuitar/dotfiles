@@ -25,21 +25,39 @@ if [ $? -eq 0 ]; then
 fi
 
 # Other aliases
-alias h='history'
 alias htopu='htop -u $(whoami)'
 alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 
 
+# ===============
+# Command History
+# ===============
+
+# History options
+alias h='history'
+shopt -s histappend
+export HISTCONTROL=ignoreboth:erasedups
+export HISTFILESIZE=5000
+function history_cleanup() {
+    # Read lines added by other terminals
+    history -n
+    # Write updated buffer to history file
+    history -w
+    # Remove duplicates from history file, keeping last copy of each command
+    tac ${HISTFILE} | awk '!x[$0]++' | tac > /tmp/temphist
+    cp /tmp/temphist ${HISTFILE}
+    rm /tmp/temphist
+    # Empty history buffer in memory
+    history -c
+    # Read history file afresh
+    history -r
+}
+
+
 # ===========
 # Other Stuff
 # ===========
-
-# History options
-export HISTCONTROL=ignorespace:ignoredups:erasedups
-export HISTFILESIZE=5000
-export HISTTIMEFORMAT="%a %Y-%m-%d %H:%M:%S "
-shopt -s histappend
 
 # Enable programmable completion features
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then

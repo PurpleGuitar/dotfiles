@@ -80,7 +80,7 @@ else
 fi
 
 # Prompt command function.
-PROMPT_COMMAND=__prompt_command
+PROMPT_COMMAND="__prompt_command; ${PROMPT_COMMAND}"
 __prompt_command() {
 # (We don't indent the contents because we're using continuation strings.)
 
