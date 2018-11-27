@@ -62,6 +62,11 @@ if [[ -r /proc/meminfo ]] && cat /proc/meminfo | grep -q MemAvailable; then
     SYSMEM_AVAILABLE_THRESHOLD_ALERT=$(( ${SYSMEM_AVAILABLE_MAX} * 10 / 100 ))
 fi
 
+# Git status available
+if hash __git_ps1 2>/dev/null ; then
+    GIT_PS1_AVAILABLE="true"
+fi
+
 # Flag strings
 if [[ ${PROMPT_USE_UNICODE} ]]; then
     STR_NO_DISPLAY="✘"
@@ -137,7 +142,7 @@ if [ -z ${DISPLAY} ] && [ -z ${PROMPT_NO_DISPLAY} ]; then
 fi
 
 # Git branch if available
-if hash __git_ps1 2>/dev/null ; then
+if [ ${GIT_PS1_AVAILABLE} ]; then
     # export GIT_PS1_SHOWDIRTYSTATE=Y
     # export GIT_PS1_SHOWSTASHSTATE=Y
     # export GIT_PS1_SHOWUNTRACKEDFILES=Y
