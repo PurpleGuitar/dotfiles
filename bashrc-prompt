@@ -64,7 +64,7 @@ fi
 
 # Git status available
 if hash __git_ps1 2>/dev/null ; then
-    GIT_PS1_AVAILABLE="true"
+    GIT_PS1_DISPLAY="true"
 fi
 
 # Flag strings
@@ -142,7 +142,7 @@ if [ -z ${DISPLAY} ] && [ -z ${PROMPT_NO_DISPLAY} ]; then
 fi
 
 # Git branch if available
-if [ ${GIT_PS1_AVAILABLE} ]; then
+if [ ${GIT_PS1_DISPLAY} ]; then
     # export GIT_PS1_SHOWDIRTYSTATE=Y
     # export GIT_PS1_SHOWSTASHSTATE=Y
     # export GIT_PS1_SHOWUNTRACKEDFILES=Y
