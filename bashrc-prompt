@@ -14,6 +14,7 @@ HOSTNAME='\h'
 HISTORY_NUMBER='\!'
 PROMPT_CHARACTER='\$'
 TIME_AMPM='\@'
+DATETIME_FORMAT='\D{%a %b %-e %-l:%M %p}'
 
 # Window constants
 WINDOW_TITLE_BEGIN="\[\e]0;"
@@ -162,7 +163,7 @@ if [ ${TMUX_SESSION_COUNT} -gt 1 ]; then
 fi
 
 # Time of prompt
-PS1+="${SPACE}${COLOR_NOTE}${TIME_AMPM}${COLOR_RESET}"
+PS1+="${SPACE}${COLOR_NOTE}${DATETIME_FORMAT}${COLOR_RESET}"
 
 # Newline
 PS1+="${NEWLINE}"
