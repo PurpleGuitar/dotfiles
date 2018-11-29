@@ -123,7 +123,7 @@ function tmux_pane_id() {
 }
 
 # Start in tmux if available
-if command -v tmux>/dev/null; then
+if command -v tmux >/dev/null 2>&1; then
     if [ ! -z "$PS1" ]; then
         TTY_TMUX_PANE=$(tmux_pane_id)
         [ -z $TTY_TMUX_PANE ] && exec tmux -2 new-session

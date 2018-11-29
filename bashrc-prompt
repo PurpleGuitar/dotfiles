@@ -64,7 +64,7 @@ if [[ -r /proc/meminfo ]] && cat /proc/meminfo | grep -q MemAvailable; then
 fi
 
 # Git status available
-if hash __git_ps1 2>/dev/null ; then
+if command -v __git_ps1 >/dev/null 2>&1; then
     GIT_PS1_DISPLAY="true"
 fi
 
