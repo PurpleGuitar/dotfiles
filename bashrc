@@ -89,7 +89,7 @@ fi
 # ==================
 # Load bashrc prompt
 # ==================
-# (We load this after .bashrc-local so that preferences can be set)
+# (We load this after .bashrc-local so that it can set prompt preferences.)
 if [ -f ~/.bashrc-prompt ]; then
     source ~/.bashrc-prompt
 fi
@@ -98,9 +98,13 @@ fi
 # =================================
 # Set Xterm defaults if xrdb exists
 # =================================
-
 # (We load this after .bashrc-local since it often sets the DISPLAY variable.)
-command -v xrdb> /dev/null 2>&1 && [ "$DISPLAY" ] && xrdb -merge ~/.Xresources
+if command -v xrdb> /dev/null 2>&1 && [ "$DISPLAY" ]; then
+    xrdb -merge ~/.Xresources
+    if [ -f ~/.Xresources-local ]; then
+        xrdb -merge ~/.Xresources-local
+    fi
+fi
 
 
 # ==========
