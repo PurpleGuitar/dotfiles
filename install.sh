@@ -58,7 +58,7 @@ FILES="\
     gvimrc \
     inputrc \
     profile \
-    tmux.conf.common \
+    tmux.conf \
     vimrc \
     vimrc-plugins \
     w3m \
@@ -71,22 +71,6 @@ do
     ln -s $SCRIPT_DIR_FILENAME .$FILENAME
     echo "Created link to $SCRIPT_DIR_FILENAME"
 done
-
-# tmux
-echo "Setting up tmux..."
-TMUX_VERSION=`tmux -V`
-if [[ "$TMUX_VERSION" < "tmux 2.1" ]] ; then
-    echo "tmux is older (pre v2.1): $TMUX_VERSION"
-    SCRIPT_DIR_FILENAME=$SCRIPT_DIR/tmux.conf.pre21
-else
-    echo "tmux is recent (post v2.1): $TMUX_VERSION"
-    SCRIPT_DIR_FILENAME=$SCRIPT_DIR/tmux.conf.21plus
-fi
-FILENAME=tmux.conf
-TARGET_DIR_FILENAME=$TARGET_DIR/.tmux.conf
-backup_if_exists $TARGET_DIR_FILENAME
-ln -s $SCRIPT_DIR_FILENAME .tmux.conf
-echo "Created link to $SCRIPT_DIR_FILENAME"
 
 # Vim
 if [ "$SETUP_VIM" = "true" ] ; then

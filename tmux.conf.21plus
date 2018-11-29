@@ -1,7 +1,0 @@
-# Activate mouse for tmux v2.1+
-set -g mouse on
-
-# Load common settings
-source-file ~/.tmux.conf.common
-
-# vim: filetype=tmux
