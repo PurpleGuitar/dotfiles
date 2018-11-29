@@ -70,13 +70,15 @@ fi
 
 # Flag strings
 if [[ ${PROMPT_USE_UNICODE} ]]; then
+    STR_IN_VIM="✎"
     STR_NO_DISPLAY="✘"
     STR_RCODE="☹"
     STR_SHLVL="»"
     STR_SYSLOAD="⚒"
-    STR_SYSMEM="✎"
+    STR_SYSMEM="♻"
     STR_TMUX_SESSIONS="◫"
 else
+    STR_IN_VIM="vim"
     STR_NO_DISPLAY="nox"
     STR_RCODE="rc:"
     STR_SHLVL="shlvl:"
@@ -140,6 +142,11 @@ fi
 # Warn if DISPLAY is not set
 if [ -z ${DISPLAY} ] && [ -z ${PROMPT_NO_DISPLAY} ]; then
     PS1+="${SPACE}${COLOR_WARN}${STR_NO_DISPLAY}${COLOR_RESET}"
+fi
+
+# Warn if in a Vim shell
+if [ -n "${VIMRUNTIME}" ]; then
+    PS1+="${SPACE}${COLOR_WARN}${STR_IN_VIM}${COLOR_RESET}"
 fi
 
 # Git branch if available

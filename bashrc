@@ -131,7 +131,7 @@ if command -v tmux >/dev/null 2>&1; then
     if [ ! -z "$PS1" ]; then
         TTY_TMUX_PANE=$(tmux_pane_id)
         [ -z $TTY_TMUX_PANE ] && exec tmux -2 new-session
-        if [ "$TMUX_PANE" == "%0" ]; then
+        if [ "$TMUX_PANE" == "%0" ] && [ ${SHLVL} -eq 1 ]; then
             if [ -f /run/motd.dynamic ]; then
                 cat /run/motd.dynamic
             fi
