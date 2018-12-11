@@ -28,6 +28,7 @@ fi
 alias htopu='htop -u $(whoami)'
 alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
+alias lga='git lga --color=always | less -RS'
 
 
 # ===============
