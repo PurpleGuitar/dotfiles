@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # The following environment variables are respected by this prompt:
-# PROMPT_USE_UNICODE: if set, use Unicode symbols in the prompt.
-# PROMPT_NO_DISPLAY: If set, the prompt will not show a warning if DISPLAY is not set.
+# export PROMPT_USE_UNICODE="true"  # use Unicode symbols in the prompt.
+# export PROMPT_NO_DISPLAY="true" # Don't show a warning in the prompt if DISPLAY is not set.
 
 # Bash prompt constants
 SPACE=' '
