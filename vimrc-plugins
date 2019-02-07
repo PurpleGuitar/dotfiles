@@ -32,7 +32,7 @@ Plugin 'leafgarland/typescript-vim'        " Syntax for typescript
 Plugin 'udalov/kotlin-vim'                 " Syntax for Kotlin
 
 " Other Stuff
-Plugin 'sjl/gundo.vim'                     " Visual undo
+Plugin 'mbbill/undotree'                   " Visual undo
 Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, etc.)
 Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm color codes
 Plugin 'severin-lemaignan/vim-minimap'     " Silly but fun
@@ -168,3 +168,4 @@ nmap _ \be
 " ========================================================================
 " Experimentation
 " ========================================================================
+
