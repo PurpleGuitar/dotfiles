@@ -11,6 +11,8 @@ alias ls='ls -hF --color=tty'
 
 # Always use color for tree, sort dirs first
 alias tree='tree -C --dirsfirst'
+alias tree1='tree -C --dirsfirst -L 1'
+alias tree2='tree -C --dirsfirst -L 2'
 
 # Behave, kitty!
 alias nyancat='nyancat --no-counter --no-title'
