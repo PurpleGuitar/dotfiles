@@ -27,12 +27,12 @@ if [ $? -eq 0 ]; then
 fi
 
 # Other aliases
+alias colortest-truecolor='awk '\''BEGIN{ s="/\\/\\/\\/\\/\\"; s=s s s s s s s s; for (colnum = 0; colnum<77; colnum++) { r = 255-(colnum*255/76); g = (colnum*510/76); b = (colnum*255/76); if (g>255) g = 510-g; printf "\033[48;2;%d;%d;%dm", r,g,b; printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b; printf "%s\033[0m", substr(s,colnum+1,1); } printf "\n"; }'\''' # from: https://gist.github.com/XVilka/8346728
 alias htopu='htop -u $(whoami)'
-alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
-alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 alias lga='git lga --color=always | less -RS'
+alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 alias tka='tmux kill-session -a'
-
+alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
 
 # ===============
 # Command History
@@ -131,16 +131,18 @@ function tmux_pane_id() {
 }
 
 # Start in tmux if available
-if command -v tmux >/dev/null 2>&1; then
-    if [ ! -z "$PS1" ]; then
-        TTY_TMUX_PANE=$(tmux_pane_id)
-        [ -z $TTY_TMUX_PANE ] && exec tmux -2 new-session
-        if [ "$TMUX_PANE" == "%0" ] && [ ${SHLVL} -eq 1 ]; then
-            if [ -f /run/motd.dynamic ]; then
-                cat /run/motd.dynamic
-            fi
-            if [ -f /etc/motd ]; then
-                cat /etc/motd
+if [[ -z ${BASHRC_NO_TMUX} ]]; then
+    if command -v tmux >/dev/null 2>&1; then
+        if [ ! -z "$PS1" ]; then
+            TTY_TMUX_PANE=$(tmux_pane_id)
+            [ -z $TTY_TMUX_PANE ] && exec tmux -2 new-session
+            if [ "$TMUX_PANE" == "%0" ] && [ ${SHLVL} -eq 1 ]; then
+                if [ -f /run/motd.dynamic ]; then
+                    cat /run/motd.dynamic
+                fi
+                if [ -f /etc/motd ]; then
+                    cat /etc/motd
+                fi
             fi
         fi
     fi
