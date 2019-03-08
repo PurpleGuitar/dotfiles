@@ -131,6 +131,7 @@ function tmux_pane_id() {
 }
 
 # Start in tmux if available
+# export BASHRC_NO_TMUX="true" # Disable automatic tmux session
 if [[ -z ${BASHRC_NO_TMUX} ]]; then
     if command -v tmux >/dev/null 2>&1; then
         if [ ! -z "$PS1" ]; then
