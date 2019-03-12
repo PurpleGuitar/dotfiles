@@ -40,6 +40,9 @@ Plugin 'fatih/vim-go'                      " Golang development
 Plugin 'keith/swift.vim'                   " Swift syntax highlighting
 Plugin 'kovisoft/slimv'                    " LISP development
 
+" Experimental
+Plugin 'rust-lang/rust.vim' " Rust language support
+
 " ========================================================================
 " Tagbar
 " ========================================================================
