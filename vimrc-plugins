@@ -30,6 +30,8 @@ Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
 Plugin 'OrangeT/vim-csharp'                " Syntax support for C# files
 Plugin 'leafgarland/typescript-vim'        " Syntax for typescript
 Plugin 'udalov/kotlin-vim'                 " Syntax for Kotlin
+Plugin 'rust-lang/rust.vim'                " Rust language support
+Plugin 'PProvost/vim-ps1'                  " PowerShell language support
 
 " Other Stuff
 Plugin 'mbbill/undotree'                   " Visual undo
@@ -41,7 +43,6 @@ Plugin 'keith/swift.vim'                   " Swift syntax highlighting
 Plugin 'kovisoft/slimv'                    " LISP development
 
 " Experimental
-Plugin 'rust-lang/rust.vim' " Rust language support
 
 " ========================================================================
 " Tagbar
