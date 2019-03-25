@@ -38,6 +38,7 @@ syntax on
 set expandtab
 set shiftwidth=4
 set softtabstop=4
+set tabstop=4
 set hlsearch
 set ignorecase
 set mouse=a
@@ -215,7 +216,7 @@ nnoremap <A-Right> >>
 nnoremap <A-S-Left> <<
 nnoremap <A-S-Right> >>
 
-" Tools for fixing up wierd ASCII or whitespace
+" Tools for fixing up weird ASCII or whitespace characters
 nnoremap <Leader>fix<Space> :silent! %s/\s\+$//<CR>:silent! %s/[\xa0]/ /g<CR>
 nnoremap <Leader>fix' :%s/[\x92’]/'/g<CR>
 nnoremap <Leader>fix" :%s/[\x93\x94“”]/"/g<CR>
@@ -264,7 +265,7 @@ vnoremap <silent> # :<C-U>
 
 " Show tabs and trailing spaces
 " From http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
-set list
+" Turn on with command :set list
 set listchars=tab:>.,trail:.,nbsp:.
 
 " Number selected list
