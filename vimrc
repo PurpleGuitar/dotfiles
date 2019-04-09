@@ -56,10 +56,11 @@ set nowrap
 " Don't show line numbers for certain files
 autocmd FileType qf set nonumber
 
-" Re-assert settings for pandoc files
+" Re-assert settings for certain files
 autocmd FileType pandoc set nowrap
 autocmd FileType pandoc set nonumber
 autocmd FileType pandoc set sidescrolloff=0
+autocmd FileType rust   set number
 
 " ========================================================================
 " Statusline
