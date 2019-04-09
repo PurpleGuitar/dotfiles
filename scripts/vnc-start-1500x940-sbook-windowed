@@ -1,0 +1,2 @@
+#!/bin/bash
+vncserver -nolisten tcp -depth 24 -geometry 1500x940 :1 -localhost
