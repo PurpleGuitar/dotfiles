@@ -73,6 +73,7 @@ Capslock & Down::SendWithModifiers("{PgDn}")
 !]::Send {LWin Down}{Right}{LWin Up}
 !=::Send {LWin Down}{Up}{LWin Up}
 !-::Send {LWin Down}{Down}{LWin Up}
+!#m::Send {LWin Down}{LShift Down}{Right}{LShift Up}{LWin Up}
 
 ;; =================================================================
 ;; Graveyard
