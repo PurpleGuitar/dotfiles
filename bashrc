@@ -63,6 +63,9 @@ function history_cleanup() {
 # Other Stuff
 # ===========
 
+# Use local bin dir
+export PATH=~/.local/bin:${PATH}
+
 # Enable programmable completion features
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
