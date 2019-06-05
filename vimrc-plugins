@@ -43,6 +43,7 @@ Plugin 'keith/swift.vim'                   " Swift syntax highlighting
 Plugin 'kovisoft/slimv'                    " LISP development
 
 " Experimental
+Plugin 'ciaranm/securemodelines'           " Lock down modelines
 
 " ========================================================================
 " Tagbar
