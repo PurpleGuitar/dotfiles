@@ -91,7 +91,7 @@ set statusline+=%{fugitive#head()!=''?'('.fugitive#head().')\ ':''} " Name of cu
 
 " Right side
 set statusline+=%=
-set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')} " Highlight under cursor
+" set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')} " Highlight under cursor
 set statusline+=\                                                " Space
 set statusline+=0x%B/%b                                          " Byte under cursor
 set statusline+=\                                                " Space
@@ -231,11 +231,11 @@ endfunction
 nnoremap <Leader>hlt :echo SyntaxItem()<CR>
 
 " Other corrections
-abbrev THe The
-abbrev teh the
-abbrev nad and
-abbrev pkmn Pokémon
-abbrev pokemon Pokémon
+" abbrev THe The
+" abbrev teh the
+" abbrev nad and
+" abbrev pkmn Pokémon
+" abbrev pokemon Pokémon
 
 " Invoke make
 nnoremap <Leader>m :wa<CR>:make<CR>
@@ -259,6 +259,9 @@ vnoremap <silent> # :<C-U>
 " vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
 " nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
 
+nnoremap <Leader>vr <Esc>:e ~/.vimrc<CR>
+nnoremap <Leader>vp <Esc>:e ~/.vimrc-plugins<CR>
+nnoremap <Leader>vl <Esc>:e ~/.vimrc-local<CR>
 
 " ========================================================================
 " Other Misc Stuff
