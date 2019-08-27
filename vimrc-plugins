@@ -183,7 +183,9 @@ function! PandocToggleTask()
         return
     endif
 endfunction
-autocmd FileType pandoc nnoremap <NUL> <Esc>:call PandocToggleTask()<CR>
+autocmd FileType pandoc nnoremap <NUL> :call PandocToggleTask()<CR>
+nnoremap <Leader>tt :execute "vimgrep '\\[ \\]' " . g:nv_search_paths[0] . '/*.md'<CR>
+nnoremap <Leader>td :execute "vimgrep '\\[ \\]' " . g:nv_search_paths[0] . '/*.md'<CR>:SortQuickFix<CR>:cc<CR>
 
 " ========================================================================
 " Quick Scope - Highlights targets for f, F, t, and T motions
@@ -205,20 +207,19 @@ nmap _ \be
 " Plugin 'PurpleGuitar/vim-zk'
 " let g:vim_zk_create_mappings=1
 
-Plugin 'junegunn/fzf'
-Plugin 'alok/notational-fzf-vim'
-" let g:nv_search_paths = ['~/Downloads/notes']
-let g:nv_default_extension = ".md"
-let g:nv_use_short_pathnames = 1
-let g:nv_ignore_pattern = ["*.html", "*.css", "*ignore"]
+" Plugin 'junegunn/fzf'
+" Plugin 'alok/notational-fzf-vim'
+" " let g:nv_search_paths = ['~/Downloads/notes']
+" let g:nv_default_extension = ".md"
+" let g:nv_use_short_pathnames = 1
+" let g:nv_ignore_pattern = ["*.html", "*.css", "*ignore"]
+"
+" nnoremap <Leader>zl :let @0="[".expand("%:r")."](".expand("%:r").".html)"<CR>
+" nnoremap <Leader>zb :let @0="](".expand("%:r").".html)"<CR>:vimgrep "<C-r>0" *.md<CR>
+" nnoremap <Leader>zt :execute "edit " . g:nv_search_paths[0] . "/" .strftime('%Y%m%d') . '.md'<CR>
+" nnoremap <Leader>zn :execute "edit " . g:nv_search_paths[0] . "/" .strftime('%Y%m%d%H%M') . '.md'<CR>
+" nnoremap <Leader>zz :NV<CR>
 
-nnoremap <Leader>zl <Esc>:let @0="[".expand("%:r")."](".expand("%:r").".html)"<CR>
-nnoremap <Leader>zt <Esc>:execute "edit " . g:nv_search_paths[0] . "/" .strftime('%Y%m%d') . '.md'<CR>
-nnoremap <Leader>zn <Esc>:execute "edit " . g:nv_search_paths[0] . "/" .strftime('%Y%m%d%H%M') . '.md'<CR>
-nnoremap <Leader>zz <Esc>:NV<CR>
-
-nnoremap <Leader>tt <Esc>:execute "vimgrep '\\[ \\]' " . g:nv_search_paths[0] . '/*.md'<CR>
-nnoremap <Leader>td <Esc>:execute "vimgrep '\\[ \\]' " . g:nv_search_paths[0] . '/*.md'<CR>:SortQuickFix<CR>:cc<CR>
 
 
 

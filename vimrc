@@ -259,9 +259,9 @@ vnoremap <silent> # :<C-U>
 " vnoremap <Leader>za <Esc>`<kzfgg`>jzfG`<
 " nnoremap <leader>zp :set foldmethod=manual<CR>zEvipjok<Esc>`<kzfgg`>jzfG`<
 
-nnoremap <Leader>vr <Esc>:e ~/.vimrc<CR>
-nnoremap <Leader>vp <Esc>:e ~/.vimrc-plugins<CR>
-nnoremap <Leader>vl <Esc>:e ~/.vimrc-local<CR>
+nnoremap <Leader>vr :e ~/.vimrc<CR>
+nnoremap <Leader>vp :e ~/.vimrc-plugins<CR>
+nnoremap <Leader>vl :e ~/.vimrc-local<CR>
 
 " ========================================================================
 " Other Misc Stuff
