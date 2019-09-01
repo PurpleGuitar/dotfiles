@@ -1,5 +1,7 @@
 ! To reload this file, use xrdb, e.g.:
 ! xrdb -merge ~/.Xresources
+! (you may need to install xrdb first)
+! sudo apt install x11-xserver-utils
 
 ! For light on dark:
 xterm*background:black
