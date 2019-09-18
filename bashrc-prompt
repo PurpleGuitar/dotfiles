@@ -14,7 +14,7 @@ HOSTNAME='\h'
 HISTORY_NUMBER='\!'
 PROMPT_CHARACTER='\$'
 TIME_AMPM='\@'
-DATETIME_FORMAT='\D{%a %b %-e %-l:%M %p}'
+DATETIME_FORMAT='\D{%a %b %-e %-l:%M%p}'
 
 # Window constants
 WINDOW_TITLE_BEGIN="\[\e]0;"
@@ -129,7 +129,7 @@ if [ ${WEATHER_DISPLAY} ]; then
     WEATHER_WIND_DIRECTION=$(grep -o "Wind: from the .*" ${WEATHER_TEMPFILE} | cut -d" " -f4)
     WEATHER_CONDITIONS=$(grep -o "Sky conditions:.*" ${WEATHER_TEMPFILE} | cut -d":" -f2)
     WEATHER_ALERT=$(grep -o "Weather:.*" ${WEATHER_TEMPFILE} | cut -d":" -f2 | awk '{$1=$1;print}')
-    PS1+="${NEWLINE}"
+    PS1+="${SPACE}"
     PS1+="${COLOR_NOTE}${WEATHER_TEMPERATURE}F"
     if [[ ${WEATHER_HEAT_INDEX} ]]; then
         PS1+="${COLOR_NOTE}(${WEATHER_HEAT_INDEX}F)"
