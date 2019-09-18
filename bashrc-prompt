@@ -68,6 +68,12 @@ if command -v __git_ps1 >/dev/null 2>&1; then
     GIT_PS1_DISPLAY="true"
 fi
 
+# Weather available
+if command -v weather >/dev/null 2>&1 && [[ ${WEATHER_LOCATION} ]]; then
+    WEATHER_DISPLAY="true"
+    WEATHER_TEMPFILE=$(mktemp /tmp/weather_${USER}.XXXXX)
+fi
+
 # Flag strings
 if [[ ${PROMPT_USE_UNICODE} ]]; then
     STR_IN_VIM="✎"
@@ -104,6 +110,40 @@ ${WORKING_DIRECTORY_BASENAME}\
 ${SPACE}\
 ${USERNAME}@${HOSTNAME}\
 ${WINDOW_TITLE_END}"
+
+# Newline
+PS1+="${NEWLINE}"
+
+# Time of prompt
+PS1+="${COLOR_NOTE}${DATETIME_FORMAT}${COLOR_RESET}"
+
+# Weather
+if [ ${WEATHER_DISPLAY} ]; then
+    weather ${WEATHER_LOCATION} > ${WEATHER_TEMPFILE}
+    WEATHER_TEMPERATURE=$(grep -o "Temperature: [0-9]\+" ${WEATHER_TEMPFILE} | cut -d" " -f2)
+    WEATHER_HEAT_INDEX=$(grep -o "Heat index: [0-9]\+" ${WEATHER_TEMPFILE} | cut -d" " -f3)
+    WEATHER_HUMIDITY=$(grep -o "Relative Humidity: .*" ${WEATHER_TEMPFILE} | cut -d" " -f3)
+    WEATHER_WIND_SPEED=$(grep -o "[0-9]\+ MPH.*" ${WEATHER_TEMPFILE} | cut -d" " -f1)
+    WEATHER_WIND_DIRECTION=$(grep -o "Wind: from the .*" ${WEATHER_TEMPFILE} | cut -d" " -f4)
+    WEATHER_CONDITIONS=$(grep -o "Sky conditions:.*" ${WEATHER_TEMPFILE} | cut -d":" -f2)
+    WEATHER_ALERT=$(grep -o "Weather:.*" ${WEATHER_TEMPFILE} | cut -d":" -f2)
+    PS1+="${SPACE}"
+    PS1+="${SPACE}${COLOR_NOTE}${WEATHER_LOCATION}:"
+    PS1+="${SPACE}${COLOR_NOTE}${WEATHER_TEMPERATURE}F"
+    if [[ ${WEATHER_HEAT_INDEX} ]]; then
+        PS1+="${COLOR_NOTE}(${WEATHER_HEAT_INDEX}F)"
+    fi
+    PS1+="${SPACE}${COLOR_NOTE}${WEATHER_HUMIDITY}"
+    PS1+="${SPACE}${COLOR_NOTE}${WEATHER_WIND_SPEED}mph"
+    if [ ${WEATHER_WIND_DIRECTION} ]; then
+        PS1+="${SPACE}${COLOR_NOTE}${WEATHER_WIND_DIRECTION}"
+    fi
+    PS1+="${COLOR_NOTE}${WEATHER_CONDITIONS}"
+    if [[ ${WEATHER_ALERT} ]]; then
+        PS1+="${COLOR_NOTE} **${WEATHER_ALERT} **"
+    fi
+    PS1+="${COLOR_RESET}"
+fi
 
 # Newline
 PS1+="${NEWLINE}"
@@ -168,9 +208,6 @@ TMUX_SESSION_COUNT=$(tmux ls | wc -l)
 if [ ${TMUX_SESSION_COUNT} -gt 1 ]; then
     PS1+="${SPACE}${COLOR_NOTE}${STR_TMUX_SESSIONS}${TMUX_SESSION_COUNT}${COLOR_RESET}"
 fi
-
-# Time of prompt
-PS1+="${SPACE}${COLOR_NOTE}${DATETIME_FORMAT}${COLOR_RESET}"
 
 # Newline
 PS1+="${NEWLINE}"
