@@ -120,16 +120,17 @@ PS1+="${COLOR_NOTE}${DATETIME_FORMAT}${COLOR_RESET}"
 # Weather
 if [ ${WEATHER_DISPLAY} ]; then
     weather ${WEATHER_LOCATION} > ${WEATHER_TEMPFILE}
+    WEATHER_UPDATE_TIME=$(grep -o "Last updated.*" ${WEATHER_TEMPFILE} | cut -d" " -f7)
+    WEATHER_UPDATE_AMPM=$(grep -o "Last updated.*" ${WEATHER_TEMPFILE} | cut -d" " -f8)
     WEATHER_TEMPERATURE=$(grep -o "Temperature: [0-9]\+" ${WEATHER_TEMPFILE} | cut -d" " -f2)
     WEATHER_HEAT_INDEX=$(grep -o "Heat index: [0-9]\+" ${WEATHER_TEMPFILE} | cut -d" " -f3)
     WEATHER_HUMIDITY=$(grep -o "Relative Humidity: .*" ${WEATHER_TEMPFILE} | cut -d" " -f3)
     WEATHER_WIND_SPEED=$(grep -o "[0-9]\+ MPH.*" ${WEATHER_TEMPFILE} | cut -d" " -f1)
     WEATHER_WIND_DIRECTION=$(grep -o "Wind: from the .*" ${WEATHER_TEMPFILE} | cut -d" " -f4)
     WEATHER_CONDITIONS=$(grep -o "Sky conditions:.*" ${WEATHER_TEMPFILE} | cut -d":" -f2)
-    WEATHER_ALERT=$(grep -o "Weather:.*" ${WEATHER_TEMPFILE} | cut -d":" -f2)
-    PS1+="${SPACE}"
-    PS1+="${SPACE}${COLOR_NOTE}${WEATHER_LOCATION}:"
-    PS1+="${SPACE}${COLOR_NOTE}${WEATHER_TEMPERATURE}F"
+    WEATHER_ALERT=$(grep -o "Weather:.*" ${WEATHER_TEMPFILE} | cut -d":" -f2 | awk '{$1=$1;print}')
+    PS1+="${NEWLINE}"
+    PS1+="${COLOR_NOTE}${WEATHER_TEMPERATURE}F"
     if [[ ${WEATHER_HEAT_INDEX} ]]; then
         PS1+="${COLOR_NOTE}(${WEATHER_HEAT_INDEX}F)"
     fi
@@ -139,8 +140,9 @@ if [ ${WEATHER_DISPLAY} ]; then
         PS1+="${SPACE}${COLOR_NOTE}${WEATHER_WIND_DIRECTION}"
     fi
     PS1+="${COLOR_NOTE}${WEATHER_CONDITIONS}"
+    PS1+="${SPACE}${COLOR_NOTE}[${WEATHER_LOCATION}/${WEATHER_UPDATE_TIME}${WEATHER_UPDATE_AMPM}]"
     if [[ ${WEATHER_ALERT} ]]; then
-        PS1+="${COLOR_NOTE} **${WEATHER_ALERT} **"
+        PS1+="${NEWLINE}${COLOR_WARN}${WEATHER_ALERT}"
     fi
     PS1+="${COLOR_RESET}"
 fi
