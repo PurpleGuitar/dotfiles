@@ -86,10 +86,10 @@ else
     STR_IN_VIM="vim"
     STR_NO_DISPLAY="nox"
     STR_RCODE="rc:"
-    STR_SHLVL="shlvl:"
-    STR_SYSLOAD="load:"
+    STR_SHLVL="shl:"
+    STR_SYSLOAD="cpu:"
     STR_SYSMEM="mem<"
-    STR_TMUX_SESSIONS="tmuxs:"
+    STR_TMUX_SESSIONS="tmx:"
 fi
 
 # Prompt command function.
