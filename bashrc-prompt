@@ -71,7 +71,6 @@ fi
 # Weather available
 if command -v weather >/dev/null 2>&1 && [[ ${WEATHER_LOCATION} ]]; then
     WEATHER_DISPLAY="true"
-    WEATHER_TEMPFILE=$(mktemp /tmp/weather_${USER}.XXXXX)
 fi
 
 # Flag strings
@@ -119,16 +118,16 @@ PS1+="${COLOR_NOTE}${DATETIME_FORMAT}${COLOR_RESET}"
 
 # Weather
 if [ ${WEATHER_DISPLAY} ]; then
-    weather ${WEATHER_LOCATION} > ${WEATHER_TEMPFILE}
-    WEATHER_UPDATE_TIME=$(grep -o "Last updated.*" ${WEATHER_TEMPFILE} | cut -d" " -f7)
-    WEATHER_UPDATE_AMPM=$(grep -o "Last updated.*" ${WEATHER_TEMPFILE} | cut -d" " -f8)
-    WEATHER_TEMPERATURE=$(grep -o "Temperature: [0-9]\+" ${WEATHER_TEMPFILE} | cut -d" " -f2)
-    WEATHER_HEAT_INDEX=$(grep -o "Heat index: [0-9]\+" ${WEATHER_TEMPFILE} | cut -d" " -f3)
-    WEATHER_HUMIDITY=$(grep -o "Relative Humidity: .*" ${WEATHER_TEMPFILE} | cut -d" " -f3)
-    WEATHER_WIND_SPEED=$(grep -o "[0-9]\+ MPH.*" ${WEATHER_TEMPFILE} | cut -d" " -f1)
-    WEATHER_WIND_DIRECTION=$(grep -o "Wind: from the .*" ${WEATHER_TEMPFILE} | cut -d" " -f4)
-    WEATHER_CONDITIONS=$(grep -o "Sky conditions:.*" ${WEATHER_TEMPFILE} | cut -d":" -f2)
-    WEATHER_ALERT=$(grep -o "Weather:.*" ${WEATHER_TEMPFILE} | cut -d":" -f2 | awk '{$1=$1;print}')
+    WEATHER_TEXT=$(weather ${WEATHER_LOCATION})
+    WEATHER_UPDATE_TIME=$(echo "${WEATHER_TEXT}" | grep -o "Last updated.*" | cut -d" " -f7)
+    WEATHER_UPDATE_AMPM=$(echo "${WEATHER_TEXT}" | grep -o "Last updated.*" | cut -d" " -f8)
+    WEATHER_TEMPERATURE=$(echo "${WEATHER_TEXT}" | grep -o "Temperature: [0-9]\+" | cut -d" " -f2)
+    WEATHER_HEAT_INDEX=$(echo "${WEATHER_TEXT}" | grep -o "Heat index: [0-9]\+" | cut -d" " -f3)
+    WEATHER_HUMIDITY=$(echo "${WEATHER_TEXT}" | grep -o "Relative Humidity: .*" | cut -d" " -f3)
+    WEATHER_WIND_SPEED=$(echo "${WEATHER_TEXT}" | grep -o "[0-9]\+ MPH.*" | cut -d" " -f1)
+    WEATHER_WIND_DIRECTION=$(echo "${WEATHER_TEXT}" | grep -o "Wind: from the .*" | cut -d" " -f4)
+    WEATHER_CONDITIONS=$(echo "${WEATHER_TEXT}" | grep -o "Sky conditions:.*" | cut -d":" -f2)
+    WEATHER_ALERT=$(echo "${WEATHER_TEXT}" | grep -o "Weather:.*" | cut -d":" -f2 | awk '{$1=$1;print}')
     PS1+="${SPACE}"
     PS1+="${COLOR_NOTE}${WEATHER_TEMPERATURE}F"
     if [[ ${WEATHER_HEAT_INDEX} ]]; then
