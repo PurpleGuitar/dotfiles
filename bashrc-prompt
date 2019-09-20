@@ -68,29 +68,14 @@ if command -v __git_ps1 >/dev/null 2>&1; then
     GIT_PS1_DISPLAY="true"
 fi
 
-# Weather available
-if command -v weather >/dev/null 2>&1 && [[ ${WEATHER_LOCATION} ]]; then
-    WEATHER_DISPLAY="true"
-fi
-
 # Flag strings
-if [[ ${PROMPT_USE_UNICODE} ]]; then
-    STR_IN_VIM="✎"
-    STR_NO_DISPLAY="✘"
-    STR_RCODE="☹"
-    STR_SHLVL="»"
-    STR_SYSLOAD="⚒"
-    STR_SYSMEM="♻"
-    STR_TMUX_SESSIONS="◫"
-else
-    STR_IN_VIM="vim"
-    STR_NO_DISPLAY="nox"
-    STR_RCODE="rc:"
-    STR_SHLVL="shl:"
-    STR_SYSLOAD="cpu:"
-    STR_SYSMEM="mem<"
-    STR_TMUX_SESSIONS="tmx:"
-fi
+STR_IN_VIM="vim"
+STR_NO_DISPLAY="nox"
+STR_RCODE="rc:"
+STR_SHLVL="shl:"
+STR_SYSLOAD="cpu:"
+STR_SYSMEM="mem<"
+STR_TMUX_SESSIONS="tmx:"
 
 # Prompt command function.
 PROMPT_COMMAND="__prompt_command; ${PROMPT_COMMAND}"
@@ -116,34 +101,20 @@ PS1+="${NEWLINE}"
 # Time of prompt
 PS1+="${COLOR_NOTE}${DATETIME_FORMAT}${COLOR_RESET}"
 
-# Weather
-if [ ${WEATHER_DISPLAY} ]; then
-    WEATHER_TEXT=$(weather ${WEATHER_LOCATION})
-    WEATHER_UPDATE_TIME=$(echo "${WEATHER_TEXT}" | grep -o "Last updated.*" | cut -d" " -f7)
-    WEATHER_UPDATE_AMPM=$(echo "${WEATHER_TEXT}" | grep -o "Last updated.*" | cut -d" " -f8)
-    WEATHER_TEMPERATURE=$(echo "${WEATHER_TEXT}" | grep -o "Temperature: [0-9]\+" | cut -d" " -f2)
-    WEATHER_HEAT_INDEX=$(echo "${WEATHER_TEXT}" | grep -o "Heat index: [0-9]\+" | cut -d" " -f3)
-    WEATHER_HUMIDITY=$(echo "${WEATHER_TEXT}" | grep -o "Relative Humidity: .*" | cut -d" " -f3)
-    WEATHER_WIND_SPEED=$(echo "${WEATHER_TEXT}" | grep -o "[0-9]\+ MPH.*" | cut -d" " -f1)
-    WEATHER_WIND_DIRECTION=$(echo "${WEATHER_TEXT}" | grep -o "Wind: from the .*" | cut -d" " -f4)
-    WEATHER_CONDITIONS=$(echo "${WEATHER_TEXT}" | grep -o "Sky conditions:.*" | cut -d":" -f2)
-    WEATHER_ALERT=$(echo "${WEATHER_TEXT}" | grep -o "Weather:.*" | cut -d":" -f2 | awk '{$1=$1;print}')
-    PS1+="${SPACE}"
-    PS1+="${COLOR_NOTE}${WEATHER_TEMPERATURE}F"
-    if [[ ${WEATHER_HEAT_INDEX} ]]; then
-        PS1+="${COLOR_NOTE}(${WEATHER_HEAT_INDEX}F)"
-    fi
-    PS1+="${SPACE}${COLOR_NOTE}${WEATHER_HUMIDITY}"
-    PS1+="${SPACE}${COLOR_NOTE}${WEATHER_WIND_SPEED}mph"
-    if [ ${WEATHER_WIND_DIRECTION} ]; then
-        PS1+="${SPACE}${COLOR_NOTE}${WEATHER_WIND_DIRECTION}"
-    fi
-    PS1+="${COLOR_NOTE}${WEATHER_CONDITIONS}"
-    PS1+="${SPACE}${COLOR_NOTE}[${WEATHER_LOCATION}/${WEATHER_UPDATE_TIME}${WEATHER_UPDATE_AMPM}]"
-    if [[ ${WEATHER_ALERT} ]]; then
-        PS1+="${NEWLINE}${COLOR_NOTE}** ${WEATHER_ALERT} **"
-    fi
-    PS1+="${COLOR_RESET}"
+# Note if DISPLAY is not set
+if [ -z ${DISPLAY} ] && [ -z ${PROMPT_NO_DISPLAY} ]; then
+    PS1+="${SPACE}${COLOR_NOTE}${STR_NO_DISPLAY}${COLOR_RESET}"
+fi
+
+# Note shell depth, if greater than 1
+if [ ${SHLVL} -gt 1 ]; then
+    PS1+="${SPACE}${COLOR_NOTE}${STR_SHLVL}${SHLVL}${COLOR_RESET}"
+fi
+
+# Note number of tmux sessions, if greater than 1
+TMUX_SESSION_COUNT=$(tmux ls | wc -l)
+if [ ${TMUX_SESSION_COUNT} -gt 1 ]; then
+    PS1+="${SPACE}${COLOR_NOTE}${STR_TMUX_SESSIONS}${TMUX_SESSION_COUNT}${COLOR_RESET}"
 fi
 
 # Newline
@@ -152,9 +123,23 @@ PS1+="${NEWLINE}"
 # User@host
 PS1+="${COLOR_THEME}${USERNAME}@${HOSTNAME}${COLOR_RESET}"
 
+# Git branch if available
+if [ ${GIT_PS1_DISPLAY} ]; then
+    # export GIT_PS1_SHOWDIRTYSTATE=Y
+    # export GIT_PS1_SHOWSTASHSTATE=Y
+    # export GIT_PS1_SHOWUNTRACKEDFILES=Y
+    # export GIT_PS1_SHOWUPSTREAM=Y
+    PS1+="${COLOR_STATUS}$(__git_ps1)${COLOR_RESET}"
+fi
+
 # Alert return code of last command, if non-zero
 if [ ${RC_OF_LAST_COMMAND} != 0 ]; then
     PS1+="${SPACE}${COLOR_ALERT}${STR_RCODE}${RC_OF_LAST_COMMAND}${COLOR_RESET}"
+fi
+
+# Warn if in a Vim shell
+if [ -n "${VIMRUNTIME}" ]; then
+    PS1+="${SPACE}${COLOR_WARN}${STR_IN_VIM}${COLOR_RESET}"
 fi
 
 # Warn or alert CPU load, if too high
@@ -178,36 +163,6 @@ if [ ${SYSMEM_DISPLAY} ]; then
         SYSMEM_AVAILABLE_MB=$(( ${SYSMEM_AVAILABLE} / 1000 ))
         PS1+="${SPACE}${COLOR_WARN}${STR_SYSMEM}${SYSMEM_AVAILABLE_MB}MB${COLOR_RESET}"
     fi
-fi
-
-# Warn if in a Vim shell
-if [ -n "${VIMRUNTIME}" ]; then
-    PS1+="${SPACE}${COLOR_WARN}${STR_IN_VIM}${COLOR_RESET}"
-fi
-
-# Git branch if available
-if [ ${GIT_PS1_DISPLAY} ]; then
-    # export GIT_PS1_SHOWDIRTYSTATE=Y
-    # export GIT_PS1_SHOWSTASHSTATE=Y
-    # export GIT_PS1_SHOWUNTRACKEDFILES=Y
-    # export GIT_PS1_SHOWUPSTREAM=Y
-    PS1+="${COLOR_STATUS}$(__git_ps1)${COLOR_RESET}"
-fi
-
-# Note if DISPLAY is not set
-if [ -z ${DISPLAY} ] && [ -z ${PROMPT_NO_DISPLAY} ]; then
-    PS1+="${SPACE}${COLOR_NOTE}${STR_NO_DISPLAY}${COLOR_RESET}"
-fi
-
-# Note shell depth, if greater than 1
-if [ ${SHLVL} -gt 1 ]; then
-    PS1+="${SPACE}${COLOR_NOTE}${STR_SHLVL}${SHLVL}${COLOR_RESET}"
-fi
-
-# Note number of tmux sessions, if greater than 1
-TMUX_SESSION_COUNT=$(tmux ls | wc -l)
-if [ ${TMUX_SESSION_COUNT} -gt 1 ]; then
-    PS1+="${SPACE}${COLOR_NOTE}${STR_TMUX_SESSIONS}${TMUX_SESSION_COUNT}${COLOR_RESET}"
 fi
 
 # Newline
