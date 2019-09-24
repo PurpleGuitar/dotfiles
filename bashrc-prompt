@@ -136,11 +136,6 @@ if [ ${RC_OF_LAST_COMMAND} != 0 ]; then
     PS1+="${SPACE}${COLOR_ALERT}${STR_RCODE}${RC_OF_LAST_COMMAND}${COLOR_RESET}"
 fi
 
-# Warn if in a Vim shell
-if [ -n "${VIMRUNTIME}" ]; then
-    PS1+="${SPACE}${COLOR_WARN}${STR_IN_VIM}${COLOR_RESET}"
-fi
-
 # Warn or alert CPU load, if too high
 if [ ${SYSLOAD_DISPLAY} ]; then
     CPU_LOAD=$(cat /proc/loadavg | cut -d " " -f 1)
@@ -162,6 +157,11 @@ if [ ${SYSMEM_DISPLAY} ]; then
         SYSMEM_AVAILABLE_MB=$(( ${SYSMEM_AVAILABLE} / 1000 ))
         PS1+="${SPACE}${COLOR_WARN}${STR_SYSMEM}${SYSMEM_AVAILABLE_MB}MB${COLOR_RESET}"
     fi
+fi
+
+# Warn if in a Vim shell
+if [ -n "${VIMRUNTIME}" ]; then
+    PS1+="${SPACE}${COLOR_WARN}${STR_IN_VIM}${COLOR_RESET}"
 fi
 
 # Newline
