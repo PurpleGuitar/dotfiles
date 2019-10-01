@@ -38,9 +38,9 @@ alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running i
 alias ang4='tmux set status off ; angband -mgcu -- -n4 ; tmux set status on'
 alias ang6='tmux set status off ; angband -mgcu -- -n6 ; tmux set status on'
 alias angbig='tmux set status off ; angband -mgcu -- -b ; tmux set status on'
-alias angdiff='ls -l /var/games/angband/save ~/dropbox/Craig/games/angband/save'
-alias angsave='cp -p /var/games/angband/save/* ~/dropbox/Craig/games/angband/save'
-alias angload='cp -p ~/dropbox/Craig/games/angband/save/* /var/games/angband/save'
+alias angdiff='ls -l /var/games/angband/save ~/dropbox/Craig/games/angband/save ~/.angband/Angband ~/dropbox/Craig/games/angband/prefs'
+alias angsave='cp -p /var/games/angband/save/* ~/dropbox/Craig/games/angband/save ; cp -p ~/.angband/Angband/* ~/dropbox/Craig/games/angband/prefs'
+alias angload='cp -p ~/dropbox/Craig/games/angband/save/* /var/games/angband/save ; cp -p ~/dropbox/Craig/games/angband/prefs/* ~/.angband/Angband'
 
 # ===============
 # Command History
