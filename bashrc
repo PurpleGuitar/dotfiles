@@ -93,6 +93,20 @@ export EDITOR=vim
 shopt -s cdspell
 
 
+# ============
+# WSL Wizardry
+# ============
+
+# Lookup host display from PowerShell
+function wsl-display() {
+    export DISPLAY=$( \
+        powershell.exe 'gwmi win32_NetworkAdapterConfiguration -Filter "IPEnabled=True and DHCPEnabled=True"' \
+        | grep IPAddress \
+        | grep --only-matching '[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+'):0.0
+    echo DISPLAY=$DISPLAY
+}
+
+
 # =====================================
 # Load local bashrc script if it exists
 # =====================================
