@@ -100,10 +100,22 @@ shopt -s cdspell
 # Lookup host display from PowerShell
 function wsl-display() {
     export DISPLAY=$( \
-        powershell.exe 'gwmi win32_NetworkAdapterConfiguration -Filter "IPEnabled=True and DHCPEnabled=True"' \
+        powershell.exe 'gwmi win32_NetworkAdapterConfiguration -Filter "IPEnabled=True and DHCPEnabled=True" | Format-List -Property *' \
         | grep IPAddress \
-        | grep --only-matching '[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+'):0.0
+        | grep --only-matching '[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+' \
+        ):0.0
     echo DISPLAY=$DISPLAY
+}
+
+# Lookup host DNS from PowerShell
+function wsl-dns() {
+    export WSL_HOST_DNS=$( \
+        powershell.exe 'gwmi win32_NetworkAdapterConfiguration -Filter "IPEnabled=True and DHCPEnabled=True" | Format-List -Property *' \
+        | grep DNSServerSearchOrder \
+        | grep --only-matching '[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+' \
+        | head -n 1
+        )
+    echo WSL_HOST_DNS=$WSL_HOST_DNS
 }
 
 
