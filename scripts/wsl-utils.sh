@@ -5,7 +5,7 @@
 # ============
 # If running under WSL2, source this file to get some useful functions in bash
 
-function wsl-display() {
+function wsl-xdisplay() {
     # Lookup host display from PowerShell
     export DISPLAY=$( \
         powershell.exe 'gwmi win32_NetworkAdapterConfiguration -Filter "IPEnabled=True and DHCPEnabled=True and DNSDomain is not null" | Format-List -Property *' \
