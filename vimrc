@@ -218,7 +218,7 @@ nnoremap <A-S-Left> <<
 nnoremap <A-S-Right> >>
 
 " Tools for fixing up weird ASCII or whitespace characters
-nnoremap <Leader>fix<Space> :silent! %s/\s\+$//<CR>:silent! %s/[\xa0]/ /g<CR>
+nnoremap <Leader>fix<Space> :silent! %s/\s\+$//<CR>:silent! %s/[\xa0]/ /g:silent! %s/\r//g<CR>
 nnoremap <Leader>fix' :%s/[\x92’]/'/g<CR>
 nnoremap <Leader>fix" :%s/[\x93\x94“”]/"/g<CR>
 nnoremap <Leader>fix- :%s/[\x96\xb7]/-/g<CR>

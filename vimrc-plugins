@@ -25,22 +25,22 @@ Plugin 'tpope/vim-abolish'                 " Tools for smart replace, mangling/d
 Plugin 'tommcdo/vim-exchange'              " Exchange chunks of text
 Plugin 'tpope/vim-vinegar'                 " Make netrw better
 
-" Commonly used Syntaxes
+" Language Syntaxes
 Plugin 'tmux-plugins/vim-tmux'             " Syntax support for tmux files
 Plugin 'OrangeT/vim-csharp'                " Syntax support for C# files
 Plugin 'leafgarland/typescript-vim'        " Syntax for typescript
 Plugin 'udalov/kotlin-vim'                 " Syntax for Kotlin
 Plugin 'rust-lang/rust.vim'                " Rust language support
 Plugin 'PProvost/vim-ps1'                  " PowerShell language support
+Plugin 'fatih/vim-go'                      " Golang development
+Plugin 'keith/swift.vim'                   " Swift syntax highlighting
+Plugin 'kovisoft/slimv'                    " LISP development
 
 " Other Stuff
 Plugin 'mbbill/undotree'                   " Visual undo
 Plugin 'tpope/vim-fugitive'                " Git integration (:GStatus, :GPush, etc.)
 Plugin 'guns/xterm-color-table.vim'        " Display a color chart of XTerm color codes
 Plugin 'severin-lemaignan/vim-minimap'     " Silly but fun
-Plugin 'fatih/vim-go'                      " Golang development
-Plugin 'keith/swift.vim'                   " Swift syntax highlighting
-Plugin 'kovisoft/slimv'                    " LISP development
 
 " Experimental
 Plugin 'ciaranm/securemodelines'           " Lock down modelines
