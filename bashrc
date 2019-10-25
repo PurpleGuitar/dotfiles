@@ -92,6 +92,11 @@ export EDITOR=vim
 # Correct some typos when using cd
 shopt -s cdspell
 
+# Override window title
+pwt() {
+    export PROMPT_WINDOW_TITLE=$*
+}
+
 
 # =====================================
 # Load local bashrc script if it exists
@@ -155,6 +160,9 @@ if [[ -z ${BASHRC_NO_TMUX} ]]; then
                 if [ -f /etc/motd ]; then
                     cat /etc/motd
                 fi
+            fi
+            if [ $(tmux display-message -p '#{window_panes}') -gt 1 ]; then
+                tmux set pane-border-status top
             fi
         fi
     fi
