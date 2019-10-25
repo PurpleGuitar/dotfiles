@@ -35,9 +35,9 @@ alias tka='tmux kill-session -a'
 alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
 
 # Angband aliases to run in console mode, and play games across machines
-alias ang4='tmux set status off ; angband -mgcu -- -n4 ; tmux set status on'
-alias ang6='tmux set status off ; angband -mgcu -- -n6 ; tmux set status on'
-alias angbig='tmux set status off ; angband -mgcu -- -b ; tmux set status on'
+alias ang4='angband -mgcu -- -n4'
+alias ang6='angband -mgcu -- -n6'
+alias angbig='angband -mgcu -- -b'
 alias angdiff='ls -l /var/games/angband/save ~/dropbox/Craig/games/angband/save ~/.angband/Angband ~/dropbox/Craig/games/angband/prefs'
 alias angsave='cp -p /var/games/angband/save/* ~/dropbox/Craig/games/angband/save ; cp -p ~/.angband/Angband/* ~/dropbox/Craig/games/angband/prefs'
 alias angload='cp -p ~/dropbox/Craig/games/angband/save/* /var/games/angband/save ; cp -p ~/dropbox/Craig/games/angband/prefs/* ~/.angband/Angband'
@@ -162,7 +162,9 @@ if [[ -z ${BASHRC_NO_TMUX} ]]; then
                 fi
             fi
             if [ $(tmux display-message -p '#{window_panes}') -gt 1 ]; then
+                # When the user splits panes, show status windows
                 tmux set pane-border-status top
+                tmux set status on
             fi
         fi
     fi
