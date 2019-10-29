@@ -33,6 +33,7 @@ alias lga='git lga --color=always | less -RS'
 alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboot required" ; else echo "No, reboot not required" ; fi'
 alias tka='tmux kill-session -a'
 alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
+alias vimtemp='VIMTEMPFILE=$(mktemp /tmp/vimtemp-XXXXXX.txt) && echo "This temp file will be deleted after you exit Vim." > ${VIMTEMPFILE} && vim ${VIMTEMPFILE} && rm ${VIMTEMPFILE}'
 
 # Angband aliases to run in console mode, and play games across machines
 alias ang4='angband -mgcu -- -n4'
@@ -162,9 +163,8 @@ if [[ -z ${BASHRC_NO_TMUX} ]]; then
                 fi
             fi
             if [ $(tmux display-message -p '#{window_panes}') -gt 1 ]; then
-                # When the user splits panes, show status windows
+                # If we're showing more than one pane, show the pane border statuses
                 tmux set pane-border-status top
-                tmux set status on
             fi
         fi
     fi
