@@ -44,7 +44,6 @@ Plugin 'severin-lemaignan/vim-minimap'     " Silly but fun
 
 " Experimental
 Plugin 'ciaranm/securemodelines'           " Lock down modelines
-" Plugin 'vimwiki/vimwiki'                   
 
 " ========================================================================
 " Tagbar
@@ -52,8 +51,6 @@ Plugin 'ciaranm/securemodelines'           " Lock down modelines
 Plugin 'majutsushi/tagbar'                 " Sidebar for code
 let g:tagbar_sort = 0
 let g:tagbar_iconchars = ['+', '-']
-
-autocmd FileType pandoc nnoremap <buffer> <Return> :TagbarOpen fj<CR>
 
 if has('win32')
     let g:tagbar_type_pandoc = {
@@ -149,6 +146,9 @@ autocmd FileType pandoc vnoremap k gk
 autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>
 autocmd FileType pandoc nnoremap <Leader>pf  :let @l=line(".")<CR>:%!pandoc --standalone --to=markdown<CR>:<C-r>l<CR>zz
 
+" Shortcuts for following pandoc links
+autocmd FileType pandoc nmap <CR> <Plug>(pandoc-keyboard-links-open)
+
 if has('win32')
     autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>:!start %:r.html<CR>
 elseif has('unix')
@@ -204,22 +204,5 @@ nmap _ \be
 " Experimentation
 " ========================================================================
 
-" Plugin 'PurpleGuitar/vim-zk'
-" let g:vim_zk_create_mappings=1
-
-" Plugin 'junegunn/fzf'
-" Plugin 'alok/notational-fzf-vim'
-" " let g:nv_search_paths = ['~/Downloads/notes']
-" let g:nv_default_extension = ".md"
-" let g:nv_use_short_pathnames = 1
-" let g:nv_ignore_pattern = ["*.html", "*.css", "*ignore"]
-"
-" nnoremap <Leader>zl :let @0="[".expand("%:r")."](".expand("%:r").".html)"<CR>
-" nnoremap <Leader>zb :let @0="](".expand("%:r").".html)"<CR>:vimgrep "<C-r>0" *.md<CR>
-" nnoremap <Leader>zt :execute "edit " . g:nv_search_paths[0] . "/" .strftime('%Y%m%d') . '.md'<CR>
-" nnoremap <Leader>zn :execute "edit " . g:nv_search_paths[0] . "/" .strftime('%Y%m%d%H%M') . '.md'<CR>
-" nnoremap <Leader>zz :NV<CR>
-
-
-
-
+Plugin 'PurpleGuitar/vim-zk'
+let g:vim_zk_create_mappings=1
