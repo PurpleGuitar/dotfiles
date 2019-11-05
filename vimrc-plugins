@@ -184,8 +184,8 @@ function! PandocToggleTask()
     endif
 endfunction
 autocmd FileType pandoc nnoremap <NUL> :call PandocToggleTask()<CR>
-nnoremap <Leader>tt :execute "vimgrep '\\[ \\]' " . g:nv_search_paths[0] . '/*.md'<CR>
-nnoremap <Leader>td :execute "vimgrep '\\[ \\]' " . g:nv_search_paths[0] . '/*.md'<CR>:SortQuickFix<CR>:cc<CR>
+nnoremap <Leader>tt :execute "vimgrep '\\[ \\]' *.md"<CR>
+nnoremap <Leader>ts :execute "vimgrep '\\[ \\]' *.md"<CR>:SortQuickFix<CR>:cc<CR>
 
 " ========================================================================
 " Quick Scope - Highlights targets for f, F, t, and T motions
