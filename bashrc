@@ -13,6 +13,7 @@ alias ls='ls -hF --color=tty'
 alias tree='tree -C --dirsfirst'
 alias tree1='tree -C --dirsfirst -L 1'
 alias tree2='tree -C --dirsfirst -L 2'
+alias tree3='tree -C --dirsfirst -L 3'
 
 # Behave, kitty!
 alias nyancat='nyancat --no-counter --no-title'
