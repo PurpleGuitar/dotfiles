@@ -204,5 +204,5 @@ nmap _ \be
 " Experimentation
 " ========================================================================
 
-Plugin 'PurpleGuitar/vim-zk'
-let g:vim_zk_create_mappings=1
+Plugin 'PurpleGuitar/pandoc-wiki-utils'
+let g:pw_create_mappings=1
