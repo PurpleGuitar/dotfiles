@@ -230,6 +230,17 @@ function! SyntaxItem()
 endfunction
 nnoremap <Leader>hlt :echo SyntaxItem()<CR>
 
+" Copy selected text to clipboard
+" From: https://vim.fandom.com/wiki/Copy_search_matches
+function! CopyMatches(reg)
+  let hits = []
+  %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/gne
+  let reg = empty(a:reg) ? '+' : a:reg
+  execute 'let @'.reg.' = join(hits, "\n") . "\n"'
+endfunction
+command! -register CopyMatches call CopyMatches(<q-reg>)
+
+
 " Other corrections
 " abbrev THe The
 " abbrev teh the
