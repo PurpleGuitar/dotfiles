@@ -1,5 +1,8 @@
 ;; Online keyboard tester: http://www.keyboardtester.com/tester.html
 
+; Give some breathing room when running at startup
+sleep 5000
+
 ; Disable capslock by itself
 SetCapsLockState, Off
 SetCapsLockState, AlwaysOff
@@ -32,6 +35,7 @@ Capslock & i::SendWithModifiers("{Up}")
 Capslock & o::SendWithModifiers("{PgDn}")
 Capslock & q::SendWithModifiers("{Media_Prev}")
 Capslock & w::SendWithModifiers("{Media_Play_Pause}")
+Capslock & x::SendWithModifiers("{Media_Stop}")
 Capslock & e::SendWithModifiers("{Media_Next}")
 Capslock & s::SendWithModifiers("{Volume_Down}")
 Capslock & d::SendWithModifiers("{Volume_Up}")

@@ -1,3 +1,6 @@
+; Give some breathing room when running at startup
+sleep 5000
+
 ;; =====================================
 ;; Remap Logitech Wireless Mouse buttons
 ;; =====================================
