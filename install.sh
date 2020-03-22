@@ -50,6 +50,7 @@ backup_if_exists()
 
 # Backup and link to regular dotfiles
 cd $TARGET_DIR
+mkdir -p .config
 FILES="\
     Xresources \
     bashrc \
@@ -62,6 +63,7 @@ FILES="\
     vimrc \
     vimrc-plugins \
     w3m \
+    config/autokey \
     "
 for FILENAME in $FILES
 do
