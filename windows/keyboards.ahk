@@ -73,11 +73,11 @@ Capslock & Up::SendWithModifiers("{PgUp}")
 Capslock & Down::SendWithModifiers("{PgDn}")
 
 ; Window movement and docking
-![::Send {LWin Down}{Left}{LWin Up}
-!]::Send {LWin Down}{Right}{LWin Up}
-!=::Send {LWin Down}{Up}{LWin Up}
-!-::Send {LWin Down}{Down}{LWin Up}
-!#m::Send {LWin Down}{LShift Down}{Right}{LShift Up}{LWin Up}
+; ![::Send {LWin Down}{Left}{LWin Up}
+; !]::Send {LWin Down}{Right}{LWin Up}
+; !=::Send {LWin Down}{Up}{LWin Up}
+; !-::Send {LWin Down}{Down}{LWin Up}
+; !#m::Send {LWin Down}{LShift Down}{Right}{LShift Up}{LWin Up}
 
 ;; =================================================================
 ;; Experimental
