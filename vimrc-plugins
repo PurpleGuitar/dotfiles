@@ -206,3 +206,5 @@ nmap _ \be
 
 " Plugin 'PurpleGuitar/pandoc-wiki-utils'
 " let g:pw_create_mappings=1
+" Plugin 'vimwiki/vimwiki'
+" let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
