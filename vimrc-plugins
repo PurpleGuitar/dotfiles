@@ -143,16 +143,16 @@ autocmd FileType pandoc vnoremap j gj
 autocmd FileType pandoc vnoremap k gk
 
 " Shortcuts for generating pandoc docs
-autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>
+autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --css=style.css --to=html --out="%:r.html" "%"<CR>
 autocmd FileType pandoc nnoremap <Leader>pf  :let @l=line(".")<CR>:%!pandoc --standalone --to=markdown<CR>:<C-r>l<CR>zz
 
 " Shortcuts for following pandoc links
 autocmd FileType pandoc nmap <CR> <Plug>(pandoc-keyboard-links-open)
 
 if has('win32')
-    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>:!start %:r.html<CR>
+    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html "%"<CR>:!start "%:r.html"<CR>
 elseif has('unix')
-    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>:!xdg-open %:r.html &<CR>
+    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html "%"<CR>:!xdg-open "%:r.html" &<CR>
 endif
 
 " Other settings

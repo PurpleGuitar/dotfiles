@@ -27,11 +27,7 @@ SendWithModifiers(keycode)
 
 Capslock & Esc::SendWithModifiers("``")
 Capslock & z::SendWithModifiers("{Appskey}")
-Capslock & i::SendWithModifiers("{Up}")
-;;Capslock & j::SendWithModifiers("{Left}")
-;;Capslock & k::SendWithModifiers("{Down}")
-;;Capslock & l::SendWithModifiers("{Right}")
-;;Capslock & u::SendWithModifiers("{PgUp}")
+Capslock & u::SendWithModifiers("{PgUp}")
 Capslock & o::SendWithModifiers("{PgDn}")
 Capslock & q::SendWithModifiers("{Media_Prev}")
 Capslock & w::SendWithModifiers("{Media_Play_Pause}")
@@ -62,6 +58,13 @@ Capslock & SC027::SendWithModifiers("{Insert}") ; Semicolon
 Capslock & SC028::SendWithModifiers("{Delete}") ; Single quote
 Capslock & SC00E::SendWithModifiers("{Delete}") ; Backspace
 
+;; Unused
+;;Capslock & i::SendWithModifiers("{Up}")
+;;Capslock & j::SendWithModifiers("{Left}")
+;;Capslock & k::SendWithModifiers("{Down}")
+;;Capslock & l::SendWithModifiers("{Right}")
+
+
 ;; =================================================================
 ;; Key shortcuts from Chromebook
 ;; =================================================================
@@ -73,11 +76,11 @@ Capslock & Up::SendWithModifiers("{PgUp}")
 Capslock & Down::SendWithModifiers("{PgDn}")
 
 ; Window movement and docking
-![::Send {LWin Down}{Left}{LWin Up}
-!]::Send {LWin Down}{Right}{LWin Up}
-!=::Send {LWin Down}{Up}{LWin Up}
-!-::Send {LWin Down}{Down}{LWin Up}
-!#m::Send {LWin Down}{LShift Down}{Right}{LShift Up}{LWin Up}
+; ![::Send {LWin Down}{Left}{LWin Up}
+; !]::Send {LWin Down}{Right}{LWin Up}
+; !=::Send {LWin Down}{Up}{LWin Up}
+; !-::Send {LWin Down}{Down}{LWin Up}
+; !#m::Send {LWin Down}{LShift Down}{Right}{LShift Up}{LWin Up}
 
 ;; =================================================================
 ;; Experimental
