@@ -35,6 +35,9 @@ if [[ -z ${BASHRC_NO_TMUX} ]]; then
                 if [ -f /etc/motd ]; then
                     cat /etc/motd
                 fi
+                if [ -f ~/.motd ]; then
+                    cat ~/.motd
+                fi
             fi
             if [ $(tmux display-message -p '#{window_panes}') -gt 1 ]; then
                 # If we're showing more than one pane, show the pane border statuses
