@@ -104,7 +104,7 @@ nnoremap <leader>ga ga
 " ========================================================================
 Plugin 'airblade/vim-gitgutter'
 if exists('&signcolumn')  " Vim 7.4.2201
-    set signcolumn=yes
+    setlocal signcolumn=yes
 else
     let g:gitgutter_sign_column_always = 1
 endif"
@@ -118,7 +118,7 @@ nmap ]h <Plug>(GitGutterNextHunk)
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'vim-voom/VOoM'
-autocmd FileType voomtree set nonumber
+autocmd FileType voomtree setlocal nonumber
 
 " Setup pandoc
 let g:pandoc#formatting#mode = 'h'                               " hard line breaks
@@ -156,7 +156,9 @@ elseif has('unix')
 endif
 
 " Other settings
-autocmd FileType pandoc set nonumber
+autocmd FileType pandoc setlocal nowrap
+autocmd FileType pandoc setlocal nonumber
+autocmd FileType pandoc setlocal sidescrolloff=0
 
 " New task management
 function! PandocToggleTask()
