@@ -62,6 +62,7 @@ FILES="\
     tmux.conf \
     vimrc \
     vimrc-plugins \
+    vimrc-statusline \
     w3m \
     config/autokey \
     "

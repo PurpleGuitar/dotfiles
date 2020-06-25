@@ -53,98 +53,13 @@ set sidescrolloff=0
 set number
 set nowrap
 
-" Don't show line numbers for certain files
-autocmd FileType qf set nonumber
-
-" Re-assert settings for certain file types
-autocmd FileType pandoc set nowrap
-autocmd FileType pandoc set nonumber
-autocmd FileType pandoc set sidescrolloff=0
-autocmd FileType rust   set number
 
 " ========================================================================
 " Statusline
 " ========================================================================
-set laststatus=2
-
-" Left side
-set statusline=                                                     " Clear previous statusline if any
-set statusline+=%t                                                  " File name tail
-set statusline+=%m                                                  " Modified
-set statusline+=%<                                                  " Cut here
-set statusline+=%r                                                  " Read-only
-set statusline+=%h                                                  " Help
-set statusline+=%w                                                  " Preview
-set statusline+=%q                                                  " quickfix/location
-set statusline+=\                                                   " Space
-set statusline+=%y                                                  " File type
-set statusline+=[%{&ff}]                                            " Format
-set statusline+=%#StatusLineWarn#                                   " Highlight as warning
-set statusline+=%{PasteForStatusline()}                             " paste flag
-set statusline+=%{StatuslineTrailingSpaceWarning()}                 " Trailing spaces
-set statusline+=%#StatusLineErr#                                    " Highlight as error
-set statusline+=%{StatuslineTabWarning()}                           " Mix-indent or wrong expandtab
-set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}     " Encoding isn't UTF-8
-set statusline+=%*                                                  " Highlight normal
-set statusline+=\                                                   " Space
-set statusline+=%{fugitive#head()!=''?'('.fugitive#head().')\ ':''} " Name of current branch, if any
-
-" Right side
-set statusline+=%=
-" set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')} " Highlight under cursor
-set statusline+=\                                                " Space
-set statusline+=0x%B/%b                                          " Byte under cursor
-set statusline+=\                                                " Space
-set statusline+=%l,%c\                                           " Line,Column under cursor
-set statusline+=%P                                               " Percentage into file
-
-" From https://nkantar.com/blog/my-vim-statusline/
-" Return '[paste]' if we're in paste mode
-function! PasteForStatusline()
-    let paste_status = &paste
-    if paste_status == 1
-        return "[paste]"
-    else
-        return ""
-    endif
-endfunction
-
-"From http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
-"return '[&et]' if &et is set wrong
-"return '[mix]' if both spaces and tabs are used to indent
-"return an empty string if everything is fine
-function! StatuslineTabWarning()
-    if !exists("b:statusline_tab_warning")
-        let tabs = search('^\t', 'nw') != 0
-        let spaces = search('^ ', 'nw') != 0
-        if tabs && spaces
-            let b:statusline_tab_warning =  '[mix]'
-        elseif (spaces && !&et) || (tabs && &et)
-            let b:statusline_tab_warning = '[&et]'
-        else
-            let b:statusline_tab_warning = ''
-        endif
-    endif
-    return b:statusline_tab_warning
-endfunction
-"recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
-
-"From http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
-"return '[\s]' if trailing white space is detected
-"return '' otherwise
-function! StatuslineTrailingSpaceWarning()
-    if !exists("b:statusline_trailing_space_warning")
-        if search('\s\+$', 'nw') != 0
-            let b:statusline_trailing_space_warning = '[\s]'
-        else
-            let b:statusline_trailing_space_warning = ''
-        endif
-    endif
-    return b:statusline_trailing_space_warning
-endfunction
-"recalculate the trailing whitespace warning when idle, and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+if !empty(glob("~/.vimrc-statusline"))
+    source ~/.vimrc-statusline
+endif
 
 
 " ========================================================================

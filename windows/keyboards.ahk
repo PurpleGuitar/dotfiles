@@ -27,11 +27,7 @@ SendWithModifiers(keycode)
 
 Capslock & Esc::SendWithModifiers("``")
 Capslock & z::SendWithModifiers("{Appskey}")
-Capslock & i::SendWithModifiers("{Up}")
-;;Capslock & j::SendWithModifiers("{Left}")
-;;Capslock & k::SendWithModifiers("{Down}")
-;;Capslock & l::SendWithModifiers("{Right}")
-;;Capslock & u::SendWithModifiers("{PgUp}")
+Capslock & u::SendWithModifiers("{PgUp}")
 Capslock & o::SendWithModifiers("{PgDn}")
 Capslock & q::SendWithModifiers("{Media_Prev}")
 Capslock & w::SendWithModifiers("{Media_Play_Pause}")
@@ -61,6 +57,13 @@ Capslock & +::SendWithModifiers("{F12}")
 Capslock & SC027::SendWithModifiers("{Insert}") ; Semicolon
 Capslock & SC028::SendWithModifiers("{Delete}") ; Single quote
 Capslock & SC00E::SendWithModifiers("{Delete}") ; Backspace
+
+;; Unused
+;;Capslock & i::SendWithModifiers("{Up}")
+;;Capslock & j::SendWithModifiers("{Left}")
+;;Capslock & k::SendWithModifiers("{Down}")
+;;Capslock & l::SendWithModifiers("{Right}")
+
 
 ;; =================================================================
 ;; Key shortcuts from Chromebook

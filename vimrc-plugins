@@ -103,11 +103,6 @@ nnoremap <leader>ga ga
 " Git Gutter
 " ========================================================================
 Plugin 'airblade/vim-gitgutter'
-if exists('&signcolumn')  " Vim 7.4.2201
-    set signcolumn=yes
-else
-    let g:gitgutter_sign_column_always = 1
-endif"
 nmap [h <Plug>(GitGutterPrevHunk)
 nmap ]h <Plug>(GitGutterNextHunk)
 
@@ -118,7 +113,7 @@ nmap ]h <Plug>(GitGutterNextHunk)
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'vim-voom/VOoM'
-autocmd FileType voomtree set nonumber
+autocmd FileType voomtree setlocal nonumber
 
 " Setup pandoc
 let g:pandoc#formatting#mode = 'h'                               " hard line breaks
@@ -143,20 +138,22 @@ autocmd FileType pandoc vnoremap j gj
 autocmd FileType pandoc vnoremap k gk
 
 " Shortcuts for generating pandoc docs
-autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>
+autocmd FileType pandoc nnoremap <Leader>pp  :update<CR>:!pandoc --standalone --css=style.css --to=html --out="%:r.html" "%"<CR>
 autocmd FileType pandoc nnoremap <Leader>pf  :let @l=line(".")<CR>:%!pandoc --standalone --to=markdown<CR>:<C-r>l<CR>zz
 
 " Shortcuts for following pandoc links
 autocmd FileType pandoc nmap <CR> <Plug>(pandoc-keyboard-links-open)
 
 if has('win32')
-    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>:!start %:r.html<CR>
+    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html "%"<CR>:!start "%:r.html"<CR>
 elseif has('unix')
-    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html %<CR>:!xdg-open %:r.html &<CR>
+    autocmd FileType pandoc nnoremap <Leader>pb  :update<CR>:!pandoc --standalone --css=style.css --to=html --out=%:r.html "%"<CR>:!xdg-open "%:r.html" &<CR>
 endif
 
 " Other settings
-autocmd FileType pandoc set nonumber
+autocmd FileType pandoc setlocal nowrap
+autocmd FileType pandoc setlocal nonumber
+autocmd FileType pandoc setlocal sidescrolloff=0
 
 " New task management
 function! PandocToggleTask()
