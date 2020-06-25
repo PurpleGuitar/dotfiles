@@ -1,4 +1,4 @@
-set laststatus=2
+set laststatus=2 " Always show status line
 
 " Left side
 set statusline=                                                     " Clear previous statusline if any
