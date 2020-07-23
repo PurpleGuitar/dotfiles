@@ -42,9 +42,9 @@ mkdir $BACKUP_DIR
 # Function to backup file if it exists
 backup_if_exists()
 {
-    if [ -e $1 ] ; then
+    if [ -e $1 ]; then
+       echo Moving $1 ...
        mv $1 $BACKUP_DIR
-       echo "Backed up $1"
     fi
 }
 
