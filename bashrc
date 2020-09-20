@@ -61,6 +61,11 @@ alias tree1='tree -C --dirsfirst -L 1'
 alias tree2='tree -C --dirsfirst -L 2'
 alias tree3='tree -C --dirsfirst -L 3'
 
+# Simplify du
+alias du0='du --human-readable --max-depth 0'
+alias du1='du --human-readable --max-depth 1'
+alias du2='du --human-readable --max-depth 2'
+
 # Behave, kitty!
 alias nyancat='nyancat --no-counter --no-title'
 
@@ -82,6 +87,8 @@ alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboo
 alias tka='tmux kill-session -a'
 alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
 alias vimtemp='VIMTEMPFILE=$(mktemp /tmp/vimtemp-XXXXXX.txt) && echo "This temp file will be deleted after you exit Vim." > ${VIMTEMPFILE} && vim ${VIMTEMPFILE} && rm ${VIMTEMPFILE}'
+alias xo='xdg-open'
+alias start='xdg-open'
 
 # Angband aliases to run in console mode, and play games across machines
 alias ang4='angband -mgcu -- -n4'
