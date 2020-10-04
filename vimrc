@@ -164,8 +164,12 @@ command! -register CopyMatches call CopyMatches(<q-reg>)
 " abbrev pokemon Pokémon
 
 " Invoke make
-nnoremap <Leader>m :wa<CR>:make<CR>
-inoremap <Leader>m <Esc>:wa<CR>:make<CR>
+nnoremap <Leader>mm :wa<CR>:make<CR>
+inoremap <Leader>mm <Esc>:wa<CR>:make<CR>
+nnoremap <Leader>ml :wa<CR>:make lint<CR>
+inoremap <Leader>ml <Esc>:wa<CR>:make lint<CR>
+nnoremap <Leader>mt :wa<CR>:make test<CR>
+inoremap <Leader>mt <Esc>:wa<CR>:make test<CR>
 
 " Search for selected text, forwards or backwards.
 " from http://vim.wikia.com/wiki/Search_for_visually_selected_text
@@ -188,6 +192,10 @@ vnoremap <silent> # :<C-U>
 nnoremap <Leader>vr :e ~/.vimrc<CR>
 nnoremap <Leader>vp :e ~/.vimrc-plugins<CR>
 nnoremap <Leader>vl :e ~/.vimrc-local<CR>
+
+" Markdown tables
+nmap <leader>mdt gaap*\|
+imap <leader>mdt <Esc>gaap*\|
 
 " ========================================================================
 " Other Misc Stuff
