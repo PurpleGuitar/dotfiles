@@ -1,21 +1,21 @@
 {
     "type": "phrase",
-    "description": "e acute",
+    "description": "\u00bd",
     "modes": [
         1
     ],
-    "usageCount": 0,
+    "usageCount": 2,
     "prompt": false,
     "omitTrigger": false,
     "matchCase": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\e'"
+            "\\1/2"
         ],
         "backspace": true,
         "ignoreCase": false,
-        "immediate": false,
+        "immediate": true,
         "triggerInside": false,
         "wordChars": "[\\w]"
     },
