@@ -16,7 +16,7 @@
         "backspace": true,
         "ignoreCase": false,
         "immediate": true,
-        "triggerInside": false,
+        "triggerInside": true,
         "wordChars": "[\\w]"
     },
     "hotkey": {

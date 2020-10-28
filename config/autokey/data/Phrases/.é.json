@@ -15,8 +15,8 @@
         ],
         "backspace": true,
         "ignoreCase": false,
-        "immediate": false,
-        "triggerInside": false,
+        "immediate": true,
+        "triggerInside": true,
         "wordChars": "[\\w]"
     },
     "hotkey": {
