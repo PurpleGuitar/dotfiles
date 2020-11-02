@@ -1,17 +1,17 @@
 {
-    "type": "script",
-    "description": "Insert Date",
-    "store": {},
+    "type": "phrase",
+    "description": "\u00bd",
     "modes": [
         1
     ],
-    "usageCount": 3,
+    "usageCount": 2,
     "prompt": false,
     "omitTrigger": false,
+    "matchCase": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\ddd"
+            "\\1/2"
         ],
         "backspace": true,
         "ignoreCase": false,
@@ -26,5 +26,6 @@
     "filter": {
         "regex": null,
         "isRecursive": false
-    }
+    },
+    "sendMode": "kb"
 }

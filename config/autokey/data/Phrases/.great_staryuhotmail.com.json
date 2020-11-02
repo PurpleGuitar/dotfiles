@@ -1,22 +1,22 @@
 {
-    "type": "script",
-    "description": "Insert Date",
-    "store": {},
+    "type": "phrase",
+    "description": "great_staryu@hotmail.com",
     "modes": [
         1
     ],
-    "usageCount": 3,
+    "usageCount": 0,
     "prompt": false,
     "omitTrigger": false,
+    "matchCase": false,
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\ddd"
+            "g@h"
         ],
         "backspace": true,
         "ignoreCase": false,
-        "immediate": true,
-        "triggerInside": true,
+        "immediate": false,
+        "triggerInside": false,
         "wordChars": "[\\w]"
     },
     "hotkey": {
@@ -26,5 +26,6 @@
     "filter": {
         "regex": null,
         "isRecursive": false
-    }
+    },
+    "sendMode": "kb"
 }

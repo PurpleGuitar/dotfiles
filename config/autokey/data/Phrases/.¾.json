@@ -1,6 +1,6 @@
 {
     "type": "phrase",
-    "description": "e acute",
+    "description": "\u00be",
     "modes": [
         1
     ],
@@ -11,12 +11,12 @@
     "showInTrayMenu": false,
     "abbreviation": {
         "abbreviations": [
-            "\\e'"
+            "\\3/4"
         ],
         "backspace": true,
         "ignoreCase": false,
-        "immediate": false,
-        "triggerInside": false,
+        "immediate": true,
+        "triggerInside": true,
         "wordChars": "[\\w]"
     },
     "hotkey": {
