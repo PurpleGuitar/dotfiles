@@ -89,6 +89,7 @@ alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running i
 alias vimtemp='VIMTEMPFILE=$(mktemp /tmp/vimtemp-XXXXXX.txt) && echo "This temp file will be deleted after you exit Vim." > ${VIMTEMPFILE} && vim ${VIMTEMPFILE} && rm ${VIMTEMPFILE}'
 alias xo='xdg-open'
 alias start='xdg-open'
+alias sqlite='sqlite3'
 
 # Angband aliases to run in console mode, and play games across machines
 alias ang4='angband -mgcu -- -n4'
