@@ -87,9 +87,16 @@ alias reboot-required='if [ -f /var/run/reboot-required ]; then echo "Yes, reboo
 alias tka='tmux kill-session -a'
 alias vim-in-shell='if [[ $(env | grep VIMRUNTIME) ]]; then echo "Yes, running in a Vim shell" ; else echo "No, not running in a Vim shell" ; fi'
 alias vimtemp='VIMTEMPFILE=$(mktemp /tmp/vimtemp-XXXXXX.txt) && echo "This temp file will be deleted after you exit Vim." > ${VIMTEMPFILE} && vim ${VIMTEMPFILE} && rm ${VIMTEMPFILE}'
-alias xo='xdg-open'
-alias start='xdg-open'
 alias sqlite='sqlite3'
+
+# Opening files
+if [ -n ${WSL_DISTRO_NAME} ]; then
+    alias xo='explorer.exe'
+    alias start='explorer.exe'
+else
+    alias xo='xdg-open'
+    alias start='xdg-open'
+fi
 
 # Angband aliases to run in console mode, and play games across machines
 alias ang4='angband -mgcu -- -n4'
