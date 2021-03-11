@@ -98,7 +98,7 @@ alias vimtemp='VIMTEMPFILE=$(mktemp /tmp/vimtemp-XXXXXX.txt) && echo "This temp 
 alias sqlite='sqlite3'
 
 # Opening files
-if [ -n ${WSL_DISTRO_NAME} ]; then
+if [ "$IS_WSL" -eq "1" ]; then
     alias start='wslview'
 else
     alias start='xdg-open'
