@@ -27,9 +27,11 @@
 [credential "https://github.com"]
     username = PurpleGuitar
 [diff]
-    tool = vimdiff
+    #tool = vimdiff
+    tool = meld
 [merge]
-    tool = vimdiff
+    #tool = vimdiff
+    tool = meld
     conflictstyle = diff3
 [mergetool]
     prompt = false

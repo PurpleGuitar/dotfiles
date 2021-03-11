@@ -213,6 +213,8 @@ command! -nargs=0 -range=% NumberLines <line1>,<line2>s/^\s*\zs/\=(line('.') - <
 " Load my colorscheme if available (Must be called after vundle#end())
 silent! colorscheme croz_dark
 
+autocmd FileType json set foldmethod=indent
+
 " ========================================================================
 " Import local .vimrc, if there is one
 " (this section should always be last)
