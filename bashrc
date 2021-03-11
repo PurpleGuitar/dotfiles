@@ -91,10 +91,8 @@ alias sqlite='sqlite3'
 
 # Opening files
 if [ -n ${WSL_DISTRO_NAME} ]; then
-    alias xo='explorer.exe'
-    alias start='explorer.exe'
+    alias start='wslview'
 else
-    alias xo='xdg-open'
     alias start='xdg-open'
 fi
 
