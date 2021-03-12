@@ -108,10 +108,6 @@ fi
 alias ang4='angband -mgcu -- -n4'
 alias ang6='angband -mgcu -- -n6'
 alias angbig='angband -mgcu -- -b'
-alias angdiff='ls -l /var/games/angband/save ~/dropbox/Craig/games/angband/save ~/.angband/Angband ~/dropbox/Craig/games/angband/prefs'
-alias angsave='cp -p /var/games/angband/save/* ~/dropbox/Craig/games/angband/save ; cp -p ~/.angband/Angband/* ~/dropbox/Craig/games/angband/prefs'
-alias angload='cp -p ~/dropbox/Craig/games/angband/save/* /var/games/angband/save ; cp -p ~/dropbox/Craig/games/angband/prefs/* ~/.angband/Angband'
-
 
 # ==============================================================================
 # Command History
