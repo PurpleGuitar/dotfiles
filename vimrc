@@ -204,7 +204,7 @@ imap <leader>mdt <Esc>gaap*\|
 " Show tabs and trailing spaces
 " From http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
 " Turn on with command :set list
-set listchars=tab:>.,trail:.,nbsp:_,eol:<,space:.
+set listchars=tab:>_,trail:.,nbsp:_,eol:<,space:.
 
 " Number selected list
 " From: //stackoverflow.com/a/4224454
