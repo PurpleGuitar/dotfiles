@@ -57,6 +57,11 @@ else
 fi
 
 # ==============================================================================
+# Use local bin folder
+# ==============================================================================
+export PATH=~/.local/bin:${PATH}
+
+# ==============================================================================
 # Aliases
 # ==============================================================================
 
@@ -84,6 +89,11 @@ alias cmatrix='cmatrix -b'
 grep --version --color=auto &> /dev/null
 if [ $? -eq 0 ]; then
     alias grep='grep --color=auto'
+fi
+
+# Use vimcat if available
+if command -v vimcat >/dev/null 2>&1; then
+    alias cat='vimcat'
 fi
 
 # Other aliases
@@ -137,9 +147,6 @@ function history_cleanup() {
 # ==============================================================================
 # Other Stuff
 # ==============================================================================
-
-# Use local bin dir
-export PATH=~/.local/bin:${PATH}
 
 # Enable programmable completion features
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
