@@ -21,6 +21,7 @@ SendWithModifiers(keycode)
     return
 }
 
+
 ;; =================================================================
 ;; Key shortcuts from POK3R using Capslock as virtual Fn key
 ;; =================================================================
@@ -82,11 +83,21 @@ Capslock & Down::SendWithModifiers("{PgDn}")
 ; !-::Send {LWin Down}{Down}{LWin Up}
 ; !#m::Send {LWin Down}{LShift Down}{Right}{LShift Up}{LWin Up}
 
+
+;; =================================================================
+;; Key shortcuts from Linux
+;; =================================================================
+
+;; Use Caps+J to pop up emojis, like in Linux
+Capslock & j::Send {LWin Down}.{LWin Up}
+
+
 ;; =================================================================
 ;; Experimental
 ;; =================================================================
 
 Capslock & m::Send {NumLock}
+
 
 ;; =================================================================
 ;; Graveyard
