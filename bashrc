@@ -91,11 +91,6 @@ if [ $? -eq 0 ]; then
     alias grep='grep --color=auto'
 fi
 
-# Use vimcat if available
-if command -v vimcat >/dev/null 2>&1; then
-    alias cat='vimcat'
-fi
-
 # Other aliases
 alias colortest-truecolor='awk '\''BEGIN{ s="/\\/\\/\\/\\/\\"; s=s s s s s s s s; for (colnum = 0; colnum<77; colnum++) { r = 255-(colnum*255/76); g = (colnum*510/76); b = (colnum*255/76); if (g>255) g = 510-g; printf "\033[48;2;%d;%d;%dm", r,g,b; printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b; printf "%s\033[0m", substr(s,colnum+1,1); } printf "\n"; }'\''' # from: https://gist.github.com/XVilka/8346728
 alias htopu='htop -u $(whoami)'
