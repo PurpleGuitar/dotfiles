@@ -138,8 +138,9 @@ autocmd FileType pandoc vnoremap j gj
 autocmd FileType pandoc vnoremap k gk
 
 " Shortcuts for generating pandoc docs
-autocmd FileType pandoc nnoremap <Leader>pp :update<CR>:!pandoc --standalone --css=style.css --wrap=none --atx-headers --to=html --out="%:r.html" "%"<CR>
-autocmd FileType pandoc nnoremap <Leader>pf :let @l=line(".")<CR>:%!pandoc --standalone --wrap=none --atx-headers --to=markdown<CR>:<C-r>l<CR>zz
+autocmd FileType pandoc nnoremap <Leader>pp :update<CR>:!pandoc            --standalone --css=style.css --wrap=none --atx-headers --to=html --out="%:r.html" "%"<CR>
+autocmd FileType pandoc nnoremap <Leader>pf :let @l=line(".")<CR>:%!pandoc --standalone                 --wrap=none --atx-headers --to=markdown-simple_tables<CR>:<C-r>l<CR>zz
+autocmd FileType pandoc nnoremap <Leader>pw :let @l=line(".")<CR>:%!pandoc --standalone                             --atx-headers --to=markdown-simple_tables<CR>:<C-r>l<CR>zz
 
 " Shortcuts for following pandoc links
 autocmd FileType pandoc nmap <CR> <Plug>(pandoc-keyboard-links-open)
