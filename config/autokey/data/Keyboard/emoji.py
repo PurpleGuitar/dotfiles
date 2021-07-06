@@ -1,1 +1,1 @@
-system.exec_command("splatmoji type", getOutput=False)
+system.exec_command("splatmoji copypaste", getOutput=False)
