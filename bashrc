@@ -66,7 +66,7 @@ export PATH=~/.local/bin:${PATH}
 # ==============================================================================
 
 # classify files in colour
-alias ls='ls -hF --color=tty'
+alias ls='LC_COLLATE=C ls -hF --color=tty --group-directories-first'
 
 # Always use color for tree, sort dirs first
 alias tree='tree -C --dirsfirst'
